@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LG U+ - 기업 특가 홈페이지</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        body { font-family: 'Pretendard', sans-serif; overflow-x: hidden; background-color: #F3F4F6; color: #111827; scroll-behavior: smooth; }
+        .uplus-pink { color: #E6007E; }
+        .bg-uplus-pink { background-color: #E6007E; }
+        .border-uplus-pink { border-color: #E6007E; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .bottom-sheet.active { transform: translateY(0); }
+
+        .moyo-chip { transition: all 0.2s; border: 1px solid #E5E7EB; background-color: #ffffff; color: #4B5563; }
+        .moyo-chip.active { background-color: #FDF2F8; border-color: #E6007E; color: #E6007E; font-weight: 700; }
+    </style>
+</head>
+<body class="antialiased selection:bg-pink-100 selection:text-pink-900 relative">
+
+    <header class="bg-white sticky top-0 z-40 px-5 py-3 flex justify-between items-center border-b border-gray-100 shadow-sm">
+        <div class="flex items-center gap-1.5">
+            <span class="text-lg font-black uplus-pink tracking-tight">LG U+</span>
+            <span class="text-[13px] font-bold text-gray-800 pl-1.5 border-l border-gray-300 mt-0.5">(주)안산모바일</span>
+        </div>
+        <button onclick="openKakaoChat()" class="text-[12px] font-bold bg-gray-900 text-white px-3 py-1.5 rounded-md hover:bg-gray-800 transition">
+            B2B 제휴문의
+        </button>
+    </header>
+
+    <div class="fixed top-[70px] right-0 w-full max-w-2xl left-1/2 -translate-x-1/2 pointer-events-none z-[100]">
+        <button onclick="openKakaoChat()" class="absolute top-0 right-4 pointer-events-auto bg-[#FEE500] text-[#391B1B] w-12 h-12 rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border-2 border-white hover:scale-105 transition-transform" aria-label="오픈채팅 상담">
+            <i data-lucide="message-circle" class="w-6 h-6 fill-current"></i>
+            <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-red-500 border-2 border-white"></span>
+            </span>
+        </button>
+    </div>
+
+    <div id="main-page" class="w-full min-h-screen max-w-2xl mx-auto bg-gray-50 relative pb-24">
+        
+        <section class="bg-white px-5 py-8">
+            <span class="inline-block bg-pink-50 text-pink-600 text-[11px] font-bold px-2.5 py-1 rounded-md mb-3 border border-pink-100">
+                안산/경인 지역 내방 업무 가능
+            </span>
+                <span class="uplus-pink">최저가 맞춤 컨설팅</span>을 제공합니다
+            </h1>
+            <p class="text-gray-500 text-[14px] leading-relaxed">
+                아이폰 17, 갤럭시 S26 등 최신 플래그십부터 가성비 모델까지. 100% 미개봉 새제품을 특별 지원금으로 만나보세요.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-2.5 mt-6">
+                <button onclick="scrollToPhones()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-4 rounded-xl transition text-[15px] flex justify-center items-center gap-2">
+                    <i data-lucide="smartphone" class="w-4 h-4"></i> 단말기 특가 보기
+                </button>
+                <button onclick="openConsultForm('일반상담')" class="w-full bg-uplus-pink hover:bg-pink-700 text-white font-bold py-4 rounded-xl shadow-md transition text-[15px] flex justify-center items-center gap-2">
+                    <i data-lucide="headset" class="w-4 h-4"></i> 빠른 상담 신청
+                </button>
+            </div>
+        </section>
+
+        <section class="bg-white px-5 pb-8">
+            <div class="grid grid-cols-1 gap-2.5">
+                <div onclick="openKakaoChat()" class="bg-gray-900 border border-gray-800 rounded-2xl p-4 flex items-center justify-between cursor-pointer hover:bg-gray-800 transition-colors">
+                    <div>
+                        <span class="text-yellow-400 font-bold text-[11px] mb-1 block">5인 이상 기업/법인 임직원 전용</span>
+                        <h3 class="text-white font-bold text-[15px]">B2B 기업특판 MOU 제휴 안내</h3>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center shadow-sm shrink-0">
+                        <i data-lucide="building-2" class="w-5 h-5 text-yellow-400"></i>
+                    </div>
+                </div>
+                
+                <div onclick="openConsultForm('WIFI(인터넷) + TV 가입')" class="bg-purple-50 border border-purple-100 rounded-2xl p-4 flex items-center justify-between cursor-pointer hover:bg-purple-100 transition-colors mt-2">
+                    <div>
+                        <span class="text-purple-600 font-bold text-[11px] mb-1 block">현금 / 사은품 최고 수준</span>
+                        <h3 class="text-gray-900 font-bold text-[15px]">WIFI(인터넷) + TV 가입 최대 지원</h3>
+                    </div>
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
+                        <i data-lucide="monitor-play" class="w-5 h-5 text-purple-500"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="phone-list-section" class="pt-2 pb-4 bg-gray-50">
+            <div class="bg-white px-5 py-3 border-y border-gray-100 sticky top-[56px] z-30 flex items-center gap-2 overflow-x-auto no-scrollbar shadow-sm">
+                <button onclick="openFilterSheet()" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-300 text-gray-800 text-[13px] font-black hover:bg-gray-50 transition bg-white shadow-sm">
+                    <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> 상세조건
+                </button>
+                <div class="w-[1px] h-4 bg-gray-200 mx-1 shrink-0"></div>
+                
+                <button onclick="toggleQuickBrand('삼성', this)" class="quick-brand-chip moyo-chip shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium">삼성</button>
+                <button onclick="toggleQuickBrand('애플', this)" class="quick-brand-chip moyo-chip shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium">애플</button>
+            </div>
+
+            <div class="px-5 py-4 flex justify-between items-center">
+                <h2 class="text-[16px] font-black text-gray-900">맞춤 특가 단말기</h2>
+                <span id="list-count" class="text-[13px] text-gray-500 font-medium">조회중...</span>
+            </div>
+
+            <div class="px-4 space-y-3" id="phone-list">
+                <div class="text-center py-10 text-gray-400 text-sm">실시간 특가 데이터를 불러오는 중입니다...</div>
+            </div>
+        </section>
+
+        <footer class="text-center py-10 text-gray-400 text-xs bg-gray-100 border-t border-gray-200 mt-10">
+            <p class="font-bold mb-1 text-gray-500"> LG U+ 공식 인증 파트너</p>
+            <p class="opacity-80">경기 안산/경인지역 23개 매장 운영</p>
+            <p class="opacity-80 mt-2">© 2026 Ansan Mobile. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <div id="filterModal" class="fixed inset-0 z-[110] hidden bg-black/50 backdrop-blur-sm transition-opacity flex justify-center">
+        <div class="absolute inset-0" onclick="closeFilterSheet()"></div>
+        <div id="filterBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[24px] px-5 pt-6 pb-24 shadow-2xl overflow-y-auto max-h-[85vh]">
+            <div class="flex justify-between items-center mb-6 sticky top-0 bg-white pb-2 z-10">
+                <h3 class="text-[20px] font-black text-gray-900 tracking-tight">상세 조건 찾기</h3>
+                <button onclick="closeFilterSheet()" class="text-gray-400 hover:text-gray-600 p-1">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <div class="space-y-8">
+                <div>
+                    <h4 class="text-[15px] font-bold text-gray-900 mb-3 flex items-center gap-1.5">
+                        <i data-lucide="signal" class="w-4 h-4 text-blue-500"></i> 현재 이용중인 통신사
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="selectCarrierFilter('SKT')" class="carrier-chip moyo-chip active rounded-full px-4 py-2 text-[14px] font-medium">SKT</button>
+                        <button onclick="selectCarrierFilter('KT')" class="carrier-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">KT</button>
+                        <button onclick="selectCarrierFilter('알뜰폰')" class="carrier-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">알뜰폰</button>
+                        <button onclick="selectCarrierFilter('LGU+')" class="carrier-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">LG U+</button>
+                    </div>
+                    <p class="text-[12px] text-gray-500 mt-2 font-medium bg-gray-50 p-2.5 rounded-lg leading-relaxed border border-gray-100">
+                        * 타 통신사 선택 시 <span class="text-pink-600 font-bold">번호이동</span> 혜택이, LG U+ 선택 시 <span class="text-pink-600 font-bold">기기변경</span> 혜택이 자동 계산됩니다.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-[15px] font-bold text-gray-900 mb-3">제조사</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="toggleMultiFilter('brand', '삼성', this)" class="brand-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">삼성</button>
+                        <button onclick="toggleMultiFilter('brand', '애플', this)" class="brand-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">애플</button>
+                        <button onclick="toggleMultiFilter('brand', '기타', this)" class="brand-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">기타</button>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-[15px] font-bold text-gray-900 mb-3">단말기 시리즈</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="toggleMultiFilter('series', '갤럭시 S', this)" class="series-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">갤럭시 S 시리즈</button>
+                        <button onclick="toggleMultiFilter('series', '갤럭시 Z', this)" class="series-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">갤럭시 Z 시리즈</button>
+                        <button onclick="toggleMultiFilter('series', '아이폰 Pro', this)" class="series-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">아이폰 Pro</button>
+                        <button onclick="toggleMultiFilter('series', '가성비', this)" class="series-chip moyo-chip rounded-full px-4 py-2 text-[14px] font-medium">보급/가성비</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl bg-white border-t border-gray-100 p-4 z-[120]">
+                <div class="flex gap-2">
+                    <button onclick="resetFilters()" class="w-1/3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3.5 rounded-xl transition text-[15px]">
+                        초기화
+                    </button>
+                    <button onclick="applyFilters()" class="w-2/3 bg-gray-900 hover:bg-black text-white font-bold py-3.5 rounded-xl transition text-[15px] shadow-lg shadow-gray-300">
+                        <span id="filter-result-count">0</span>개 특가 확인하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="detail-page" class="fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-out flex justify-center">
+        <div class="absolute inset-0 bg-gray-900/20" onclick="closeDetail()"></div>
+        <div class="relative w-full max-w-2xl h-full bg-white flex flex-col overflow-y-auto border-x border-gray-100 shadow-2xl ml-auto">
+            <header class="bg-white sticky top-0 z-40 flex items-center px-2 py-3 border-b border-gray-100">
+                <button onclick="closeDetail()" class="p-3 text-gray-600 hover:bg-gray-50 rounded-full transition-colors">
+                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                </button>
+                <h2 class="text-[16px] font-bold ml-1 text-gray-900" id="detail-header-title">실구매가 계산</h2>
+            </header>
+
+            <div class="px-5 pt-6 pb-40">
+                <div class="flex items-center gap-4 mb-8">
+                    <div id="detail-image-container" class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 overflow-hidden shrink-0 p-1.5">
+                        <i data-lucide="smartphone" class="w-10 h-10 text-gray-300"></i>
+                    </div>
+                    <div>
+                        <h2 id="detail-model-name" class="text-2xl font-black text-gray-900 tracking-tight">모델명</h2>
+                        <p class="text-sm text-gray-500 mt-1">출고가 <span id="detail-retail-price">0</span>원</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div id="section-capacity" class="hidden">
+                        <h3 class="text-[15px] font-bold text-gray-900 mb-3">1. 저장 용량 선택</h3>
+                        <div id="chip-capacities" class="flex flex-wrap gap-2"></div>
+                    </div>
+
+                    <div id="section-discount" class="hidden">
+                        <h3 class="text-[15px] font-bold text-gray-900 mb-3 flex items-center gap-1">
+                            2. 할인 방식 선택
+                        </h3>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <button onclick="selectDiscount('gongsi')" id="btn-disc-gongsi" class="moyo-chip rounded-xl py-3.5 text-center text-[14px]">
+                                공시지원금<br><span class="text-[12px] font-normal opacity-70 mt-0.5 block">기기값 일시불 할인</span>
+                            </button>
+                            <button onclick="selectDiscount('sunyak')" id="btn-disc-sunyak" class="moyo-chip rounded-xl py-3.5 text-center text-[14px]">
+                                선택약정<br><span class="text-[12px] font-normal opacity-70 mt-0.5 block">매월 요금 25% 할인</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="result-board" class="hidden bg-gray-50 border border-gray-100 rounded-2xl p-5 mt-10">
+                    <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
+                        <span class="font-bold text-[15px] text-gray-900">직영점 특별 구매가</span>
+                        <span id="badge-jointype" class="text-[11px] bg-pink-100 px-2 py-1 rounded text-pink-600 font-bold tracking-tight"></span>
+                    </div>
+                    
+                    <div class="space-y-3 text-[14px]">
+                        <div class="flex justify-between text-gray-500">
+                            <span>출고가</span>
+                            <span id="calc-retail">0원</span>
+                        </div>
+                        <div class="flex justify-between text-blue-600 font-medium" id="row-main-discount">
+                            <span id="label-main-discount">공시지원금</span>
+                            <span id="calc-main-discount">0원</span>
+                        </div>
+                        <div class="flex justify-between text-pink-600 font-medium">
+                            <span>직영점 추가 지원금</span>
+                            <span id="calc-special">0원</span>
+                        </div>
+                        <div class="flex justify-between font-black text-gray-900 pt-3 mt-3 border-t border-gray-200 text-[17px]">
+                            <span>최종 기기 실구매가</span>
+                            <span id="calc-principal" class="text-pink-600">0원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bottom-cta" class="absolute bottom-0 left-0 w-full bg-white border-t border-gray-100 p-4 pb-6 flex justify-between items-center z-[60] transform translate-y-full transition-transform duration-300 shadow-[0_-10px_30px_rgba(0,0,0,0.08)]">
+                <div class="pl-1">
+                    <div class="text-[12px] text-gray-500 font-medium mb-0.5 tracking-tight">안산모바일 특가</div>
+                    <div class="text-[20px] font-black text-gray-900 leading-none"><span id="calc-total-monthly">0</span>원</div>
+                </div>
+                <button onclick="openConsultForm('특가모델')" class="bg-uplus-pink hover:bg-pink-700 text-white font-bold py-3.5 px-7 rounded-[14px] text-[15px] transition shadow-md shadow-pink-200 active:scale-95">
+                    상담 신청하기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="formModal" class="fixed inset-0 z-[120] hidden bg-black/50 backdrop-blur-sm transition-opacity flex justify-center">
+        <div class="absolute inset-0" onclick="closeFormModal()"></div>
+        <div id="formBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[24px] px-6 pt-8 pb-10 shadow-2xl">
+            <button onclick="closeFormModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 p-2">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <h3 class="text-[22px] font-black text-gray-900 mb-2 tracking-tight">상담을 위한<br>정보를 남겨주세요</h3>
+            <p class="text-gray-500 text-[14px] mb-6" id="formSubtitle">직영점 전문 상담사가 빠르게 연락드립니다.</p>
+            
+            <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5">이름</label>
+                    <input type="text" id="orderName" required placeholder="홍길동" class="w-full px-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all">
+                </div>
+                <div>
+                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5">연락처</label>
+                    <input type="tel" id="orderPhone" required placeholder="010-0000-0000" class="w-full px-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all">
+                </div>
+                
+                <div>
+                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5">현재 통신사</label>
+                    <select id="orderCarrier" required class="w-full px-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all appearance-none">
+                        <option value="" disabled selected>사용 중인 통신사를 선택해주세요</option>
+                        <option value="SKT">SKT</option>
+                        <option value="KT">KT</option>
+                        <option value="LG U+">LG U+</option>
+                        <option value="알뜰폰">알뜰폰</option>
+                    </select>
+                </div>
+
+                <div class="mt-5 border border-gray-200 rounded-xl p-3.5 bg-white">
+                    <label class="flex items-start gap-2.5 cursor-pointer">
+                        <input type="checkbox" id="privacyConsent" required class="mt-0.5 w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500">
+                        <span class="text-[13px] text-gray-700 font-medium">
+                            <span class="font-bold text-pink-600">[필수]</span> 개인정보 수집 및 이용에 동의합니다.
+                        </span>
+                    </label>
+                    <div class="mt-3 text-[11px] text-gray-500 bg-gray-50 p-2.5 rounded-lg h-16 overflow-y-auto leading-relaxed border border-gray-100">
+                        1. 수집 목적: 휴대폰 구매 상담, 견적 안내 및 개통 처리<br>
+                        2. 수집 항목: 이름, 연락처, 현재 통신사<br>
+                        3. 보유 및 이용기간: <span class="font-bold text-gray-700">상담 완료 후 즉시 파기</span><br>
+                        4. 귀하는 동의를 거부할 권리가 있으나, 거부 시 원활한 상담 안내가 제한될 수 있습니다.
+                    </div>
+                </div>
+                
+                <button type="submit" id="submitBtn" class="w-full bg-uplus-pink hover:bg-pink-700 text-white font-bold py-4 rounded-xl shadow-md mt-2 transition text-[16px]">
+                    무료 견적 및 혜택 신청
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="thankYouModal" class="fixed inset-0 z-[130] hidden flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
+        <div class="bg-white rounded-[24px] w-full max-w-[320px] p-8 text-center shadow-2xl">
+            <div class="w-14 h-14 bg-pink-50 text-pink-500 rounded-full flex items-center justify-center mx-auto mb-5">
+                <i data-lucide="check" class="w-7 h-7"></i>
+            </div>
+            <h3 class="text-[20px] font-black mb-2 text-gray-900 tracking-tight">신청이 접수되었습니다</h3>
+            <p class="text-gray-500 mb-6 text-[14px] leading-relaxed">담당자가 확인 후<br>빠르게 연락드리겠습니다.</p>
+            <button onclick="closeThankYouModal()" class="block w-full bg-gray-900 text-white font-bold py-3.5 rounded-[12px]">확인</button>
+        </div>
+    </div>
+
+    <script>
+        // ★ 파트너님의 구글 앱스 스크립트 웹앱 URL로 교체해주세요.
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwwl6KZd0TDExjpWAxIX_PWvFiSdAoe1uAXSrXvhw3G90ELmZxBgB6ehRt7-f92ax7Z/exec';
+        
+        let mockData = []; 
+
+        // 1. 필터 및 현재 선택 상태 관리 객체
+        let filterState = {
+            carrier: 'SKT', 
+            brand: [],      
+            series: []      
+        };
+
+        let detailState = {
+            model: '',
+            capacity: '',
+            discountType: 'gongsi',
+            formSource: '' 
+        };
+
+        // 오픈채팅 이동
+        function openKakaoChat() {
+            window.open("https://open.kakao.com/o/gY2nLumi", "_blank");
+        }
+
+        function scrollToPhones() {
+            const section = document.getElementById('phone-list-section');
+            window.scrollTo({ top: section.offsetTop - 50, behavior: 'smooth' });
+        }
+
+        // 초기 데이터 로드
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    mockData = data;
+                    applyFilters(); // 초기 로드 시 필터 적용하여 리스트 렌더링
+                })
+                .catch(error => {
+                    console.error('데이터 연동 실패:', error);
+                    document.getElementById('phone-list').innerHTML = '<div class="text-sm text-red-500 py-4 font-bold text-center">데이터를 불러오지 못했습니다. 새로고침 해주세요.</div>';
+                });
+        });
+
+        function formatNum(num) { 
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
+        }
+
+        /* ---------------- 다중 필터링 로직 ---------------- */
+        function openFilterSheet() {
+            document.getElementById('filterModal').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('filterBottomSheet').classList.add('active');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFilterSheet() {
+            document.getElementById('filterBottomSheet').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('filterModal').classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
+        function selectCarrierFilter(carrierName) {
+            filterState.carrier = carrierName;
+            
+            // 바텀시트 UI 업데이트
+            document.querySelectorAll('.carrier-chip').forEach(chip => {
+                if (chip.innerText === carrierName) {
+                    chip.classList.add('active');
+                } else {
+                    chip.classList.remove('active');
+                }
+            });
+            // 실시간 반영을 원한다면 아래 주석 해제
+            // updateFilterCount();
+        }
+
+        function toggleMultiFilter(category, value, element) {
+            const index = filterState[category].indexOf(value);
+            if (index === -1) {
+                filterState[category].push(value);
+                element.classList.add('active');
+            } else {
+                filterState[category].splice(index, 1);
+                element.classList.remove('active');
+            }
+            // updateFilterCount();
+        }
+
+        // 퀵바의 제조사 필터
+        function toggleQuickBrand(brandName, element) {
+            const index = filterState.brand.indexOf(brandName);
+            
+            // 바텀시트의 동일 제조사 칩도 함께 상태 변경해주기 위함
+            const bottomSheetChip = Array.from(document.querySelectorAll('.brand-chip')).find(chip => chip.innerText === brandName);
+
+            if (index === -1) {
+                filterState.brand.push(brandName);
+                element.classList.add('active');
+                if(bottomSheetChip) bottomSheetChip.classList.add('active');
+            } else {
+                filterState.brand.splice(index, 1);
+                element.classList.remove('active');
+                if(bottomSheetChip) bottomSheetChip.classList.remove('active');
+            }
+            applyFilters(); // 퀵바는 누르면 즉시 적용
+        }
+
+        function resetFilters() {
+            filterState.brand = [];
+            filterState.series = [];
+            selectCarrierFilter('SKT'); 
+            
+            document.querySelectorAll('.brand-chip, .series-chip, .quick-brand-chip').forEach(chip => chip.classList.remove('active'));
+            applyFilters();
+        }
+
+        function applyFilters() {
+            let filteredData = mockData;
+
+            if (filterState.brand.length > 0) {
+                filteredData = filteredData.filter(item => filterState.brand.includes(item.brand));
+            }
+            if (filterState.series.length > 0) {
+                filteredData = filteredData.filter(item => filterState.series.includes(item.series));
+            }
+
+            // 모델별 그룹화 (중복 방지)
+            const groupedByModel = {};
+            filteredData.forEach(d => {
+                if(!groupedByModel[d.model]) groupedByModel[d.model] = [];
+                groupedByModel[d.model].push(d);
+            });
+
+            const uniqueModelsCount = Object.keys(groupedByModel).length;
+            
+            const countEl = document.getElementById('filter-result-count');
+            const listCountEl = document.getElementById('list-count');
+            if(countEl) countEl.innerText = uniqueModelsCount;
+            if(listCountEl) listCountEl.innerText = `총 ${uniqueModelsCount}개 상품`;
+
+            const container = document.getElementById('phone-list');
+            container.innerHTML = '';
+            
+            if (uniqueModelsCount === 0) {
+                container.innerHTML = `<div class="py-12 bg-white rounded-2xl border border-gray-100 text-center text-gray-500 font-medium">선택하신 조건에 맞는 기기가 없습니다.<br>다른 조건을 선택해주세요.</div>`;
+                closeFilterSheet();
+                return;
+            }
+
+            const isChange = filterState.carrier === 'LGU+'; 
+
+            Object.keys(groupedByModel).forEach(modelName => {
+                const items = groupedByModel[modelName];
+                const item = items[0]; // 대표 아이템
+                let retailPrice = item.price || 0;
+                
+                let publicSub = isChange ? (item.changepublicsub || 0) : (item.mnppublicsub || 0);
+                let specialSub = isChange ? (item.changesub || 0) : (item.mnpsub || 0);
+                
+                let minPrice = retailPrice - publicSub - specialSub;
+                if (minPrice < 0) minPrice = 0;
+                let totalDiscount = publicSub + specialSub;
+
+                let imageUrl = item.imageurl || item.imageUrl;
+                let imageHtml = imageUrl 
+                    ? `<img src="${imageUrl}" alt="${item.model}" class="w-full h-full object-contain p-1.5">` 
+                    : `<i data-lucide="smartphone" class="w-8 h-8 text-gray-300"></i>`;
+
+                const cardHtml = `
+                    <div onclick="openDetail('${item.model}')" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex gap-4 cursor-pointer hover:border-pink-300 transition-all active:scale-[0.98]">
+                        <div class="w-20 h-20 bg-gray-50 rounded-xl flex items-center justify-center shrink-0 border border-gray-100 overflow-hidden">
+                            ${imageHtml}
+                        </div>
+                        <div class="flex-1">
+                            <span class="inline-block text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md mb-1.5">
+                                ${isChange ? '기기변경' : '번호이동'} 최대 ${formatNum(totalDiscount)}원 혜택
+                            </span>
+                            <h3 class="text-[16px] font-bold text-gray-900 mb-1 leading-tight">${item.model}</h3>
+                            <p class="text-[12px] text-gray-500 mb-2">출고가 ${formatNum(retailPrice)}원</p>
+                            <div class="flex items-end justify-between mt-2 pt-2 border-t border-gray-100">
+                                <span class="text-[11px] font-medium text-gray-500">예상 실구매가</span>
+                                <div class="text-right">
+                                    <span class="text-[18px] font-black text-pink-600">${formatNum(minPrice)}</span><span class="text-[13px] font-bold text-gray-900">원~</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+            
+            lucide.createIcons();
+            closeFilterSheet(); 
+        }
+
+        /* ---------------- 상세 페이지 제어 스크립트 ---------------- */
+        function openDetail(modelName) {
+            detailState.model = modelName;
+            const items = mockData.filter(d => d.model === modelName);
+            if(items.length === 0) return;
+
+            document.getElementById('detail-model-name').innerText = modelName;
+            document.getElementById('detail-retail-price').innerText = formatNum(items[0].price);
+
+            let imageUrl = items[0].imageUrl || items[0].imageurl;
+            let imgContainer = document.getElementById('detail-image-container');
+            if(imageUrl) {
+                imgContainer.innerHTML = `<img src="${imageUrl}" alt="${modelName}" class="w-full h-full object-contain">`;
+            } else {
+                imgContainer.innerHTML = `<i data-lucide="smartphone" class="w-10 h-10 text-gray-300"></i>`;
+                lucide.createIcons();
+            }
+
+            const capacities = [...new Set(items.map(i => i.capacity))].filter(Boolean).sort((a,b) => parseInt(a) - parseInt(b));
+            const capContainer = document.getElementById('chip-capacities');
+            capContainer.innerHTML = '';
+            
+            if(capacities.length > 0) {
+                document.getElementById('section-capacity').classList.remove('hidden');
+                document.getElementById('section-discount').classList.remove('hidden');
+                
+                capacities.forEach(cap => {
+                    const btn = document.createElement('button');
+                    btn.className = 'moyo-chip rounded-xl py-2 px-4 text-[14px] flex-1 text-center font-medium';
+                    btn.innerText = cap;
+                    btn.onclick = () => selectCapacity(cap);
+                    capContainer.appendChild(btn);
+                });
+                detailState.capacity = capacities[0]; 
+            } else {
+                document.getElementById('section-capacity').classList.add('hidden');
+                document.getElementById('section-discount').classList.remove('hidden');
+                detailState.capacity = '';
+            }
+
+            if(capacities.length > 0) selectCapacity(capacities[0]);
+            selectDiscount('gongsi');
+
+            document.getElementById('detail-page').classList.remove('translate-x-full');
+            document.getElementById('result-board').classList.remove('hidden');
+            document.getElementById('bottom-cta').classList.remove('translate-y-full');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeDetail() {
+            document.getElementById('detail-page').classList.add('translate-x-full');
+            document.getElementById('bottom-cta').classList.add('translate-y-full');
+            document.body.style.overflow = '';
+        }
+
+        function selectCapacity(cap) {
+            detailState.capacity = cap;
+            const container = document.getElementById('chip-capacities');
+            Array.from(container.children).forEach(btn => {
+                btn.classList.toggle('active', btn.innerText === cap);
+            });
+            calculateDetailPrice();
+        }
+
+        function selectDiscount(type) {
+            detailState.discountType = type;
+            document.getElementById('btn-disc-gongsi').classList.toggle('active', type === 'gongsi');
+            document.getElementById('btn-disc-sunyak').classList.toggle('active', type === 'sunyak');
+            
+            document.getElementById('label-main-discount').innerText = type === 'gongsi' ? '공시지원금' : '선택약정 할인(요금 25%↓)';
+            calculateDetailPrice();
+        }
+
+        function calculateDetailPrice() {
+            let items = mockData.filter(d => d.model === detailState.model);
+            if(detailState.capacity) {
+                items = items.filter(d => d.capacity === detailState.capacity);
+            }
+            if(items.length === 0) return;
+            
+            const item = items[0];
+            let retail = item.price || 0;
+            let publicSub = 0;
+            let specialSub = 0;
+            
+            const isChange = filterState.carrier === 'LGU+'; 
+
+            if (!isChange) {
+                publicSub = item.mnppublicsub || 0;
+                specialSub = item.mnpsub || 0;
+            } else {
+                publicSub = item.changepublicsub || 0;
+                specialSub = item.changesub || 0;
+            }
+
+            document.getElementById('calc-retail').innerText = formatNum(retail) + '원';
+            document.getElementById('calc-special').innerText = '-' + formatNum(specialSub) + '원';
+
+            let principal = retail;
+
+            if (detailState.discountType === 'gongsi') {
+                document.getElementById('calc-main-discount').innerText = '-' + formatNum(publicSub) + '원';
+                document.getElementById('row-main-discount').classList.remove('hidden');
+                principal = retail - publicSub - specialSub;
+            } else {
+                document.getElementById('calc-main-discount').innerText = '매월 요금 25% 적용됨';
+                principal = retail - specialSub; 
+            }
+
+            if (principal < 0) principal = 0;
+
+            document.getElementById('calc-principal').innerText = formatNum(principal) + '원';
+            document.getElementById('calc-total-monthly').innerText = formatNum(principal);
+            document.getElementById('badge-jointype').innerText = isChange ? '기기 변경' : '통신사 이동';
+        }
+
+        /* ---------------- 상담 폼 및 접수 로직 ---------------- */
+        function openConsultForm(source) {
+            detailState.formSource = source === '특가모델' 
+                ? `[${detailState.model} / ${detailState.capacity}] - ${filterState.carrier === 'LGU+' ? '기기변경' : '번호이동'} (${detailState.discountType === 'gongsi' ? '공시' : '선약'})` 
+                : source;
+            
+            // 폼 열 때 기존 필터의 통신사 자동 선택
+            const carrierSelect = document.getElementById('orderCarrier');
+            for(let i=0; i<carrierSelect.options.length; i++) {
+                if(carrierSelect.options[i].value === filterState.carrier) {
+                    carrierSelect.selectedIndex = i;
+                    break;
+                }
+            }
+
+            document.getElementById('formModal').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('formBottomSheet').classList.add('active');
+            }, 10);
+            
+            if(document.getElementById('detail-page').classList.contains('translate-x-full')){
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeFormModal() {
+            document.getElementById('formBottomSheet').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('formModal').classList.add('hidden');
+            }, 300);
+            if(document.getElementById('detail-page').classList.contains('translate-x-full')) {
+               document.body.style.overflow = '';
+            }
+        }
+
+        function handleOrderSubmit(e) {
+            e.preventDefault();
+            
+            if(!document.getElementById('privacyConsent').checked) {
+                alert('개인정보 수집 및 이용에 동의해주세요.');
+                return;
+            }
+
+            const name = document.getElementById('orderName').value;
+            const phone = document.getElementById('orderPhone').value;
+            const carrier = document.getElementById('orderCarrier').value;
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = '신청을 접수하는 중입니다...';
+            submitBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('이름', name);
+            formData.append('연락처', phone);
+            formData.append('현재통신사', carrier);
+            formData.append('문의경로', detailState.formSource);
+
+            fetch(API_URL, { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(data => {
+                    closeFormModal();
+                    document.getElementById('thankYouModal').classList.remove('hidden');
+                    document.getElementById('orderForm').reset();
+                })
+                .catch(err => {
+                    console.error('Submit Error:', err);
+                    alert('신청 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                })
+                .finally(() => {
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                });
+        }
+
+        function closeThankYouModal() {
+            document.getElementById('thankYouModal').classList.add('hidden');
+            if(document.getElementById('detail-page').classList.contains('translate-x-full')) {
+               document.body.style.overflow = '';
+            }
+        }
+    </script>
+</body>
+</html>
