@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LG U+ (주)안산모바일 - 전국 직영 특가 몰</title>
+    <meta name="description" content="LG U+ 공식 인증 파트너 (주)안산모바일. 안산 및 경인 지역 23개 직영점 연합 특가, 최신 스마트폰 혜택 및 기업특판(B2B) 컨설팅.">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -25,7 +27,9 @@
         .page-section.active { display: block; animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .swiper { width: 100%; height: 260px; }
+        /* 배너 겹침 및 로딩 최적화 */
+        .swiper { width: 100%; height: 260px; border-radius: 24px; }
+        .swiper-slide { overflow: hidden; border-radius: 24px; background-color: #f3f4f6; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
         .swiper-pagination-bullet-active { background-color: #E6007E !important; }
 
@@ -37,16 +41,16 @@
 
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
 
-        /* 배송 조회 트래커 라인 스타일 */
+        /* 배송 조회 라인 */
         .tracker-line { position: absolute; top: 16px; left: 15%; right: 15%; height: 2px; background-color: #F3F4F6; z-index: 0; }
         .tracker-line-active { position: absolute; top: 16px; left: 15%; height: 2px; background-color: #E6007E; z-index: 1; transition: width 0.5s ease; }
     </style>
 </head>
 <body class="antialiased selection:bg-pink-100 relative">
 
-    <header class="bg-white/90 sticky top-0 z-[50] border-b border-gray-100/50 backdrop-blur-md">
+    <header class="bg-white/95 sticky top-0 z-[50] border-b border-gray-100/50 backdrop-blur-md">
         <div class="max-w-2xl mx-auto flex justify-between items-center px-5 py-3.5">
-            <div class="flex items-center gap-1.5">
+            <div class="flex items-center gap-1.5 cursor-pointer" onclick="showPage('home')">
                 <span class="text-lg font-black uplus-pink tracking-tight">LG U+</span>
                 <span class="text-[13px] font-bold text-gray-800 pl-1.5 border-l border-gray-300 mt-0.5">(주)안산모바일</span>
             </div>
@@ -56,14 +60,17 @@
         </div>
     </header>
 
-    <main class="max-w-2xl mx-auto min-h-screen bg-gray-50 shadow-sm pb-24">
+    <main class="max-w-2xl mx-auto min-h-screen bg-gray-50 shadow-sm flex flex-col pb-20">
         
         <section id="page-home" class="page-section active bg-white">
             <div class="px-5 pt-4 pb-2">
-                <div class="swiper mySwiper rounded-[24px] overflow-hidden shadow-sm border border-gray-100">
+                <div class="swiper mySwiper shadow-sm border border-gray-100">
                     <div class="swiper-wrapper" id="banner-wrapper">
-                        <div class="swiper-slide bg-gray-100 flex items-center justify-center">
-                            <p class="text-gray-400 text-sm">배너를 불러오는 중입니다...</p>
+                        <div class="swiper-slide relative">
+                            <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?q=80&w=1200&auto=format&fit=crop" alt="기본 배너">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-7">
+                                <h3 class="text-white text-xl font-black leading-tight">최신 스마트폰 특가<br>정보를 불러오는 중입니다.</h3>
+                            </div>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -84,11 +91,11 @@
                         </div>
                         <span class="text-[12px] font-bold text-gray-700">인터넷가입</span>
                     </div>
-                    <div onclick="openKakaoChat()" class="cursor-pointer group">
-                        <div class="w-14 h-14 mx-auto bg-gray-50 rounded-[20px] flex items-center justify-center mb-2 group-hover:bg-pink-50 transition border border-gray-100">
-                            <i data-lucide="building-2" class="w-6 h-6 text-gray-700"></i>
+                    <div onclick="checkB2BCode()" class="cursor-pointer group">
+                        <div class="w-14 h-14 mx-auto bg-gray-900 rounded-[20px] flex items-center justify-center mb-2 transition border border-gray-800 shadow-md">
+                            <i data-lucide="building-2" class="w-6 h-6 text-yellow-400"></i>
                         </div>
-                        <span class="text-[12px] font-bold text-gray-700">기업특판</span>
+                        <span class="text-[12px] font-bold text-gray-900">기업특판</span>
                     </div>
                     <div onclick="showPage('mypage')" class="cursor-pointer group">
                         <div class="w-14 h-14 mx-auto bg-gray-50 rounded-[20px] flex items-center justify-center mb-2 group-hover:bg-pink-50 transition border border-gray-100">
@@ -102,13 +109,15 @@
             <hr class="border-gray-50 border-4">
 
             <div class="px-5 py-8 bg-white">
-                <h2 class="text-[18px] font-black mb-4">전국 23개 지점 연합 특가</h2>
-                <div class="bg-gray-900 rounded-[24px] p-6 text-white flex justify-between items-center cursor-pointer shadow-xl shadow-gray-200" onclick="openKakaoChat()">
+                <div class="flex justify-between items-end mb-5">
                     <div>
-                        <p class="text-yellow-400 font-bold text-[11px] mb-1">안산/경인 지역 전문가 80인 상시 대기</p>
-                        <p class="font-bold text-[16px]">B2B 기업 임직원 제휴 문의</p>
+                        <span class="text-[11px] font-bold text-pink-600 bg-pink-50 px-2 py-1 rounded mb-1 inline-block">출고가 대비 최대 혜택</span>
+                        <h2 class="text-[18px] font-black leading-tight text-gray-900">이달의 추천 단말기<br>TOP 3</h2>
                     </div>
-                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500"></i>
+                    <button onclick="showPage('mobile')" class="text-[12px] text-gray-400 font-bold bg-gray-50 px-3 py-1.5 rounded-full hover:bg-gray-100">전체보기</button>
+                </div>
+                <div id="home-top3-list" class="space-y-3">
+                    <div class="py-10 text-center text-gray-400 text-sm bg-gray-50 rounded-[20px]">데이터를 불러오는 중입니다...</div>
                 </div>
             </div>
         </section>
@@ -121,9 +130,9 @@
                     </button>
                 </div>
                 
-                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
                     <button onclick="openFilterSheet()" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-300 text-gray-800 text-[13px] font-black bg-white shadow-sm">
-                        <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> 단말기 상세조건
+                        <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> 상세조건
                     </button>
                     <div class="w-[1px] h-4 bg-gray-200 mx-1 shrink-0"></div>
                     <button onclick="toggleQuickBrand('삼성', this)" class="quick-brand-chip moyo-chip shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium">삼성</button>
@@ -138,7 +147,28 @@
             <div class="px-4 pb-10 space-y-3" id="phone-list"></div>
         </section>
 
-        <section id="page-internet" class="page-section px-5 py-8 bg-white min-h-screen">
+        <section id="page-b2b" class="page-section bg-[#1A1C20] min-h-screen text-white">
+            <div class="px-5 py-8">
+                <span class="inline-block bg-yellow-500/20 text-yellow-400 text-[11px] font-bold px-2.5 py-1 rounded-md mb-3 border border-yellow-500/30">
+                    VIP 임직원 전용 라운지
+                </span>
+                <h1 class="text-[24px] font-black leading-snug tracking-tight mb-2">
+                    일반 대리점에는 없는<br>
+                    <span class="text-yellow-400">법인/임직원 특별 지원금</span>
+                </h1>
+                <p class="text-gray-400 text-[13px] mb-8">인증된 임직원에게만 공개되는 비밀 특가입니다.</p>
+                
+                <div class="flex items-center justify-between mb-4 border-b border-gray-800 pb-3">
+                    <h2 class="text-[15px] font-bold text-white tracking-tight">B2B 추천 단말기</h2>
+                    <span class="text-[12px] text-yellow-400 font-bold border border-yellow-400/50 px-2 py-0.5 rounded">최대 혜택순</span>
+                </div>
+                
+                <div class="space-y-3" id="b2b-phone-list">
+                    </div>
+            </div>
+        </section>
+
+        <section id="page-internet" class="page-section px-5 py-8 bg-white flex-1">
             <h2 class="text-[22px] font-black mb-6 leading-tight">인터넷 + TV 결합하고<br><span class="uplus-pink">최대 사은품</span> 받기</h2>
             <div class="space-y-4">
                 <div class="border border-gray-100 bg-gray-50 p-6 rounded-[24px] flex justify-between items-center">
@@ -158,7 +188,7 @@
             </div>
         </section>
 
-        <section id="page-mypage" class="page-section bg-gray-50 min-h-screen">
+        <section id="page-mypage" class="page-section bg-gray-50 flex-1">
             <div id="mypage-login" class="bg-white px-5 py-8 mb-4 border-b border-gray-100 shadow-sm">
                 <h2 class="text-[20px] font-black mb-2 tracking-tight">신청 내역 조회</h2>
                 <p class="text-gray-500 text-[14px] mb-6 font-medium">상담 신청 시 입력한 연락처를 조회합니다.</p>
@@ -174,114 +204,94 @@
                         <span class="text-[12px] bg-pink-50 text-pink-600 font-bold px-2 py-1 rounded-md" id="track-date"></span>
                         <button onclick="resetTracking()" class="text-[12px] text-gray-400 underline underline-offset-2">다시 조회</button>
                     </div>
-                    
-                    <h3 class="text-[16px] font-bold text-gray-900 mb-8" id="track-item">아이폰 17 프로</h3>
-
+                    <h3 class="text-[16px] font-bold text-gray-900 mb-8" id="track-item">모델명</h3>
                     <div class="relative mb-8">
                         <div class="tracker-line"></div>
                         <div class="tracker-line-active" id="tracker-progress" style="width: 0%;"></div>
-                        
                         <div class="flex justify-between relative z-10">
                             <div class="flex flex-col items-center gap-2">
-                                <div id="step-1-icon" class="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-colors">
-                                    <i data-lucide="file-check-2" class="w-4 h-4 text-gray-400"></i>
-                                </div>
+                                <div id="step-1-icon" class="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center"><i data-lucide="file-check-2" class="w-4 h-4 text-gray-400"></i></div>
                                 <span id="step-1-text" class="text-[11px] font-medium text-gray-400">신청완료</span>
                             </div>
                             <div class="flex flex-col items-center gap-2">
-                                <div id="step-2-icon" class="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-colors">
-                                    <i data-lucide="truck" class="w-4 h-4 text-gray-400"></i>
-                                </div>
+                                <div id="step-2-icon" class="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center"><i data-lucide="truck" class="w-4 h-4 text-gray-400"></i></div>
                                 <span id="step-2-text" class="text-[11px] font-medium text-gray-400">배송중</span>
                             </div>
                             <div class="flex flex-col items-center gap-2">
-                                <div id="step-3-icon" class="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-colors">
-                                    <i data-lucide="power" class="w-4 h-4 text-gray-400"></i>
-                                </div>
+                                <div id="step-3-icon" class="w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center"><i data-lucide="power" class="w-4 h-4 text-gray-400"></i></div>
                                 <span id="step-3-text" class="text-[11px] font-medium text-gray-400">개통완료</span>
                             </div>
                         </div>
                     </div>
-
                     <div id="shipping-info" class="hidden bg-gray-50 rounded-[16px] p-4 text-center border border-gray-100">
-                        <p class="text-[11px] text-gray-500 font-bold mb-1" id="track-courier">우체국택배</p>
-                        <p class="text-[16px] font-black text-gray-900 tracking-wider" id="track-invoice">1234-5678-9012</p>
-                        <p class="text-[11px] text-pink-600 mt-2 font-medium">* 기기 수령 후 개통 요청을 진행해 주세요.</p>
+                        <p class="text-[11px] text-gray-500 font-bold mb-1" id="track-courier">택배사</p>
+                        <p class="text-[16px] font-black text-gray-900 tracking-wider" id="track-invoice">송장번호</p>
                     </div>
                 </div>
             </div>
-
-            <div class="px-5 py-2">
-                <h3 class="text-[16px] font-bold mb-4 px-1">직영점 및 지원센터</h3>
-                <ul class="space-y-3">
-                    <li class="bg-white border border-gray-100 rounded-[18px] p-5 flex justify-between items-center cursor-pointer hover:bg-gray-50 shadow-sm transition">
-                        <span class="text-[14px] font-semibold text-gray-700">안산/경인 23개 전 지점 위치 안내</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300"></i>
-                    </li>
-                    <li onclick="openKakaoChat()" class="bg-white border border-gray-100 rounded-[18px] p-5 flex justify-between items-center cursor-pointer hover:bg-gray-50 shadow-sm transition">
-                        <span class="text-[14px] font-semibold text-gray-700">카카오톡 실시간 고객지원</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300"></i>
-                    </li>
-                </ul>
+            
+            <div class="px-5 py-4">
+                <button onclick="openKakaoChat()" class="w-full bg-gray-900 text-white font-bold py-4 rounded-[18px] flex items-center justify-center gap-2 shadow-md">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i> 카카오톡 실시간 상담 문의
+                </button>
             </div>
         </section>
+
+        <footer class="mt-auto bg-gray-100 border-t border-gray-200 px-6 pt-10 pb-12">
+            <div class="mb-8">
+                <h4 class="text-gray-900 font-black text-[18px] mb-3">고객센터 <a href="tel:1111-1111" class="text-uplus-pink">1111-1111</a></h4>
+                <div class="space-y-1">
+                    <p class="text-[13px] text-gray-600"><span class="font-bold w-14 inline-block text-gray-800">평일</span> 오전 10:00 ~ 오후 8:00</p>
+                    <p class="text-[13px] text-gray-600"><span class="font-bold w-14 inline-block text-gray-800">점심</span> 오후 12:00 ~ 오후 1:00</p>
+                    <p class="text-[13px] text-pink-600 font-medium"><span class="font-bold w-14 inline-block">휴무</span> 일요일 및 공휴일 휴무</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 pt-6">
+                <p class="text-[13px] text-gray-800 font-bold mb-3">(주)안산모바일 회사 정보</p>
+                <div class="text-[12px] text-gray-500 space-y-1.5 leading-relaxed">
+                    <p>대표이사 : 김우식 <span class="mx-1 text-gray-300">|</span> 사업자등록번호 : 134-87-24780</p>
+                    <p>통신판매업 신고번호 : 0000-0000-0000</p>
+                    <p>주소 : 경기도 안산시 광덕대로 197</p>
+                </div>
+            </div>
+            <p class="text-[11px] text-gray-400 mt-8 pt-6 border-t border-gray-200 text-center font-medium">
+                © 2026 Ansan Mobile. All rights reserved.
+            </p>
+        </footer>
     </main>
 
     <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl bg-white/95 border-t border-gray-100 flex pb-safe z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)] backdrop-blur-lg">
-        <button onclick="showPage('home')" class="nav-link active flex-1 py-4 flex flex-col items-center gap-1.5" id="nav-home">
-            <i data-lucide="home" class="w-6 h-6"></i>
-            <span class="text-[10px] font-medium">홈</span>
+        <button onclick="showPage('home')" class="nav-link active flex-1 py-3.5 flex flex-col items-center gap-1.5" id="nav-home">
+            <i data-lucide="home" class="w-6 h-6"></i><span class="text-[10px] font-medium">홈</span>
         </button>
-        <button onclick="showPage('mobile')" class="nav-link flex-1 py-4 flex flex-col items-center gap-1.5" id="nav-mobile">
-            <i data-lucide="smartphone" class="w-6 h-6"></i>
-            <span class="text-[10px] font-medium">휴대폰</span>
+        <button onclick="showPage('mobile')" class="nav-link flex-1 py-3.5 flex flex-col items-center gap-1.5" id="nav-mobile">
+            <i data-lucide="smartphone" class="w-6 h-6"></i><span class="text-[10px] font-medium">휴대폰</span>
         </button>
-        <button onclick="showPage('internet')" class="nav-link flex-1 py-4 flex flex-col items-center gap-1.5" id="nav-internet">
-            <i data-lucide="monitor" class="w-6 h-6"></i>
-            <span class="text-[10px] font-medium">인터넷</span>
+        <button onclick="showPage('internet')" class="nav-link flex-1 py-3.5 flex flex-col items-center gap-1.5" id="nav-internet">
+            <i data-lucide="monitor" class="w-6 h-6"></i><span class="text-[10px] font-medium">인터넷</span>
         </button>
-        <button onclick="showPage('mypage')" class="nav-link flex-1 py-4 flex flex-col items-center gap-1.5" id="nav-mypage">
-            <i data-lucide="user" class="w-6 h-6"></i>
-            <span class="text-[10px] font-medium">마이페이지</span>
+        <button onclick="showPage('mypage')" class="nav-link flex-1 py-3.5 flex flex-col items-center gap-1.5" id="nav-mypage">
+            <i data-lucide="user" class="w-6 h-6"></i><span class="text-[10px] font-medium">마이페이지</span>
         </button>
     </nav>
 
-    <div id="carrierModal" class="fixed inset-0 z-[120] hidden bg-black/60 backdrop-blur-sm transition-opacity flex justify-center">
-        <div class="absolute inset-0" onclick="closeCarrierSheet()"></div>
-        <div id="carrierBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[32px] px-6 pt-8 pb-12 shadow-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-[22px] font-black text-gray-900 tracking-tight">현재 이용중인<br>통신사를 알려주세요</h3>
-                <button onclick="closeCarrierSheet()" class="text-gray-400 hover:text-gray-600 p-2 self-start"><i data-lucide="x" class="w-6 h-6"></i></button>
-            </div>
-            <p class="text-[14px] text-gray-500 mb-6">선택하신 통신사에 맞춰 <span class="text-pink-600 font-bold">기기변경/번호이동</span> 특가가 자동 계산됩니다.</p>
-            <div class="grid grid-cols-2 gap-3 mb-6">
-                <button onclick="selectCarrierFilter('SKT')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">SKT</button>
-                <button onclick="selectCarrierFilter('KT')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">KT</button>
-                <button onclick="selectCarrierFilter('알뜰폰')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">알뜰폰</button>
-                <button onclick="selectCarrierFilter('LGU+')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">LG U+</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="detail-page" class="fixed inset-0 z-[100] transform translate-x-full transition-transform duration-300 ease-out flex justify-center no-scrollbar overflow-y-auto">
-        <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm" onclick="closeDetail()"></div>
-        <div class="relative w-full max-w-2xl h-full bg-white flex flex-col border-x border-gray-100 shadow-2xl ml-auto">
-            <header class="bg-white sticky top-0 z-40 flex items-center px-3 py-3 border-b border-gray-50">
-                <button onclick="closeDetail()" class="p-3 text-gray-600 hover:bg-gray-50 rounded-full transition-colors">
-                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
-                </button>
+    <div id="detail-page" class="fixed inset-0 z-[100] transform translate-x-full transition-transform duration-300 ease-out flex justify-end">
+        <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="closeDetail()"></div>
+        <div class="relative w-full max-w-2xl h-full bg-white flex flex-col shadow-2xl overflow-hidden">
+            <header class="shrink-0 bg-white z-40 flex items-center px-3 py-3 border-b border-gray-50 shadow-sm">
+                <button onclick="closeDetail()" class="p-3 text-gray-600 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
                 <h2 class="text-[16px] font-bold ml-1" id="detail-header-title">조건별 구매가</h2>
             </header>
-            <div class="px-6 pt-8 pb-48">
+
+            <div class="flex-1 overflow-y-auto px-6 pt-8 pb-10 no-scrollbar bg-white">
                 <div class="flex items-center gap-5 mb-10">
-                    <div id="detail-image-container" class="w-24 h-24 bg-gray-50 rounded-[24px] flex items-center justify-center border border-gray-100 overflow-hidden shrink-0 p-2">
-                        <i data-lucide="smartphone" class="w-10 h-10 text-gray-200"></i>
-                    </div>
+                    <div id="detail-image-container" class="w-24 h-24 bg-gray-50 rounded-[24px] flex items-center justify-center border border-gray-100 overflow-hidden shrink-0 p-2"></div>
                     <div>
                         <h2 id="detail-model-name" class="text-2xl font-black text-gray-900 leading-tight">모델명</h2>
                         <p class="text-sm text-gray-400 mt-1.5">출고가 <span id="detail-retail-price">0</span>원</p>
                     </div>
                 </div>
+                
                 <div class="space-y-10">
                     <div id="section-capacity" class="hidden">
                         <h3 class="text-[15px] font-bold text-gray-900 mb-4 px-1">1. 저장 용량 선택</h3>
@@ -290,48 +300,48 @@
                     <div id="section-discount" class="hidden">
                         <h3 class="text-[15px] font-bold text-gray-900 mb-4 px-1">2. 할인 방식 선택</h3>
                         <div class="grid grid-cols-2 gap-3">
-                            <button onclick="selectDiscount('gongsi')" id="btn-disc-gongsi" class="moyo-chip rounded-2xl py-4 text-center text-[14px]">
-                                공시지원금<br><span class="text-[11px] opacity-60 mt-0.5 block">기기값 즉시 할인</span>
-                            </button>
-                            <button onclick="selectDiscount('sunyak')" id="btn-disc-sunyak" class="moyo-chip rounded-2xl py-4 text-center text-[14px]">
-                                선택약정<br><span class="text-[11px] opacity-60 mt-0.5 block">매월 요금 25% 할인</span>
-                            </button>
+                            <button onclick="selectDiscount('gongsi')" id="btn-disc-gongsi" class="moyo-chip rounded-2xl py-4 text-center text-[14px]">공시지원금<br><span class="text-[11px] opacity-60 mt-0.5 block">기기값 즉시 할인</span></button>
+                            <button onclick="selectDiscount('sunyak')" id="btn-disc-sunyak" class="moyo-chip rounded-2xl py-4 text-center text-[14px]">선택약정<br><span class="text-[11px] opacity-60 mt-0.5 block">매월 요금 25% 할인</span></button>
                         </div>
                     </div>
                 </div>
+
                 <div id="result-board" class="hidden bg-gray-50 border border-gray-100 rounded-[28px] p-6 mt-12 shadow-sm">
                     <div class="flex justify-between items-center mb-5 pb-5 border-b border-gray-200">
                         <span class="font-bold text-[15px]">최종 구매 혜택</span>
                         <span id="badge-jointype" class="text-[11px] bg-pink-100 px-2.5 py-1 rounded-md text-pink-600 font-bold"></span>
                     </div>
                     <div class="space-y-4 text-[14px]">
-                        <div class="flex justify-between text-gray-400">
-                            <span>출고가</span>
-                            <span id="calc-retail">0원</span>
-                        </div>
-                        <div class="flex justify-between text-blue-600 font-semibold" id="row-main-discount">
-                            <span id="label-main-discount">공시지원금</span>
-                            <span id="calc-main-discount">0원</span>
-                        </div>
-                        <div class="flex justify-between text-pink-600 font-semibold">
-                            <span>직영점 특별 지원금</span>
-                            <span id="calc-special">0원</span>
-                        </div>
-                        <div class="flex justify-between font-black text-gray-900 pt-4 mt-4 border-t border-gray-200 text-[18px]">
-                            <span>최종 실구매가</span>
-                            <span id="calc-principal" class="text-pink-600">0원</span>
-                        </div>
+                        <div class="flex justify-between text-gray-400"><span>출고가</span><span id="calc-retail">0원</span></div>
+                        <div class="flex justify-between text-blue-600 font-semibold" id="row-main-discount"><span id="label-main-discount">공시지원금</span><span id="calc-main-discount">0원</span></div>
+                        <div class="flex justify-between text-pink-600 font-semibold"><span>직영점 추가 혜택</span><span id="calc-special">0원</span></div>
+                        <div class="flex justify-between font-black text-gray-900 pt-4 mt-4 border-t border-gray-200 text-[18px]"><span>최종 실구매가</span><span id="calc-principal" class="text-pink-600">0원</span></div>
                     </div>
                 </div>
             </div>
-            <div id="bottom-cta" class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 p-5 pb-8 flex justify-between items-center z-[60] transform translate-y-full transition-transform duration-300 shadow-[0_-15px_40px_rgba(0,0,0,0.08)]">
+
+            <div id="bottom-cta" class="shrink-0 bg-white border-t border-gray-100 p-5 pb-safe z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.06)] flex justify-between items-center">
                 <div class="pl-1">
-                    <div class="text-[12px] text-gray-400 font-medium mb-1">직영점 특별 혜택가</div>
+                    <div class="text-[12px] text-gray-400 font-medium mb-1">직영점 특별가</div>
                     <div class="text-[22px] font-black text-gray-900 leading-none"><span id="calc-total-monthly">0</span>원</div>
                 </div>
-                <button onclick="openConsultForm('특가모델')" class="bg-uplus-pink hover:bg-pink-700 text-white font-bold py-4 px-8 rounded-2xl text-[16px] transition shadow-lg shadow-pink-200 active:scale-95">
-                    상담 신청하기
-                </button>
+                <button onclick="openConsultForm('특가모델')" class="bg-uplus-pink hover:bg-pink-700 text-white font-bold py-4 px-8 rounded-2xl text-[16px] transition shadow-lg shadow-pink-200 active:scale-95">상담 신청</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="carrierModal" class="fixed inset-0 z-[120] hidden bg-black/60 backdrop-blur-sm transition-opacity flex justify-center">
+        <div class="absolute inset-0" onclick="closeCarrierSheet()"></div>
+        <div id="carrierBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[32px] px-6 pt-8 pb-12 shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-[22px] font-black text-gray-900 tracking-tight">현재 이용중인<br>통신사를 알려주세요</h3>
+                <button onclick="closeCarrierSheet()" class="text-gray-400 hover:text-gray-600 p-2"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <button onclick="selectCarrierFilter('SKT')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">SKT</button>
+                <button onclick="selectCarrierFilter('KT')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">KT</button>
+                <button onclick="selectCarrierFilter('알뜰폰')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">알뜰폰</button>
+                <button onclick="selectCarrierFilter('LGU+')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">LG U+</button>
             </div>
         </div>
     </div>
@@ -340,7 +350,7 @@
         <div class="absolute inset-0" onclick="closeFilterSheet()"></div>
         <div id="filterBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[32px] px-6 pt-8 pb-24 shadow-2xl overflow-y-auto max-h-[85vh]">
             <div class="flex justify-between items-center mb-8 sticky top-0 bg-white pb-2 z-10">
-                <h3 class="text-[20px] font-black text-gray-900">단말기 상세 조건 찾기</h3>
+                <h3 class="text-[20px] font-black text-gray-900">상세 조건 찾기</h3>
                 <button onclick="closeFilterSheet()" class="text-gray-400 hover:text-gray-600 p-2"><i data-lucide="x" class="w-6 h-6"></i></button>
             </div>
             <div class="space-y-10">
@@ -377,19 +387,19 @@
         <div id="formBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[32px] px-6 pt-10 pb-12 shadow-2xl">
             <button onclick="closeFormModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 p-2"><i data-lucide="x" class="w-6 h-6"></i></button>
             <h3 class="text-[22px] font-black text-gray-900 mb-2 leading-tight">상담을 위한 정보를<br>남겨주세요</h3>
-            <p class="text-gray-400 text-[14px] mb-8 font-medium">직영점 전문 상담사가 빠르게 연락드립니다.</p>
+            <p class="text-gray-400 text-[14px] mb-8 font-medium">안산모바일 직영점 담당자가 연락드립니다.</p>
             <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-5">
                 <div>
                     <label class="block text-[13px] font-bold text-gray-700 mb-2 ml-1">이름</label>
-                    <input type="text" id="orderName" required placeholder="성함을 입력해주세요" class="w-full px-5 py-4 rounded-[18px] bg-gray-50 border border-gray-100 text-gray-900 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all">
+                    <input type="text" id="orderName" required placeholder="성함을 입력해주세요" class="w-full px-5 py-4 rounded-[18px] bg-gray-50 border border-gray-100 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all">
                 </div>
                 <div>
                     <label class="block text-[13px] font-bold text-gray-700 mb-2 ml-1">연락처</label>
-                    <input type="tel" id="orderPhone" required placeholder="010-0000-0000" class="w-full px-5 py-4 rounded-[18px] bg-gray-50 border border-gray-100 text-gray-900 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all">
+                    <input type="tel" id="orderPhone" required placeholder="010-0000-0000" class="w-full px-5 py-4 rounded-[18px] bg-gray-50 border border-gray-100 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all">
                 </div>
                 <div>
                     <label class="block text-[13px] font-bold text-gray-700 mb-2 ml-1">현재 통신사</label>
-                    <select id="orderCarrier" required class="w-full px-5 py-4 rounded-[18px] bg-gray-50 border border-gray-100 text-gray-900 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all appearance-none">
+                    <select id="orderCarrier" required class="w-full px-5 py-4 rounded-[18px] bg-gray-50 border border-gray-100 focus:outline-none focus:bg-white focus:border-uplus-pink transition-all appearance-none">
                         <option value="" disabled selected>사용 중인 통신사를 선택해주세요</option>
                         <option value="SKT">SKT</option>
                         <option value="KT">KT</option>
@@ -400,30 +410,26 @@
                 <div class="pt-2">
                     <label class="flex items-start gap-3 cursor-pointer group">
                         <input type="checkbox" id="privacyConsent" required class="mt-1 w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500">
-                        <span class="text-[13px] text-gray-500 font-medium group-hover:text-gray-700 transition">개인정보 수집 및 이용에 동의합니다. <span class="text-pink-600 font-bold">[필수]</span></span>
+                        <span class="text-[13px] text-gray-500 font-medium">개인정보 수집 및 이용에 동의합니다. <span class="text-pink-600 font-bold">[필수]</span></span>
                     </label>
                 </div>
-                <button type="submit" id="submitBtn" class="w-full bg-uplus-pink text-white font-bold py-4.5 rounded-[20px] shadow-lg shadow-pink-100 mt-4 transition active:scale-95">신청 완료</button>
+                <button type="submit" id="submitBtn" class="w-full bg-uplus-pink text-white font-bold py-4.5 rounded-[20px] shadow-lg shadow-pink-100 mt-4 active:scale-95">신청 완료</button>
             </form>
         </div>
     </div>
     
     <div id="thankYouModal" class="fixed inset-0 z-[130] hidden flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
         <div class="bg-white rounded-[32px] w-full max-w-[320px] p-10 text-center shadow-2xl">
-            <div class="w-16 h-16 bg-pink-50 text-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i data-lucide="check" class="w-8 h-8"></i>
-            </div>
+            <div class="w-16 h-16 bg-pink-50 text-pink-500 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="check" class="w-8 h-8"></i></div>
             <h3 class="text-[20px] font-black mb-3">신청이 접수되었습니다</h3>
-            <p class="text-gray-400 mb-8 text-[14px] leading-relaxed">담당자 확인 후<br>빠르게 연락드리겠습니다.</p>
+            <p class="text-gray-400 mb-8 text-[14px] leading-relaxed">접수 확인 후<br>빠르게 연락드리겠습니다.</p>
             <button onclick="closeThankYouModal()" class="block w-full bg-gray-900 text-white font-bold py-4 rounded-[18px]">확인</button>
         </div>
     </div>
 
     <script>
-        // ★ 최신 배포 URL
         const API_URL = 'https://script.google.com/macros/s/AKfycbwwl6KZd0TDExjpWAxIX_PWvFiSdAoe1uAXSrXvhw3G90ELmZxBgB6ehRt7-f92ax7Z/exec';
         
-        // (기존 스크립트 코드 - 배너, 필터, 폼 제출 모두 그대로 유지)
         let mockData = []; 
         let swiper;
         let filterState = { carrier: '', brand: [], series: [] };
@@ -434,15 +440,30 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             lucide.createIcons();
-            swiper = new Swiper(".mySwiper", { pagination: { el: ".swiper-pagination", clickable: true }, autoplay: { delay: 3500, disableOnInteraction: false }, loop: true, effect: "fade" });
+            
+            // 배너 초기화 (겹침방지 effect 추가)
+            swiper = new Swiper(".mySwiper", { 
+                pagination: { el: ".swiper-pagination", clickable: true }, 
+                autoplay: { delay: 3500, disableOnInteraction: false }, 
+                loop: true, 
+                effect: "fade", 
+                fadeEffect: { crossFade: true } 
+            });
 
+            // 데이터 fetch 및 초기 렌더링
             fetch(API_URL)
                 .then(res => res.json())
-                .then(data => { mockData = data.prices; renderBanners(data.banners); applyFilters(); })
+                .then(data => { 
+                    mockData = data.prices; 
+                    renderBanners(data.banners); 
+                    renderTop3();  // 메인화면 Top3 렌더링
+                    renderB2B();   // B2B 렌더링
+                    applyFilters(); 
+                })
                 .catch(err => { console.error('Data error:', err); });
         });
 
-        // (기존 렌더링 함수들 생략 - 이전 답변 코드 사용)
+        /* ★ [개선] 배너 렌더링 (로딩 화면 제거 및 교체) */
         function renderBanners(banners) {
             const wrapper = document.getElementById('banner-wrapper');
             if (!banners || banners.length === 0) return;
@@ -459,6 +480,99 @@
                 wrapper.insertAdjacentHTML('beforeend', slide);
             });
             swiper.update();
+            swiper.slideTo(0);
+        }
+
+        /* ★ [신규] 메인화면 Top 3 특가 로직 */
+        function renderTop3() {
+            const container = document.getElementById('home-top3-list');
+            if(!mockData || mockData.length === 0) return;
+
+            const grouped = {};
+            mockData.forEach(d => { if(!grouped[d.model]) grouped[d.model] = []; grouped[d.model].push(d); });
+
+            const discounts = [];
+            Object.keys(grouped).forEach(model => {
+                const item = grouped[model][0];
+                // 번이/기변 중 가장 높은 할인금액 찾기
+                const maxDisc = Math.max((item.mnppublicsub||0) + (item.mnpsub||0), (item.changepublicsub||0) + (item.changesub||0));
+                discounts.push({ model: model, item: item, discount: maxDisc });
+            });
+
+            // 할인 금액 순으로 정렬 후 3개 추출
+            discounts.sort((a, b) => b.discount - a.discount);
+            const top3 = discounts.slice(0, 3);
+            container.innerHTML = '';
+
+            top3.forEach((data, idx) => {
+                const item = data.item;
+                const minPrice = Math.max(0, item.price - data.discount);
+                const rankColor = idx === 0 ? 'text-pink-600' : 'text-blue-600';
+                
+                const card = `
+                    <div onclick="showPage('mobile')" class="bg-white p-4 rounded-[20px] shadow-sm border border-gray-100 flex gap-4 cursor-pointer hover:border-pink-300 transition-all">
+                        <div class="w-16 h-16 bg-gray-50 rounded-[16px] flex items-center justify-center shrink-0 border border-gray-100 overflow-hidden relative">
+                            <div class="absolute top-0 left-0 bg-gray-900 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-br-lg z-10">${idx+1}</div>
+                            <img src="${item.imageurl}" alt="${data.model}" class="w-full h-full object-contain p-1.5 relative z-0">
+                        </div>
+                        <div class="flex-1 flex flex-col justify-center">
+                            <h3 class="text-[14px] font-bold text-gray-900 mb-1 leading-tight">${data.model}</h3>
+                            <div class="flex items-end justify-between">
+                                <span class="text-[11px] font-medium text-gray-400">최대 할인가</span>
+                                <div><span class="text-[16px] font-black ${rankColor}">${formatNum(minPrice)}</span><span class="text-[12px] font-bold text-gray-900">원~</span></div>
+                            </div>
+                        </div>
+                    </div>`;
+                container.insertAdjacentHTML('beforeend', card);
+            });
+        }
+
+        /* ★ [신규] B2B 기업특판 암호 접근 로직 및 렌더링 */
+        function checkB2BCode() {
+            // 안산뉴스 파트너쉽 등에 사용하실 수 있는 기본 코드 '1019'로 설정 (변경 가능)
+            const code = prompt("기업/임직원 전용 접속 코드를 입력해주세요.\n(기본 테스트 코드: 1019)");
+            if (code === '1019') {
+                showPage('b2b');
+            } else if (code !== null) {
+                alert("접속 코드가 일치하지 않습니다.");
+            }
+        }
+
+        function renderB2B() {
+            const container = document.getElementById('b2b-phone-list');
+            if(!mockData || mockData.length === 0) return;
+
+            const grouped = {};
+            mockData.forEach(d => { if(!grouped[d.model]) grouped[d.model] = []; grouped[d.model].push(d); });
+            container.innerHTML = '';
+
+            // B2B 전용: 번호이동 기준으로 가장 싼 금액에 B2B 전용 추가할인 5만원(예시)을 더 적용해 보여줌
+            Object.keys(grouped).slice(0, 5).forEach(model => {
+                const item = grouped[model][0];
+                const retail = item.price || 0;
+                const pub = item.mnppublicsub || 0;
+                const spc = (item.mnpsub || 0) + 50000; // B2B 시각적 추가 할인
+                const min = Math.max(0, retail - pub - spc);
+
+                const card = `
+                    <div onclick="openConsultForm('[B2B전용] ${model}')" class="bg-[#22252A] p-5 rounded-[20px] shadow-sm border border-gray-700/50 flex gap-4 cursor-pointer active:scale-95 transition-all">
+                        <div class="w-20 h-20 bg-white/5 rounded-[16px] flex items-center justify-center shrink-0 border border-white/10 overflow-hidden">
+                            <img src="${item.imageurl}" alt="${model}" class="w-full h-full object-contain p-2">
+                        </div>
+                        <div class="flex-1">
+                            <span class="inline-block text-[10px] font-bold text-yellow-900 bg-yellow-400 px-2 py-0.5 rounded mb-1.5">임직원 전용 혜택가</span>
+                            <h3 class="text-[15px] font-bold text-white mb-1 leading-tight">${model}</h3>
+                            <p class="text-[11px] text-gray-500 mb-2 line-through">출고가 ${formatNum(retail)}원</p>
+                            <div class="flex items-end justify-between mt-2 pt-2 border-t border-gray-700/50">
+                                <span class="text-[11px] font-medium text-yellow-400/80">기업특판가</span>
+                                <div class="text-right">
+                                    <span class="text-[18px] font-black text-yellow-400">${formatNum(min)}</span><span class="text-[13px] font-bold text-gray-300">원~</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                container.insertAdjacentHTML('beforeend', card);
+            });
         }
 
         function handleBannerClick(url) { if(url.startsWith('#')) showPage(url.replace('#page-', '')); else window.location.href = url; }
@@ -467,7 +581,7 @@
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById('page-' + pageId).classList.add('active');
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            document.getElementById('nav-' + pageId).classList.add('active');
+            if(document.getElementById('nav-' + pageId)) document.getElementById('nav-' + pageId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             if (pageId === 'mobile' && !hasSelectedCarrier) openCarrierSheet();
@@ -477,7 +591,6 @@
 
         function openCarrierSheet() { document.getElementById('carrierModal').classList.remove('hidden'); setTimeout(() => document.getElementById('carrierBottomSheet').classList.add('active'), 10); document.body.style.overflow = 'hidden'; }
         function closeCarrierSheet() { document.getElementById('carrierBottomSheet').classList.remove('active'); setTimeout(() => document.getElementById('carrierModal').classList.add('hidden'), 300); document.body.style.overflow = ''; }
-
         function selectCarrierFilter(c) {
             filterState.carrier = c; hasSelectedCarrier = true;
             document.querySelectorAll('.carrier-chip').forEach(chip => chip.classList.toggle('active', chip.innerText === c));
@@ -488,7 +601,6 @@
 
         function openFilterSheet() { document.getElementById('filterModal').classList.remove('hidden'); setTimeout(() => document.getElementById('filterBottomSheet').classList.add('active'), 10); document.body.style.overflow = 'hidden'; }
         function closeFilterSheet() { document.getElementById('filterBottomSheet').classList.remove('active'); setTimeout(() => document.getElementById('filterModal').classList.add('hidden'), 300); document.body.style.overflow = ''; }
-
         function toggleMultiFilter(cat, val, el) { const idx = filterState[cat].indexOf(val); if (idx === -1) { filterState[cat].push(val); el.classList.add('active'); } else { filterState[cat].splice(idx, 1); el.classList.remove('active'); } }
         function toggleQuickBrand(b, el) { const idx = filterState.brand.indexOf(b); const bottomSheetChip = Array.from(document.querySelectorAll('.brand-chip')).find(chip => chip.innerText === b); if (idx === -1) { filterState.brand.push(b); el.classList.add('active'); if(bottomSheetChip) bottomSheetChip.classList.add('active'); } else { filterState.brand.splice(idx, 1); el.classList.remove('active'); if(bottomSheetChip) bottomSheetChip.classList.remove('active'); } applyFilters(); }
         function resetFilters() { filterState.brand = []; filterState.series = []; document.querySelectorAll('.brand-chip, .series-chip, .quick-brand-chip').forEach(c => c.classList.remove('active')); applyFilters(); }
@@ -502,8 +614,8 @@
             filtered.forEach(d => { if(!grouped[d.model]) grouped[d.model] = []; grouped[d.model].push(d); });
 
             const count = Object.keys(grouped).length;
-            document.getElementById('filter-result-count').innerText = count;
-            document.getElementById('list-count').innerText = `총 ${count}개 상품`;
+            if(document.getElementById('filter-result-count')) document.getElementById('filter-result-count').innerText = count;
+            if(document.getElementById('list-count')) document.getElementById('list-count').innerText = `총 ${count}개 상품`;
 
             const container = document.getElementById('phone-list');
             container.innerHTML = '';
@@ -544,6 +656,7 @@
             lucide.createIcons(); closeFilterSheet();
         }
 
+        /* ★ [개선] 상세 페이지 애니메이션 제어 */
         function openDetail(model) {
             if (!hasSelectedCarrier) { openCarrierSheet(); return; }
             detailState.model = model;
@@ -555,11 +668,18 @@
             const capCon = document.getElementById('chip-capacities'); capCon.innerHTML = '';
             if(caps.length > 0) { document.getElementById('section-capacity').classList.remove('hidden'); caps.forEach(c => { const b = document.createElement('button'); b.className = 'moyo-chip rounded-2xl py-2.5 px-4 text-[14px] flex-1 text-center font-semibold'; b.innerText = c; b.onclick = () => selectCapacity(c); capCon.appendChild(b); }); selectCapacity(caps[0]); }
             document.getElementById('section-discount').classList.remove('hidden'); selectDiscount('gongsi');
-            document.getElementById('detail-page').classList.remove('translate-x-full'); document.getElementById('result-board').classList.remove('hidden'); document.getElementById('bottom-cta').classList.remove('translate-y-full'); document.body.style.overflow = 'hidden';
+            document.getElementById('detail-page').classList.remove('translate-x-full'); 
+            document.getElementById('result-board').classList.remove('hidden'); 
+            document.body.style.overflow = 'hidden';
         }
-        function closeDetail() { document.getElementById('detail-page').classList.add('translate-x-full'); document.getElementById('bottom-cta').classList.add('translate-y-full'); document.body.style.overflow = ''; }
+        function closeDetail() { 
+            document.getElementById('detail-page').classList.add('translate-x-full'); 
+            document.body.style.overflow = ''; 
+        }
+        
         function selectCapacity(c) { detailState.capacity = c; Array.from(document.getElementById('chip-capacities').children).forEach(b => b.classList.toggle('active', b.innerText === c)); calcDetail(); }
         function selectDiscount(t) { detailState.discountType = t; document.getElementById('btn-disc-gongsi').classList.toggle('active', t === 'gongsi'); document.getElementById('btn-disc-sunyak').classList.toggle('active', t === 'sunyak'); document.getElementById('label-main-discount').innerText = t === 'gongsi' ? '공시지원금' : '선택약정(요금할인)'; calcDetail(); }
+        
         function calcDetail() {
             const item = mockData.find(d => d.model === detailState.model && d.capacity === detailState.capacity) || mockData.find(d => d.model === detailState.model);
             const isChange = filterState.carrier === 'LGU+'; const retail = item.price;
@@ -581,90 +701,49 @@
         }
         function closeThankYouModal() { document.getElementById('thankYouModal').classList.add('hidden'); }
 
-        // ★ 마이페이지: 배송/상태 조회 로직
+        /* 마이페이지 상태 조회 로직 */
         function trackOrder() {
             const phoneStr = document.getElementById('track-phone').value.replace(/-/g, '').trim();
             if(!phoneStr) return alert("연락처를 입력해주세요.");
-
-            const btn = document.getElementById('btn-track');
-            btn.innerText = "조회중";
-            btn.disabled = true;
+            const btn = document.getElementById('btn-track'); btn.innerText = "조회중"; btn.disabled = true;
 
             fetch(`${API_URL}?action=track&phone=${phoneStr}`)
             .then(res => res.json())
-            .then(data => {
-                if(data.error) {
-                    alert("일치하는 접수 내역이 없습니다.");
-                } else {
-                    renderTrackingStatus(data);
-                }
-            })
+            .then(data => { if(data.error) alert("일치하는 접수 내역이 없습니다."); else renderTrackingStatus(data); })
             .catch(err => alert("조회 중 오류가 발생했습니다."))
-            .finally(() => {
-                btn.innerText = "조회";
-                btn.disabled = false;
-            });
+            .finally(() => { btn.innerText = "조회"; btn.disabled = false; });
         }
 
         function renderTrackingStatus(data) {
-            document.getElementById('mypage-login').classList.add('hidden');
-            document.getElementById('mypage-result').classList.remove('hidden');
-            
-            // 날짜 포맷
+            document.getElementById('mypage-login').classList.add('hidden'); document.getElementById('mypage-result').classList.remove('hidden');
             const dateObj = new Date(data['접수시간']);
             document.getElementById('track-date').innerText = `${dateObj.getFullYear()}.${String(dateObj.getMonth()+1).padStart(2,'0')}.${String(dateObj.getDate()).padStart(2,'0')} 신청`;
             document.getElementById('track-item').innerText = data['문의경로'];
 
-            const status = data['진행상태'] || '신청완료';
-            const courier = data['택배사'] || '';
-            const invoice = data['송장번호'] || '';
-
-            // 트래커 UI 초기화
+            const status = data['진행상태'] || '신청완료'; const courier = data['택배사'] || ''; const invoice = data['송장번호'] || '';
             const s1Icon = document.getElementById('step-1-icon'); const s1Text = document.getElementById('step-1-text');
             const s2Icon = document.getElementById('step-2-icon'); const s2Text = document.getElementById('step-2-text');
             const s3Icon = document.getElementById('step-3-icon'); const s3Text = document.getElementById('step-3-text');
-            const progress = document.getElementById('tracker-progress');
-            const shipInfo = document.getElementById('shipping-info');
+            const progress = document.getElementById('tracker-progress'); const shipInfo = document.getElementById('shipping-info');
             
-            // 기본 비활성 스타일 세팅
             [s1Icon, s2Icon, s3Icon].forEach(el => { el.className = "w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-colors"; el.firstElementChild.classList.replace('text-white', 'text-gray-400'); });
             [s1Text, s2Text, s3Text].forEach(el => { el.className = "text-[11px] font-medium text-gray-400"; });
             shipInfo.classList.add('hidden');
 
-            // 활성 스타일 함수
-            const activateStep = (iconEl, textEl) => {
-                iconEl.classList.replace('bg-white', 'bg-uplus-pink');
-                iconEl.classList.replace('border-gray-200', 'border-uplus-pink');
-                iconEl.firstElementChild.classList.replace('text-gray-400', 'text-white');
-                textEl.classList.replace('text-gray-400', 'text-gray-900');
-                textEl.classList.add('font-bold');
-            };
+            const activateStep = (iconEl, textEl) => { iconEl.classList.replace('bg-white', 'bg-uplus-pink'); iconEl.classList.replace('border-gray-200', 'border-uplus-pink'); iconEl.firstElementChild.classList.replace('text-gray-400', 'text-white'); textEl.classList.replace('text-gray-400', 'text-gray-900'); textEl.classList.add('font-bold'); };
 
-            // 상태에 따른 프로그레스바 및 아이콘 점등
-            activateStep(s1Icon, s1Text); // 1단계는 무조건 켜짐
-            progress.style.width = "0%";
+            activateStep(s1Icon, s1Text); progress.style.width = "0%";
 
             if (status.includes('배송')) {
-                activateStep(s2Icon, s2Text);
-                progress.style.width = "50%";
-                if(invoice) {
-                    shipInfo.classList.remove('hidden');
-                    document.getElementById('track-courier').innerText = courier;
-                    document.getElementById('track-invoice').innerText = invoice;
-                }
+                activateStep(s2Icon, s2Text); progress.style.width = "50%";
+                if(invoice) { shipInfo.classList.remove('hidden'); document.getElementById('track-courier').innerText = courier; document.getElementById('track-invoice').innerText = invoice; }
             } else if (status.includes('개통')) {
-                activateStep(s2Icon, s2Text);
-                activateStep(s3Icon, s3Text);
-                progress.style.width = "100%";
+                activateStep(s2Icon, s2Text); activateStep(s3Icon, s3Text); progress.style.width = "100%";
             }
             lucide.createIcons();
         }
 
-        function resetTracking() {
-            document.getElementById('mypage-result').classList.add('hidden');
-            document.getElementById('mypage-login').classList.remove('hidden');
-            document.getElementById('track-phone').value = '';
-        }
+        function resetTracking() { document.getElementById('mypage-result').classList.add('hidden'); document.getElementById('mypage-login').classList.remove('hidden'); document.getElementById('track-phone').value = ''; }
     </script>
 </body>
 </html>
