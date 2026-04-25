@@ -27,7 +27,6 @@
         .page-section.active { display: block; animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 배너 겹침 및 로딩 최적화 */
         .swiper { width: 100%; height: 260px; border-radius: 24px; }
         .swiper-slide { overflow: hidden; border-radius: 24px; background-color: #f3f4f6; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
@@ -41,7 +40,6 @@
 
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
 
-        /* 배송 조회 라인 */
         .tracker-line { position: absolute; top: 16px; left: 15%; right: 15%; height: 2px; background-color: #F3F4F6; z-index: 0; }
         .tracker-line-active { position: absolute; top: 16px; left: 15%; height: 2px; background-color: #E6007E; z-index: 1; transition: width 0.5s ease; }
     </style>
@@ -67,9 +65,8 @@
                 <div class="swiper mySwiper shadow-sm border border-gray-100">
                     <div class="swiper-wrapper" id="banner-wrapper">
                         <div class="swiper-slide relative">
-                            <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?q=80&w=1200&auto=format&fit=crop" alt="기본 배너">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-7">
-                                <h3 class="text-white text-xl font-black leading-tight">최신 스마트폰 특가<br>정보를 불러오는 중입니다.</h3>
+                            <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                                <span class="text-gray-400 text-sm font-bold">최신 특가 정보를 불러오는 중입니다...</span>
                             </div>
                         </div>
                     </div>
@@ -108,6 +105,43 @@
             
             <hr class="border-gray-50 border-4">
 
+            <div class="px-5 py-8 bg-white border-t border-gray-100">
+                <h2 class="text-[18px] font-black text-gray-900 mb-4 flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-yellow-500 fill-yellow-500"></i> 이달의 특별 혜택
+                </h2>
+                <div class="grid grid-cols-1 gap-3">
+                    <div onclick="openConsultForm('SIM MNP')" class="bg-blue-50/70 border border-blue-100 rounded-[20px] p-5 flex items-center justify-between cursor-pointer hover:bg-blue-50 transition-colors">
+                        <div>
+                            <span class="text-blue-600 font-bold text-[11px] mb-1 block">유심만 교체해서 그대로!</span>
+                            <h3 class="text-gray-900 font-bold text-[15px]">쓰던 기기 그대로 SIM MNP</h3>
+                        </div>
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
+                            <i data-lucide="sim-card" class="w-5 h-5 text-blue-500"></i>
+                        </div>
+                    </div>
+                    <div onclick="openConsultForm('선불폰 신규 가입')" class="bg-pink-50/70 border border-pink-100 rounded-[20px] p-5 flex items-center justify-between cursor-pointer hover:bg-pink-50 transition-colors">
+                        <div>
+                            <span class="text-pink-600 font-bold text-[11px] mb-1 block">첫 달 요금 무료 지원</span>
+                            <h3 class="text-gray-900 font-bold text-[15px]">선불폰 신규 가입 특별 지원</h3>
+                        </div>
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
+                            <i data-lucide="gift" class="w-5 h-5 text-pink-500"></i>
+                        </div>
+                    </div>
+                    <div onclick="openConsultForm('WIFI + TV 가입')" class="bg-purple-50/70 border border-purple-100 rounded-[20px] p-5 flex items-center justify-between cursor-pointer hover:bg-purple-50 transition-colors">
+                        <div>
+                            <span class="text-purple-600 font-bold text-[11px] mb-1 block">현금 / 사은품 최고 수준</span>
+                            <h3 class="text-gray-900 font-bold text-[15px]">WIFI + TV 가입 시 최대 지원</h3>
+                        </div>
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
+                            <i data-lucide="monitor-play" class="w-5 h-5 text-purple-500"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-gray-50 border-4">
+
             <div class="px-5 py-8 bg-white">
                 <div class="flex justify-between items-end mb-5">
                     <div>
@@ -129,7 +163,6 @@
                         <span id="display-current-carrier" class="text-blue-600">통신사 선택</span> 사용중 <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
                     </button>
                 </div>
-                
                 <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
                     <button onclick="openFilterSheet()" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-300 text-gray-800 text-[13px] font-black bg-white shadow-sm">
                         <i data-lucide="sliders-horizontal" class="w-4 h-4"></i> 상세조건
@@ -139,7 +172,6 @@
                     <button onclick="toggleQuickBrand('애플', this)" class="quick-brand-chip moyo-chip shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium">애플</button>
                 </div>
             </div>
-
             <div class="px-5 py-4 flex justify-between items-center">
                 <h2 class="text-[15px] font-black text-gray-900 tracking-tight">맞춤 특가 단말기</h2>
                 <span id="list-count" class="text-[12px] text-gray-500 font-medium tracking-tighter">상품 조회 중...</span>
@@ -148,6 +180,13 @@
         </section>
 
         <section id="page-b2b" class="page-section bg-[#1A1C20] min-h-screen text-white">
+            <div class="bg-[#1A1C20] px-5 py-4 border-b border-gray-800 sticky top-[53px] z-30 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <button onclick="openCarrierSheet()" class="flex items-center gap-1.5 text-[18px] font-black text-white active:scale-95 transition">
+                        <span id="b2b-display-current-carrier" class="text-yellow-400">통신사 선택</span> 사용중 <i data-lucide="chevron-down" class="w-5 h-5 text-gray-500"></i>
+                    </button>
+                </div>
+            </div>
             <div class="px-5 py-8">
                 <span class="inline-block bg-yellow-500/20 text-yellow-400 text-[11px] font-bold px-2.5 py-1 rounded-md mb-3 border border-yellow-500/30">
                     VIP 임직원 전용 라운지
@@ -157,14 +196,11 @@
                     <span class="text-yellow-400">법인/임직원 특별 지원금</span>
                 </h1>
                 <p class="text-gray-400 text-[13px] mb-8">인증된 임직원에게만 공개되는 비밀 특가입니다.</p>
-                
                 <div class="flex items-center justify-between mb-4 border-b border-gray-800 pb-3">
                     <h2 class="text-[15px] font-bold text-white tracking-tight">B2B 추천 단말기</h2>
                     <span class="text-[12px] text-yellow-400 font-bold border border-yellow-400/50 px-2 py-0.5 rounded">최대 혜택순</span>
                 </div>
-                
-                <div class="space-y-3" id="b2b-phone-list">
-                    </div>
+                <div class="space-y-3" id="b2b-phone-list"></div>
             </div>
         </section>
 
@@ -314,8 +350,37 @@
                     <div class="space-y-4 text-[14px]">
                         <div class="flex justify-between text-gray-400"><span>출고가</span><span id="calc-retail">0원</span></div>
                         <div class="flex justify-between text-blue-600 font-semibold" id="row-main-discount"><span id="label-main-discount">공시지원금</span><span id="calc-main-discount">0원</span></div>
-                        <div class="flex justify-between text-pink-600 font-semibold"><span>직영점 추가 혜택</span><span id="calc-special">0원</span></div>
+                        <div class="flex justify-between text-pink-600 font-semibold"><span>직영점 특별 혜택</span><span id="calc-special">0원</span></div>
                         <div class="flex justify-between font-black text-gray-900 pt-4 mt-4 border-t border-gray-200 text-[18px]"><span>최종 실구매가</span><span id="calc-principal" class="text-pink-600">0원</span></div>
+                    </div>
+                </div>
+
+                <div id="transparent-conditions" class="mt-12 pt-10 border-t border-gray-100">
+                    <div class="mb-6">
+                        <h2 class="text-[17px] font-black mb-2 text-gray-900 tracking-tight">✅ 숨기는 것 없는<br>100% 투명한 가입 조건</h2>
+                        <p class="text-[13px] text-gray-500">불필요한 고가 요금제 장기 유지나 부가서비스 강요가 없습니다.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-gray-50 p-4 rounded-[20px] text-center border border-gray-100">
+                            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="percent" class="w-5 h-5"></i></div>
+                            <h3 class="font-bold text-[13px] mb-1">선택약정 할인</h3>
+                            <p class="text-[11px] text-gray-500 leading-tight">요금의 25%를<br>매월 할인받는 방식</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-[20px] text-center border border-gray-100">
+                            <div class="w-10 h-10 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
+                            <h3 class="font-bold text-[13px] mb-1">85요금제 딱 6개월</h3>
+                            <p class="text-[11px] text-gray-500 leading-tight">85,000원 6개월 유지<br><span class="text-pink-600 font-bold">(선약 적용 월 63,750원)</span></p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-[20px] text-center border border-gray-100">
+                            <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="arrow-down-circle" class="w-5 h-5"></i></div>
+                            <h3 class="font-bold text-[13px] mb-1">요금제 자유변경</h3>
+                            <p class="text-[11px] text-gray-500 leading-tight">6개월 이후 47,000원 이상<br>자유롭게 변경 가능</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-[20px] text-center border border-gray-100">
+                            <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="ban" class="w-5 h-5"></i></div>
+                            <h3 class="font-bold text-[13px] mb-1">부가서비스 無</h3>
+                            <p class="text-[11px] text-gray-500 leading-tight">복잡하고 불필요한<br>부가서비스 가입 0원</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -335,9 +400,9 @@
         <div id="carrierBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[32px] px-6 pt-8 pb-12 shadow-2xl">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-[22px] font-black text-gray-900 tracking-tight">현재 이용중인<br>통신사를 알려주세요</h3>
-                <button onclick="closeCarrierSheet()" class="text-gray-400 hover:text-gray-600 p-2"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <button onclick="closeCarrierSheet()" class="text-gray-400 hover:text-gray-600 p-2 self-start"><i data-lucide="x" class="w-6 h-6"></i></button>
             </div>
-            <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="grid grid-cols-2 gap-3 mb-6">
                 <button onclick="selectCarrierFilter('SKT')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">SKT</button>
                 <button onclick="selectCarrierFilter('KT')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">KT</button>
                 <button onclick="selectCarrierFilter('알뜰폰')" class="carrier-chip moyo-chip rounded-2xl py-4 text-[16px] font-bold">알뜰폰</button>
@@ -345,12 +410,12 @@
             </div>
         </div>
     </div>
-    
+
     <div id="filterModal" class="fixed inset-0 z-[110] hidden bg-black/50 backdrop-blur-sm transition-opacity flex justify-center">
         <div class="absolute inset-0" onclick="closeFilterSheet()"></div>
         <div id="filterBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[32px] px-6 pt-8 pb-24 shadow-2xl overflow-y-auto max-h-[85vh]">
             <div class="flex justify-between items-center mb-8 sticky top-0 bg-white pb-2 z-10">
-                <h3 class="text-[20px] font-black text-gray-900">상세 조건 찾기</h3>
+                <h3 class="text-[20px] font-black text-gray-900">단말기 상세 조건 찾기</h3>
                 <button onclick="closeFilterSheet()" class="text-gray-400 hover:text-gray-600 p-2"><i data-lucide="x" class="w-6 h-6"></i></button>
             </div>
             <div class="space-y-10">
@@ -381,13 +446,13 @@
             </div>
         </div>
     </div>
-    
+
     <div id="formModal" class="fixed inset-0 z-[120] hidden bg-black/60 backdrop-blur-sm flex justify-center">
         <div class="absolute inset-0" onclick="closeFormModal()"></div>
         <div id="formBottomSheet" class="bottom-sheet absolute bottom-0 w-full max-w-2xl bg-white rounded-t-[32px] px-6 pt-10 pb-12 shadow-2xl">
             <button onclick="closeFormModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 p-2"><i data-lucide="x" class="w-6 h-6"></i></button>
             <h3 class="text-[22px] font-black text-gray-900 mb-2 leading-tight">상담을 위한 정보를<br>남겨주세요</h3>
-            <p class="text-gray-400 text-[14px] mb-8 font-medium">안산모바일 직영점 담당자가 연락드립니다.</p>
+            <p class="text-gray-400 text-[14px] mb-8 font-medium">직영점 전문 상담사가 빠르게 연락드립니다.</p>
             <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-5">
                 <div>
                     <label class="block text-[13px] font-bold text-gray-700 mb-2 ml-1">이름</label>
@@ -417,7 +482,7 @@
             </form>
         </div>
     </div>
-    
+
     <div id="thankYouModal" class="fixed inset-0 z-[130] hidden flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
         <div class="bg-white rounded-[32px] w-full max-w-[320px] p-10 text-center shadow-2xl">
             <div class="w-16 h-16 bg-pink-50 text-pink-500 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="check" class="w-8 h-8"></i></div>
@@ -441,7 +506,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             lucide.createIcons();
             
-            // 배너 초기화 (겹침방지 effect 추가)
             swiper = new Swiper(".mySwiper", { 
                 pagination: { el: ".swiper-pagination", clickable: true }, 
                 autoplay: { delay: 3500, disableOnInteraction: false }, 
@@ -450,20 +514,18 @@
                 fadeEffect: { crossFade: true } 
             });
 
-            // 데이터 fetch 및 초기 렌더링
             fetch(API_URL)
                 .then(res => res.json())
                 .then(data => { 
                     mockData = data.prices; 
                     renderBanners(data.banners); 
-                    renderTop3();  // 메인화면 Top3 렌더링
-                    renderB2B();   // B2B 렌더링
+                    renderTop3();  
+                    renderB2B();   
                     applyFilters(); 
                 })
                 .catch(err => { console.error('Data error:', err); });
         });
 
-        /* ★ [개선] 배너 렌더링 (로딩 화면 제거 및 교체) */
         function renderBanners(banners) {
             const wrapper = document.getElementById('banner-wrapper');
             if (!banners || banners.length === 0) return;
@@ -483,7 +545,6 @@
             swiper.slideTo(0);
         }
 
-        /* ★ [신규] 메인화면 Top 3 특가 로직 */
         function renderTop3() {
             const container = document.getElementById('home-top3-list');
             if(!mockData || mockData.length === 0) return;
@@ -494,12 +555,10 @@
             const discounts = [];
             Object.keys(grouped).forEach(model => {
                 const item = grouped[model][0];
-                // 번이/기변 중 가장 높은 할인금액 찾기
                 const maxDisc = Math.max((item.mnppublicsub||0) + (item.mnpsub||0), (item.changepublicsub||0) + (item.changesub||0));
                 discounts.push({ model: model, item: item, discount: maxDisc });
             });
 
-            // 할인 금액 순으로 정렬 후 3개 추출
             discounts.sort((a, b) => b.discount - a.discount);
             const top3 = discounts.slice(0, 3);
             container.innerHTML = '';
@@ -527,15 +586,9 @@
             });
         }
 
-        /* ★ [신규] B2B 기업특판 암호 접근 로직 및 렌더링 */
         function checkB2BCode() {
-            // 안산뉴스 파트너쉽 등에 사용하실 수 있는 기본 코드 '1019'로 설정 (변경 가능)
             const code = prompt("기업/임직원 전용 접속 코드를 입력해주세요.\n(기본 테스트 코드: 1019)");
-            if (code === '1019') {
-                showPage('b2b');
-            } else if (code !== null) {
-                alert("접속 코드가 일치하지 않습니다.");
-            }
+            if (code === '1019') { showPage('b2b'); } else if (code !== null) { alert("접속 코드가 일치하지 않습니다."); }
         }
 
         function renderB2B() {
@@ -546,13 +599,24 @@
             mockData.forEach(d => { if(!grouped[d.model]) grouped[d.model] = []; grouped[d.model].push(d); });
             container.innerHTML = '';
 
-            // B2B 전용: 번호이동 기준으로 가장 싼 금액에 B2B 전용 추가할인 5만원(예시)을 더 적용해 보여줌
-            Object.keys(grouped).slice(0, 5).forEach(model => {
+            const isChange = filterState.carrier === 'LGU+';
+            const hasCarrier = filterState.carrier !== '';
+
+            Object.keys(grouped).forEach(model => {
                 const item = grouped[model][0];
                 const retail = item.price || 0;
-                const pub = item.mnppublicsub || 0;
-                const spc = (item.mnpsub || 0) + 50000; // B2B 시각적 추가 할인
+                
+                let pub = 0, spc = 0;
+                if (hasCarrier) { 
+                    pub = isChange ? (item.changepublicsub || 0) : (item.mnppublicsub || 0); 
+                    // ★ [적용완료] 시트의 b2bsub 데이터를 읽어와서 추가
+                    spc = (isChange ? (item.changesub || 0) : (item.mnpsub || 0)) + (item.b2bsub || 0); 
+                }
                 const min = Math.max(0, retail - pub - spc);
+                const disc = pub + spc;
+
+                const priceDisplayHtml = hasCarrier ? `<span class="text-[18px] font-black text-yellow-400">${formatNum(min)}</span><span class="text-[13px] font-bold text-gray-300">원~</span>` : `<span class="text-[14px] font-bold text-gray-500">통신사 선택 후 확인</span>`;
+                const badgeHtml = hasCarrier ? `<span class="inline-block text-[10px] font-bold text-yellow-900 bg-yellow-400 px-2 py-0.5 rounded mb-1.5">${isChange ? '기변' : '번이'} 최대 ${formatNum(disc)}원 혜택</span>` : `<span class="inline-block text-[10px] font-bold text-gray-400 bg-gray-800 px-2 py-0.5 rounded mb-1.5">통신사 선택 시 맞춤 혜택</span>`;
 
                 const card = `
                     <div onclick="openConsultForm('[B2B전용] ${model}')" class="bg-[#22252A] p-5 rounded-[20px] shadow-sm border border-gray-700/50 flex gap-4 cursor-pointer active:scale-95 transition-all">
@@ -560,19 +624,20 @@
                             <img src="${item.imageurl}" alt="${model}" class="w-full h-full object-contain p-2">
                         </div>
                         <div class="flex-1">
-                            <span class="inline-block text-[10px] font-bold text-yellow-900 bg-yellow-400 px-2 py-0.5 rounded mb-1.5">임직원 전용 혜택가</span>
+                            ${badgeHtml}
                             <h3 class="text-[15px] font-bold text-white mb-1 leading-tight">${model}</h3>
                             <p class="text-[11px] text-gray-500 mb-2 line-through">출고가 ${formatNum(retail)}원</p>
                             <div class="flex items-end justify-between mt-2 pt-2 border-t border-gray-700/50">
                                 <span class="text-[11px] font-medium text-yellow-400/80">기업특판가</span>
                                 <div class="text-right">
-                                    <span class="text-[18px] font-black text-yellow-400">${formatNum(min)}</span><span class="text-[13px] font-bold text-gray-300">원~</span>
+                                    ${priceDisplayHtml}
                                 </div>
                             </div>
                         </div>
                     </div>`;
                 container.insertAdjacentHTML('beforeend', card);
             });
+            lucide.createIcons();
         }
 
         function handleBannerClick(url) { if(url.startsWith('#')) showPage(url.replace('#page-', '')); else window.location.href = url; }
@@ -589,18 +654,21 @@
 
         function formatNum(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
-        function openCarrierSheet() { document.getElementById('carrierModal').classList.remove('hidden'); setTimeout(() => document.getElementById('carrierBottomSheet').classList.add('active'), 10); document.body.style.overflow = 'hidden'; }
-        function closeCarrierSheet() { document.getElementById('carrierBottomSheet').classList.remove('active'); setTimeout(() => document.getElementById('carrierModal').classList.add('hidden'), 300); document.body.style.overflow = ''; }
+        function openCarrierSheet() { document.getElementById('carrierModal').classList.remove('hidden'); setTimeout(() => document.getElementById('carrierBottomSheet').classList.add('active'), 10); }
+        function closeCarrierSheet() { document.getElementById('carrierBottomSheet').classList.remove('active'); setTimeout(() => document.getElementById('carrierModal').classList.add('hidden'), 300); }
+        
         function selectCarrierFilter(c) {
             filterState.carrier = c; hasSelectedCarrier = true;
             document.querySelectorAll('.carrier-chip').forEach(chip => chip.classList.toggle('active', chip.innerText === c));
             const displayEl = document.getElementById('display-current-carrier');
-            displayEl.innerText = c; displayEl.className = c === 'LGU+' ? 'text-pink-600' : 'text-blue-600';
-            closeCarrierSheet(); applyFilters();
+            if(displayEl) { displayEl.innerText = c; displayEl.className = c === 'LGU+' ? 'text-pink-600' : 'text-blue-600'; }
+            const b2bDisplayEl = document.getElementById('b2b-display-current-carrier');
+            if(b2bDisplayEl) b2bDisplayEl.innerText = c;
+            closeCarrierSheet(); applyFilters(); renderB2B();
         }
 
-        function openFilterSheet() { document.getElementById('filterModal').classList.remove('hidden'); setTimeout(() => document.getElementById('filterBottomSheet').classList.add('active'), 10); document.body.style.overflow = 'hidden'; }
-        function closeFilterSheet() { document.getElementById('filterBottomSheet').classList.remove('active'); setTimeout(() => document.getElementById('filterModal').classList.add('hidden'), 300); document.body.style.overflow = ''; }
+        function openFilterSheet() { document.getElementById('filterModal').classList.remove('hidden'); setTimeout(() => document.getElementById('filterBottomSheet').classList.add('active'), 10); }
+        function closeFilterSheet() { document.getElementById('filterBottomSheet').classList.remove('active'); setTimeout(() => document.getElementById('filterModal').classList.add('hidden'), 300); }
         function toggleMultiFilter(cat, val, el) { const idx = filterState[cat].indexOf(val); if (idx === -1) { filterState[cat].push(val); el.classList.add('active'); } else { filterState[cat].splice(idx, 1); el.classList.remove('active'); } }
         function toggleQuickBrand(b, el) { const idx = filterState.brand.indexOf(b); const bottomSheetChip = Array.from(document.querySelectorAll('.brand-chip')).find(chip => chip.innerText === b); if (idx === -1) { filterState.brand.push(b); el.classList.add('active'); if(bottomSheetChip) bottomSheetChip.classList.add('active'); } else { filterState.brand.splice(idx, 1); el.classList.remove('active'); if(bottomSheetChip) bottomSheetChip.classList.remove('active'); } applyFilters(); }
         function resetFilters() { filterState.brand = []; filterState.series = []; document.querySelectorAll('.brand-chip, .series-chip, .quick-brand-chip').forEach(c => c.classList.remove('active')); applyFilters(); }
@@ -656,7 +724,6 @@
             lucide.createIcons(); closeFilterSheet();
         }
 
-        /* ★ [개선] 상세 페이지 애니메이션 제어 */
         function openDetail(model) {
             if (!hasSelectedCarrier) { openCarrierSheet(); return; }
             detailState.model = model;
@@ -668,14 +735,9 @@
             const capCon = document.getElementById('chip-capacities'); capCon.innerHTML = '';
             if(caps.length > 0) { document.getElementById('section-capacity').classList.remove('hidden'); caps.forEach(c => { const b = document.createElement('button'); b.className = 'moyo-chip rounded-2xl py-2.5 px-4 text-[14px] flex-1 text-center font-semibold'; b.innerText = c; b.onclick = () => selectCapacity(c); capCon.appendChild(b); }); selectCapacity(caps[0]); }
             document.getElementById('section-discount').classList.remove('hidden'); selectDiscount('gongsi');
-            document.getElementById('detail-page').classList.remove('translate-x-full'); 
-            document.getElementById('result-board').classList.remove('hidden'); 
-            document.body.style.overflow = 'hidden';
+            document.getElementById('detail-page').classList.remove('translate-x-full'); document.body.style.overflow = 'hidden';
         }
-        function closeDetail() { 
-            document.getElementById('detail-page').classList.add('translate-x-full'); 
-            document.body.style.overflow = ''; 
-        }
+        function closeDetail() { document.getElementById('detail-page').classList.add('translate-x-full'); document.body.style.overflow = ''; }
         
         function selectCapacity(c) { detailState.capacity = c; Array.from(document.getElementById('chip-capacities').children).forEach(b => b.classList.toggle('active', b.innerText === c)); calcDetail(); }
         function selectDiscount(t) { detailState.discountType = t; document.getElementById('btn-disc-gongsi').classList.toggle('active', t === 'gongsi'); document.getElementById('btn-disc-sunyak').classList.toggle('active', t === 'sunyak'); document.getElementById('label-main-discount').innerText = t === 'gongsi' ? '공시지원금' : '선택약정(요금할인)'; calcDetail(); }
@@ -701,7 +763,6 @@
         }
         function closeThankYouModal() { document.getElementById('thankYouModal').classList.add('hidden'); }
 
-        /* 마이페이지 상태 조회 로직 */
         function trackOrder() {
             const phoneStr = document.getElementById('track-phone').value.replace(/-/g, '').trim();
             if(!phoneStr) return alert("연락처를 입력해주세요.");
