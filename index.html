@@ -43,6 +43,18 @@
         .tracker-line { position: absolute; top: 16px; left: 15%; right: 15%; height: 2px; background-color: #F3F4F6; z-index: 0; }
         .tracker-line-active { position: absolute; top: 16px; left: 15%; height: 2px; background-color: #E6007E; z-index: 1; transition: width 0.5s ease; }
     </style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var userAgent = navigator.userAgent.toLowerCase();
+        // 사용자가 카카오톡 브라우저로 접속했는지 확인
+        if (userAgent.indexOf("kakaotalk") > -1) {
+            // 카카오톡 외부 브라우저(크롬, 사파리 등)로 현재 주소를 다시 엽니다.
+            location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(location.href);
+        }
+    });
+</script>
+
 </head>
 <body class="antialiased selection:bg-pink-100 relative">
 
