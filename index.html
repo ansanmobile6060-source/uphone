@@ -13,7 +13,7 @@
         }
     </script>
 
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"></script>
+   <script src="https://t1.kakaocdn.net/kakao_js_sdk/1.43.1/kakao.min.js"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -26,7 +26,6 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* 다크 테마 네비게이션 */
         .nav-link { transition: all 0.3s; color: #6B7280; }
         .nav-link.active { color: #FF2E97; transform: translateY(-2px); font-weight: 800; }
         .nav-link.active i { stroke-width: 2.5px; filter: drop-shadow(0 0 5px rgba(255, 46, 151, 0.5)); }
@@ -43,7 +42,7 @@
         .bottom-sheet { transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); background-color: #1F2937; color: #F3F4F6; }
         .bottom-sheet.active { transform: translateY(0); }
         
-        /* 다크 스켈레톤 */
+        /* 고급스러운 다크 스켈레톤 애니메이션 */
         .skeleton { background: linear-gradient(110deg, #1f2937 8%, #374151 18%, #1f2937 33%); background-size: 200% 100%; animation: shine 1.5s linear infinite; }
         @keyframes shine { to { background-position-x: -200%; } }
         
@@ -55,13 +54,11 @@
         .uplus-pink { color: #FF2E97; }
         .bg-uplus-pink { background-color: #E6007E; }
         
-        /* 다크 셀렉트 박스 커스텀 */
         select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-right: 2.5rem; background-color: #1F2937; border-color: #374151; color: white; }
         
         .btn-touch { transition: all 0.15s ease; }
         .btn-touch:active { transform: scale(0.95); opacity: 0.8; }
 
-        /* 다크 테마 칩 스타일 */
         .moyo-chip { background-color: #1F2937; border: 1px solid #374151; color: #9CA3AF; }
         .moyo-chip.active { background-color: rgba(230, 0, 126, 0.15); border-color: #FF2E97; color: #FF2E97; box-shadow: 0 0 10px rgba(255, 46, 151, 0.2); }
     </style>
@@ -88,12 +85,12 @@
     <main class="max-w-2xl mx-auto min-h-screen flex flex-col pb-24">
         
         <section id="page-home" class="page-section active bg-gray-900">
-            
             <div class="px-5 pt-5 pb-3 flex gap-3 h-[220px]">
                 <div class="w-2/3 h-full">
                     <div class="swiper banner-swiper shadow-xl border border-gray-800 h-full">
                         <div class="swiper-wrapper" id="banner-wrapper">
-                            </div>
+                            <div class="swiper-slide skeleton h-full w-full rounded-2xl"></div>
+                        </div>
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>
@@ -379,7 +376,6 @@
     </div>
 
     <script>
-        // 점장님 구글 앱스 스크립트 API URL 유지
         const API_URL = 'https://script.google.com/macros/s/AKfycbwwl6KZd0TDExjpWAxIX_PWvFiSdAoe1uAXSrXvhw3G90ELmZxBgB6ehRt7-f92ax7Z/exec';
         const SHOW_SKT_KT_PRICE = false; 
 
@@ -397,31 +393,24 @@
         let likedPhones = JSON.parse(localStorage.getItem('ansan_liked_phones')) || [];
         likedPhones = likedPhones.map(p => typeof p === 'string' ? { model: p, savedPrice: 0 } : p);
 
-        // 점장님 발급 카카오 키 연동
         Kakao.init('56be2afd5d2033ccfe4610832e36551f');
 
-        function triggerHaptic() {
-            if (navigator.vibrate) { navigator.vibrate(50); }
-        }
-
+        function triggerHaptic() { if (navigator.vibrate) navigator.vibrate(50); }
         function openKakaoChat() { window.open("https://open.kakao.com/o/gY2nLumi", "_blank"); }
 
         function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
+            const container = document.getElementById('toast-container'); const toast = document.createElement('div');
             let iconHtml = type === 'error' ? '<i data-lucide="alert-circle" class="w-4 h-4 text-red-400"></i>' : (type === 'success' ? '<i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>' : '<i data-lucide="info" class="w-4 h-4 text-blue-400"></i>');
             toast.className = `toast-enter flex items-center gap-2 px-4 py-3 rounded-xl shadow-2xl bg-gray-800 text-white text-[13px] border border-gray-700`;
             toast.innerHTML = `${iconHtml} <span>${message}</span>`;
-            container.appendChild(toast);
-            lucide.createIcons();
+            container.appendChild(toast); lucide.createIcons();
             setTimeout(() => { toast.classList.replace('toast-enter', 'toast-leave'); setTimeout(() => toast.remove(), 300); }, 2500);
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             lucide.createIcons();
             reviewSwiper = new Swiper(".review-swiper", { slidesPerView: 1.2, centeredSlides: true, spaceBetween: 15, pagination: { el: ".swiper-pagination", clickable: true } });
-            startCountdown();
-            loadDataWithCache();
+            startCountdown(); loadDataWithCache();
         });
 
         function startCountdown() {
@@ -435,37 +424,25 @@
             }, 1000);
         }
 
-        function checkB2BAuth() {
-            document.getElementById('b2bAuthModal').classList.remove('hidden');
-            document.getElementById('b2b-password').value = '';
-            setTimeout(() => document.getElementById('b2b-password').focus(), 100);
-        }
+        function checkB2BAuth() { document.getElementById('b2bAuthModal').classList.remove('hidden'); document.getElementById('b2b-password').value = ''; setTimeout(() => document.getElementById('b2b-password').focus(), 100); }
         function closeB2BAuth() { document.getElementById('b2bAuthModal').classList.add('hidden'); }
         function submitB2BAuth() {
-            triggerHaptic();
-            const pwd = document.getElementById('b2b-password').value;
-            if(pwd === '1019') {
-                closeB2BAuth(); showPage('b2b'); showToast('VIP 임직원 인증 완료', 'success');
-            } else { showToast('비밀코드가 일치하지 않습니다.', 'error'); }
+            triggerHaptic(); const pwd = document.getElementById('b2b-password').value;
+            if(pwd === '1019') { closeB2BAuth(); showPage('b2b'); showToast('VIP 임직원 인증 완료', 'success'); } else { showToast('비밀코드가 일치하지 않습니다.', 'error'); }
         }
 
         function toggleQuickCuration(keyword, el) {
-            triggerHaptic();
-            const isActive = el.classList.contains('active');
-            document.querySelectorAll('.quick-curation-chip').forEach(c => c.classList.remove('active')); 
-            filterState.series = []; 
-            if (!isActive) {
-                el.classList.add('active');
-                filterState.series.push(keyword);
-                showToast(`'${keyword}' 필터 적용`, 'success');
-            }
+            triggerHaptic(); const isActive = el.classList.contains('active');
+            document.querySelectorAll('.quick-curation-chip').forEach(c => c.classList.remove('active')); filterState.series = []; 
+            if (!isActive) { el.classList.add('active'); filterState.series.push(keyword); showToast(`'${keyword}' 필터 적용`, 'success'); }
             applyFilters();
         }
 
         function loadDataWithCache() {
             const cached = localStorage.getItem('ansan_data'); const cacheTime = localStorage.getItem('ansan_time'); const now = new Date().getTime();
             if (cached) processData(JSON.parse(cached));
-            if (!cached || !cacheTime || now - parseInt(cacheTime) > 300000) {
+            // 캐시 대기시간 1시간(3600000ms)으로 연장하여 체감 속도 최적화
+            if (!cached || !cacheTime || now - parseInt(cacheTime) > 3600000) {
                 fetch(API_URL).then(res => res.json()).then(data => { localStorage.setItem('ansan_data', JSON.stringify(data)); localStorage.setItem('ansan_time', now.toString()); if (!cached) processData(data); }).catch(err => console.error(err));
             }
         }
@@ -473,19 +450,15 @@
         function processData(data) {
             mockData = data.prices || []; mockData.forEach(d => { if(!d.targetCarrier) d.targetCarrier = 'LG U+'; });
             document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
-            renderBanners(data.banners);
-            renderTop3(); renderB2B(); applyFilters(); renderReviews(data.reviews); 
+            renderBanners(data.banners); renderTop3(); renderB2B(); applyFilters(); renderReviews(data.reviews); 
         }
 
         function renderBanners(banners) {
             const wrapper = document.getElementById('banner-wrapper');
-            if (!banners || banners.length === 0) return;
-            wrapper.innerHTML = '';
+            if (!banners || banners.length === 0) return; wrapper.innerHTML = '';
             banners.forEach(b => {
                 let textOverlay = '';
-                if (b.title || b.subtitle) {
-                    textOverlay = `<div class="absolute inset-0 bg-black/40 flex items-end p-4"><div><p class="text-white text-[11px] font-bold mb-1">${b.subtitle || ''}</p><h3 class="text-white font-black text-[16px] leading-tight">${b.title || ''}</h3></div></div>`;
-                }
+                if (b.title || b.subtitle) textOverlay = `<div class="absolute inset-0 bg-black/40 flex items-end p-4"><div><p class="text-white text-[11px] font-bold mb-1">${b.subtitle || ''}</p><h3 class="text-white font-black text-[16px] leading-tight">${b.title || ''}</h3></div></div>`;
                 const slide = `<div class="swiper-slide relative cursor-pointer h-full bg-black" onclick="handleBannerClick('${b.linkUrl}')"><img src="${b.imageUrl}" class="w-full h-full object-cover">${textOverlay}</div>`;
                 wrapper.insertAdjacentHTML('beforeend', slide);
             });
@@ -496,17 +469,13 @@
         function handleBannerClick(linkUrl) {
             triggerHaptic(); if (!linkUrl) return;
             if (linkUrl.startsWith('mobile:')) {
-                const targetSeries = linkUrl.split(':')[1].trim(); 
-                showPage('mobile');
+                const targetSeries = linkUrl.split(':')[1].trim(); showPage('mobile');
                 setTimeout(() => {
                     filterState.series = [targetSeries];
                     document.querySelectorAll('.quick-curation-chip').forEach(btn => btn.classList.toggle('active', btn.innerText.trim() === targetSeries));
-                    applyFilters();
-                    showToast(`${targetSeries} 특가 리스트`, 'success');
+                    applyFilters(); showToast(`${targetSeries} 특가 리스트`, 'success');
                 }, 100);
-            } 
-            else if (linkUrl === 'internet') { showPage('internet'); } 
-            else if (linkUrl === 'b2b') { checkB2BAuth(); }
+            } else if (linkUrl === 'internet') { showPage('internet'); } else if (linkUrl === 'b2b') { checkB2BAuth(); }
         }
 
         function setPlanOptions(carrier) {
@@ -621,8 +590,13 @@
         function trackOrder() { triggerHaptic(); const p = document.getElementById('track-phone').value.replace(/-/g, '').trim(); if(!p) return showToast("연락처 입력", "error"); document.getElementById('btn-track').innerText = "조회중"; fetch(`${API_URL}?action=track&phone=${p}`).then(res => res.json()).then(data => { if(data.error) showToast("내역 없음", "error"); else { document.getElementById('mypage-login').classList.add('hidden'); document.getElementById('mypage-result').classList.remove('hidden'); document.getElementById('track-item').innerText = data['문의경로']; } }).finally(() => document.getElementById('btn-track').innerText = "조회"); }
         function resetTracking() { document.getElementById('mypage-result').classList.add('hidden'); document.getElementById('mypage-login').classList.remove('hidden'); }
 
+        // 카카오 로그인 (강력한 에러 핸들링 포함)
         function startKakaoLogin() {
             triggerHaptic();
+            if (!Kakao.isInitialized()) {
+                showToast('카카오 SDK 초기화에 실패했습니다.', 'error');
+                return;
+            }
             Kakao.Auth.login({
                 success: function(authObj) {
                     Kakao.API.request({
@@ -639,7 +613,10 @@
                         fail: function(error) { showToast('사용자 정보를 가져오는데 실패했습니다.', 'error'); }
                     });
                 },
-                fail: function(err) { showToast('카카오 로그인 실패', 'error'); }
+                fail: function(err) { 
+                    console.error(err);
+                    showToast('카카오 도메인 설정(Web)을 확인해주세요!', 'error'); 
+                }
             });
         }
         
