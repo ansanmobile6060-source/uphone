@@ -350,7 +350,9 @@
 
     <div id="thankYouModal" class="fixed inset-0 z-[130] hidden flex items-center justify-center bg-black/80 px-4">
         <div class="bg-gray-800 rounded-[24px] w-full max-w-[320px] p-8 text-center border border-gray-700 shadow-2xl">
-            <div class="w-16 h-16 bg-pink-900/20 rounded-full mx-auto mb-4 overflow-hidden border border-pink-900/30"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&q=80" class="w-full h-full object-cover"></div>
+            <div class="w-20 h-20 bg-white rounded-full mx-auto mb-4 overflow-hidden border border-gray-700">
+                <img src="https://i.ibb.co/spmNQtnx/uplus-mall-icon-512.png" class="w-full h-full object-cover">
+            </div>
             <span class="text-[10px] font-bold text-pink-500 bg-pink-900/30 px-2 py-1 rounded-full mb-2 inline-block border border-pink-900/50">1:1 전담 매니저 배정</span>
             <h3 class="text-[18px] font-black mb-2 text-white">접수 완료</h3>
             <p class="text-gray-400 mb-6 text-[13px]">전문 점장이 확인 후 빠르게 연락드리겠습니다.</p>
@@ -362,7 +364,7 @@
         const API_URL = 'https://script.google.com/macros/s/AKfycbwwl6KZd0TDExjpWAxIX_PWvFiSdAoe1uAXSrXvhw3G90ELmZxBgB6ehRt7-f92ax7Z/exec';
         // 카카오 JS 키 설정
         const JS_KEY = '56be2afd5d2033ccfe4610832e36551f';
-        // 🚀 환경에 상관없이 주소를 동적으로 파싱
+        // 환경에 상관없이 주소를 동적으로 파싱
         const REDIRECT_URI = window.location.origin; 
 
         let mockData = []; let bannerSwiper; let reviewSwiper;
@@ -392,7 +394,7 @@
             setTimeout(() => { toast.classList.replace('toast-enter', 'toast-leave'); setTimeout(() => toast.remove(), 300); }, 3000);
         }
 
-        // 🚀 카카오 로그인 리다이렉트 처리 로직
+        // 카카오 로그인 리다이렉트 처리 로직
         window.onload = function() {
             lucide.createIcons();
             const urlParams = new URLSearchParams(window.location.search);
@@ -408,7 +410,6 @@
                 })
                 .then(res => res.json())
                 .then(data => {
-                    // 🚀 에러 발생 시 팝업으로 상세 내용 확인
                     if (data.result === "success") {
                         localStorage.setItem('user_name', data.name);
                         localStorage.setItem('is_logged_in', 'true');
@@ -507,7 +508,6 @@
         function closeB2BAuth() { document.getElementById('b2bAuthModal').classList.add('hidden'); }
         function submitB2BAuth() { triggerHaptic(); if(document.getElementById('b2b-password').value === '1019') { closeB2BAuth(); showPage('b2b'); showToast('VIP 인증 완료', 'success'); } else { showToast('비밀코드가 다릅니다.', 'error'); } }
 
-        // 🚀 B2B에도 일반 리스트와 동일한 할인율(%) 뱃지 적용
         function createPhoneCard(model, item, isB2B, rank = null) {
             const retail = item.price || 0; const isChange = filterState.currentCarrier === filterState.targetCarrier; const hasCarrier = filterState.currentCarrier !== '';
             let pub = isChange ? (item.changepublicsub || 0) : (item.mnppublicsub || 0); let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); if (isB2B) spc += (item.b2bsub || 0);
@@ -554,6 +554,8 @@
         }
         function closeDetail() { document.getElementById('detail-page').classList.add('translate-x-full'); document.body.style.overflow = ''; }
         function selectDiscount(t) { triggerHaptic(); detailState.discountType = t; document.getElementById('btn-disc-gongsi').classList.toggle('active', t === 'gongsi'); document.getElementById('btn-disc-sunyak').classList.toggle('active', t === 'sunyak'); calcDetail(); }
+        
+        // 🚀 [수정] 0원 오류 로직 완벽 해결
         function calcDetail() {
             const item = mockData.find(d => d.model === detailState.model && d.targetCarrier === filterState.targetCarrier); if (!item) return;
             const isChange = filterState.currentCarrier === filterState.targetCarrier; const retail = item.price || 0; 
@@ -561,15 +563,74 @@
             document.getElementById('calc-retail').innerText = formatNum(retail) + '원'; document.getElementById('calc-special').innerText = '-' + formatNum(spc) + '원';
             let princ = retail - spc; if(detailState.discountType === 'gongsi') { document.getElementById('label-main-discount').innerText = '공시지원금'; document.getElementById('calc-main-discount').innerText = '-' + formatNum(pub) + '원'; princ -= pub; } else { document.getElementById('label-main-discount').innerText = '요금할인(25%)'; document.getElementById('calc-main-discount').innerText = '매월 할인'; }
             princ = Math.max(0, princ); document.getElementById('calc-principal').innerText = formatNum(princ) + '원';
+            
             const planPrice = parseInt(document.getElementById('detail-plan-select').value);
-            const monthlyPlan = detailState.discountType === 'sunyak' ? planPrice * 0.75 : planPrice;
-            const total = Math.floor(princ / 24) + monthlyPlan; document.getElementById('calc-total-monthly').innerText = formatNum(total); document.getElementById('bottom-total-monthly').innerText = formatNum(total);
+            const monthlyPlan = detailState.discountType === 'sunyak' ? Math.floor(planPrice * 0.75) : planPrice;
+            const monthlyDevice = Math.floor(princ / 24);
+            const total = monthlyDevice + monthlyPlan; 
+            
+            document.getElementById('calc-monthly-device').innerText = formatNum(monthlyDevice) + '원'; 
+            document.getElementById('calc-monthly-plan').innerText = formatNum(monthlyPlan) + '원';
+            document.getElementById('calc-total-monthly').innerText = formatNum(total); 
+            document.getElementById('bottom-total-monthly').innerText = formatNum(total);
         }
 
         function openConsultForm(src) { triggerHaptic(); detailState.formSource = src; document.getElementById('formModal').classList.remove('hidden'); setTimeout(() => document.getElementById('formBottomSheet').classList.add('active'), 10); }
         function closeFormModal() { document.getElementById('formBottomSheet').classList.remove('active'); setTimeout(() => document.getElementById('formModal').classList.add('hidden'), 300); }
-        function handleOrderSubmit(e) { triggerHaptic(); e.preventDefault(); const fd = new FormData(); fd.append('이름', document.getElementById('orderName').value); fd.append('연락처', document.getElementById('orderPhone').value); fd.append('현재통신사', filterState.currentCarrier); fd.append('문의경로', detailState.formSource); fetch(API_URL, { method: 'POST', body: fd }).then(() => { closeFormModal(); document.getElementById('thankYouModal').classList.remove('hidden'); }); }
+        
+        // 🚀 [수정] 팝업 닫기 함수 추가
         function closeThankYouModal() { document.getElementById('thankYouModal').classList.add('hidden'); }
+
+        // 🚀 [수정] 텔레그램 알림 할부원금 전송 로직 적용
+        function handleOrderSubmit(e) { 
+            triggerHaptic(); 
+            e.preventDefault(); 
+            
+            let detailText = "";
+            if (detailState.formSource === '인터넷맞춤진단') {
+                detailText = `[인터넷 가입]\n- 통신사: ${inetState.carrier === 'LGU' ? 'LG U+' : 'SKT/KT/알뜰폰'}\n- 상품: ${inetState.product === 'NET_TV' ? '인터넷+TV' : '인터넷 단독'}\n- 속도: ${inetState.speed}\n- 요금제: ${inetState.planType}`;
+            } else {
+                let discountStr = detailState.discountType === 'gongsi' ? '공시지원금' : '선택약정';
+                let b2bStr = detailState.isB2B ? '[B2B 기업특판]' : '[휴대폰 특가]';
+                let capStr = detailState.capacity ? detailState.capacity : '기본용량';
+                
+                const item = mockData.find(d => d.model === detailState.model && d.targetCarrier === filterState.targetCarrier);
+                let priceDetails = '';
+                
+                if (item) {
+                    const isChange = filterState.currentCarrier === filterState.targetCarrier;
+                    let pub = isChange ? (item.changepublicsub || 0) : (item.mnppublicsub || 0);
+                    let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0);
+                    if (detailState.isB2B) spc += (item.b2bsub || 0);
+                    
+                    let retail = item.price || 0;
+                    let installmentPrincipal = retail - spc;
+
+                    if (detailState.discountType === 'gongsi') {
+                        installmentPrincipal -= pub;
+                        priceDetails = `\n- 공시지원금: ${formatNum(pub)}원\n- 유통망지원금: ${formatNum(spc)}원`;
+                    } else {
+                        priceDetails = `\n- 유통망지원금: ${formatNum(spc)}원`;
+                    }
+                    
+                    installmentPrincipal = Math.max(0, installmentPrincipal);
+                    priceDetails += `\n- 최종 할부원금: ${formatNum(installmentPrincipal)}원`;
+                }
+
+                detailText = `${b2bStr}\n- 가입통신사: ${filterState.targetCarrier}\n- 모델명: ${detailState.model}\n- 기기용량: ${capStr}\n- 할인방식: ${discountStr}${priceDetails}`;
+            }
+
+            const fd = new FormData(); 
+            fd.append('이름', document.getElementById('orderName').value); 
+            fd.append('연락처', document.getElementById('orderPhone').value); 
+            fd.append('현재통신사', filterState.currentCarrier); 
+            fd.append('문의경로', detailText); 
+
+            fetch(API_URL, { method: 'POST', body: fd }).then(() => { 
+                closeFormModal(); 
+                document.getElementById('thankYouModal').classList.remove('hidden'); 
+            }); 
+        }
         
         function selectInetCarrier(c, el) { triggerHaptic(); inetState.carrier = c; el.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active', 'border-pink-500', 'bg-pink-50', 'text-pink-600')); el.classList.add('active', 'border-pink-500', 'bg-pink-50', 'text-pink-600'); calcInetGift(); }
         function selectInetProduct(p, el) { triggerHaptic(); inetState.product = p; el.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active', 'border-pink-500', 'bg-pink-50', 'text-pink-600')); el.classList.add('active', 'border-pink-500', 'bg-pink-50', 'text-pink-600'); calcInetGift(); }
