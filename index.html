@@ -201,28 +201,32 @@
         <section id="page-mypage" class="page-section bg-gray-900 flex-1 min-h-screen">
             <div id="mypage-unauth" class="bg-gray-800 px-5 py-16 mb-4 text-center rounded-b-[24px] shadow-xl border-b border-gray-700">
                 <div class="w-16 h-16 bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-5 border border-yellow-900/30"><i data-lucide="bell-ring" class="w-8 h-8 text-yellow-500"></i></div>
-                <h2 class="text-[22px] font-black text-white mb-2">특가 알람 받기</h2>
-                <p class="text-[14px] text-gray-400 mb-8">카카오 1초 로그인하고 특별 혜택을 받아보세요.</p>
+                <h2 class="text-[22px] font-black text-white mb-2">특가 알람 및 배송 조회</h2>
+                <p class="text-[14px] text-gray-400 mb-8">카카오 1초 로그인하고 특별 혜택과 배송 상태를 확인하세요.</p>
                 <button onclick="startKakaoLogin()" class="btn-touch w-full bg-[#FEE500] text-black font-black py-4 rounded-[16px] flex items-center justify-center gap-2 text-[15px] shadow-lg">
                     <svg viewBox="0 0 32 32" class="w-5 h-5"><path d="M16 4.64c-6.96 0-12.64 4.48-12.64 10.08 0 3.52 2.32 6.64 5.76 8.48l-1.44 5.44c-.16.56.48.96.96.64l6.24-4.24c.4.08.8.08 1.12.08 6.96 0 12.64-4.48 12.64-10.08S22.96 4.64 16 4.64z"/></svg>카카오 로그인
                 </button>
             </div>
+
             <div id="mypage-auth" class="hidden">
                 <div class="bg-gray-800 px-5 py-6 mb-3 flex items-center justify-between rounded-b-[24px] shadow-xl border-b border-gray-700">
                     <div class="flex items-center gap-3"><div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center border border-gray-600"><i data-lucide="user" class="w-6 h-6 text-gray-300"></i></div><div><p class="text-[10px] text-yellow-500 font-black bg-yellow-900/30 px-1.5 py-0.5 rounded mb-1 inline-block border border-yellow-900/50">VIP 회원</p><h2 class="text-[16px] font-black text-white" id="mypage-user-name">고객님</h2></div></div>
-                    <button onclick="startKakaoLogout()" class="text-[11px] text-gray-400 bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-600">로그아웃</button>
+                    <button onclick="startKakaoLogout()" class="text-[11px] text-gray-400 bg-gray-700 px-3 py-1.5 rounded-lg border border-gray-600 btn-touch">로그아웃</button>
                 </div>
-                <div class="bg-black/50 rounded-[20px] p-6 mx-5 mb-4 text-white relative overflow-hidden shadow-2xl border border-gray-800 text-center">
-                    <p class="text-gray-400 text-[11px] mb-2 font-bold">VIP 프리패스 바코드</p>
-                    <div class="bg-white/5 rounded-xl p-3 border border-white/5 text-[14px] font-mono tracking-widest text-gray-300">8231-4019-****</div>
+                
+                <div class="bg-gray-900 px-5 py-8 mb-4 border-y border-gray-800">
+                    <h2 class="text-[18px] font-black text-white mb-5 flex items-center gap-1.5"><i data-lucide="package" class="w-5 h-5 text-blue-400"></i> 나의 진행사항 조회</h2>
+                    <div id="mypage-tracking-box" class="bg-gray-800 rounded-2xl p-5 border border-gray-700 relative overflow-hidden shadow-lg">
+                        </div>
                 </div>
+
                 <div class="bg-gray-900 px-5 py-8 mb-4 border-y border-gray-800"><h2 class="text-[18px] font-black text-white mb-5 flex items-center gap-1.5"><i data-lucide="heart" class="w-5 h-5 text-pink-500"></i> 내가 찜한 단말기</h2><div id="mypage-liked-list" class="space-y-3"></div></div>
             </div>
         </section>
 
         <footer class="mt-auto bg-black/50 border-t border-gray-800 px-6 pt-10 pb-12 rounded-t-[24px]">
             <h4 class="text-white font-black text-[18px] mb-3">고객센터 <a href="tel:1866-1665" class="text-pink-500">1866-1665</a></h4>
-            <p class="text-[12px] text-gray-500 leading-relaxed mb-6">평일 10:00 ~ 20:00 / 점심시간 : 12:00 ~ 13:00 / 공휴일 휴무</p>
+            <p class="text-[12px] text-gray-500 leading-relaxed mb-6">평일 10:00 ~ 20:00 / 점심시간 12:00 ~ 13:00 / 공휴일 휴무</p>
             <div class="border-t border-gray-800 pt-6">
                 <p class="text-[13px] text-gray-300 font-bold mb-1">(주)안산모바일</p>
                 <p class="text-[11px] text-gray-500">대표 : 김우식 | 사업자번호 : 134-87-24780<br>주소 : 경기도 안산시 광덕대로 197</p>
@@ -357,21 +361,14 @@
     </div>
 
     <div id="thankYouModal" class="fixed inset-0 z-[130] hidden flex items-center justify-center bg-black/80 px-4">
-        <div class="bg-gray-800 rounded-[24px] w-full max-w-[320px] p-8 text-center border border-gray-700 shadow-2xl">
-            <div class="w-20 h-20 bg-white rounded-full mx-auto mb-4 overflow-hidden border border-gray-700 p-2">
-                <img src="https://i.ibb.co/spmNQtnx/uplus-mall-icon-512.png" class="w-full h-full object-contain">
+        <div id="thankYouModalContent" class="bg-gray-800 rounded-[24px] w-full max-w-[320px] p-8 text-center border border-gray-700 shadow-2xl">
             </div>
-            <span class="text-[10px] font-bold text-pink-500 bg-pink-900/30 px-2 py-1 rounded-full mb-2 inline-block border border-pink-900/50">1:1 전담 매니저 배정</span>
-            <h3 class="text-[18px] font-black mb-2 text-white">접수 완료</h3>
-            <p class="text-gray-400 mb-6 text-[13px]">전문 점장이 확인 후 빠르게 연락드리겠습니다.</p>
-            <button onclick="closeThankYouModal()" class="btn-touch w-full bg-white text-black font-bold py-3.5 rounded-xl">확인</button>
-        </div>
     </div>
 
     <script>
         // 프리미어 슈퍼(115000) 요금제 선택 시 기기값 추가지원금
-        const EXTRA_DISCOUNT_115_MNP = 40000;    // 통신사 이동 추가 할인금액
-        const EXTRA_DISCOUNT_115_CHANGE = 50000; // 기기변경 추가 할인금액
+        const EXTRA_DISCOUNT_115_MNP = 40000;    
+        const EXTRA_DISCOUNT_115_CHANGE = 50000; 
 
         const API_URL = 'https://script.google.com/macros/s/AKfycbwwl6KZd0TDExjpWAxIX_PWvFiSdAoe1uAXSrXvhw3G90ELmZxBgB6ehRt7-f92ax7Z/exec';
         const JS_KEY = '56be2afd5d2033ccfe4610832e36551f';
@@ -447,6 +444,7 @@
                 document.getElementById('mypage-unauth').classList.add('hidden');
                 document.getElementById('mypage-auth').classList.remove('hidden');
                 if(document.getElementById('mypage-user-name')) document.getElementById('mypage-user-name').innerText = userName + " 고객님";
+                checkTracking(); // 로그인 상태면 배송 조회 자동 실행
             }
         }
 
@@ -513,7 +511,7 @@
             if(document.getElementById('nav-' + pageId)) document.getElementById('nav-' + pageId).classList.add('active'); 
             window.scrollTo(0, 0); 
             if (pageId === 'mobile' && !hasSelectedCarrier) openCarrierSheet(); 
-            if (pageId === 'mypage') renderLikedPhones(); 
+            if (pageId === 'mypage') { renderLikedPhones(); checkTracking(); } 
             
             if (!isPopState) history.pushState({page: pageId}, null, "#" + pageId);
         }
@@ -637,6 +635,8 @@
             triggerHaptic(); 
             e.preventDefault(); 
             
+            const phoneInput = document.getElementById('orderPhone').value.replace(/-/g, '').trim();
+            
             let detailText = "";
             if (detailState.formSource === '인터넷맞춤진단') {
                 detailText = `[인터넷 가입]\n- 통신사: ${inetState.carrier === 'LGU' ? 'LG U+' : 'SKT/KT/알뜰폰'}\n- 상품: ${inetState.product === 'NET_TV' ? '인터넷+TV' : '인터넷 단독'}\n- 속도: ${inetState.speed}\n- 요금제: ${inetState.planType}`;
@@ -688,14 +688,130 @@
             fd.append('문의경로', detailText); 
 
             fetch(API_URL, { method: 'POST', body: fd }).then(() => { 
+                localStorage.setItem('ansan_my_phone', phoneInput); // 🚀 고객 연락처 저장 (배송조회용)
                 history.replaceState({modal: 'thankYou'}, null, "#thankYou");
                 document.getElementById('formBottomSheet').classList.remove('active'); 
                 document.getElementById('formModal').classList.add('hidden'); 
-                document.getElementById('thankYouModal').classList.remove('hidden'); 
+                showThankYouModal(); // 🚀 동적 팝업 렌더링 함수 호출
             }); 
         }
 
+        // 🚀 [추가됨] 완료 팝업 동적 렌더링 (로그인 유도 & 배송조회 안내)
+        function showThankYouModal() {
+            const isLoggedIn = localStorage.getItem('is_logged_in') === 'true';
+            const modalContent = document.getElementById('thankYouModalContent');
+            
+            if (isLoggedIn) {
+                modalContent.innerHTML = `
+                    <div class="w-20 h-20 bg-white rounded-full mx-auto mb-4 overflow-hidden border border-gray-700 p-2">
+                        <img src="https://i.ibb.co/spmNQtnx/uplus-mall-icon-512.png" class="w-full h-full object-contain">
+                    </div>
+                    <span class="text-[10px] font-bold text-pink-500 bg-pink-900/30 px-2 py-1 rounded-full mb-2 inline-block border border-pink-900/50">1:1 전담 매니저 배정</span>
+                    <h3 class="text-[18px] font-black mb-2 text-white">접수 완료</h3>
+                    <p class="text-gray-400 mb-6 text-[13px] leading-relaxed">마이페이지에서 배송 및 진행상태를<br>실시간으로 확인하실 수 있습니다.</p>
+                    <div class="flex gap-2">
+                        <button onclick="closeThankYouModal(); showPage('mypage');" class="btn-touch flex-1 bg-pink-600 text-white font-bold py-3.5 rounded-xl">조회하기</button>
+                        <button onclick="closeThankYouModal()" class="btn-touch flex-1 bg-gray-700 text-gray-300 font-bold py-3.5 rounded-xl">닫기</button>
+                    </div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <div class="w-20 h-20 bg-white rounded-full mx-auto mb-4 overflow-hidden border border-gray-700 p-2">
+                        <img src="https://i.ibb.co/spmNQtnx/uplus-mall-icon-512.png" class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-[18px] font-black mb-2 text-white">상담 신청 완료!</h3>
+                    <p class="text-gray-300 mb-6 text-[13px] leading-relaxed">
+                        상담 및 배송 진행사항을 확인하시려면<br>
+                        <span class="text-pink-500 font-bold">카카오 채널 추가 및 로그인</span>을 진행해주세요!
+                    </p>
+                    <div class="space-y-2">
+                        <button onclick="startKakaoLogin()" class="btn-touch w-full bg-[#FEE500] text-black font-black py-3.5 rounded-xl flex items-center justify-center gap-1.5"><svg viewBox="0 0 32 32" class="w-4 h-4"><path d="M16 4.64c-6.96 0-12.64 4.48-12.64 10.08 0 3.52 2.32 6.64 5.76 8.48l-1.44 5.44c-.16.56.48.96.96.64l6.24-4.24c.4.08.8.08 1.12.08 6.96 0 12.64-4.48 12.64-10.08S22.96 4.64 16 4.64z"/></svg> 카카오 1초 로그인 (채널추가)</button>
+                        <button onclick="closeThankYouModal()" class="btn-touch w-full bg-gray-700 text-gray-300 font-bold py-3.5 rounded-xl">다음에 하기</button>
+                    </div>
+                `;
+            }
+            document.getElementById('thankYouModal').classList.remove('hidden');
+        }
+
         function closeThankYouModal() { history.back(); }
+        
+        // 🚀 [추가됨] 마이페이지 주문/배송 조회 스크립트
+        function checkTracking() {
+            const phone = localStorage.getItem('ansan_my_phone');
+            const trackingBox = document.getElementById('mypage-tracking-box');
+            if(!trackingBox) return;
+
+            if(!phone) {
+                trackingBox.innerHTML = `
+                    <p class="text-gray-400 text-[13px] text-center mb-4">접수하신 연락처로 내역을 조회합니다.</p>
+                    <div class="flex gap-2">
+                        <input type="tel" id="track-phone-input" placeholder="010-0000-0000" class="flex-1 bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-[14px] text-white outline-none focus:border-pink-500 transition-colors">
+                        <button onclick="manualTrack()" class="bg-pink-600 text-white font-bold px-5 rounded-xl text-[14px] btn-touch shadow-lg">조회</button>
+                    </div>
+                `;
+                return;
+            }
+
+            trackingBox.innerHTML = `<div class="text-center py-6"><i data-lucide="loader-2" class="w-6 h-6 text-pink-500 animate-spin mx-auto mb-2"></i><p class="text-[12px] text-gray-400">실시간 조회 중...</p></div>`;
+            lucide.createIcons();
+
+            fetch(API_URL + '?action=track&phone=' + encodeURIComponent(phone))
+            .then(r => r.json())
+            .then(data => {
+                if(data.error) {
+                    trackingBox.innerHTML = `
+                        <p class="text-gray-400 text-[13px] text-center py-4 mb-3">진행 중인 상담/주문 내역이 없습니다.</p>
+                        <div class="flex gap-2 border-t border-gray-700 pt-4">
+                            <input type="tel" id="track-phone-input" value="${phone}" class="flex-1 bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-[14px] text-white outline-none">
+                            <button onclick="manualTrack()" class="bg-gray-700 text-white font-bold px-4 rounded-xl text-[13px] btn-touch">다시조회</button>
+                        </div>
+                    `;
+                } else {
+                    let statusColor = data.진행상태 === '신청완료' ? 'text-blue-400' : 'text-pink-500';
+                    let trackingHtml = '';
+                    if(data.송장번호) {
+                        trackingHtml = `
+                            <div class="mt-4 pt-4 border-t border-gray-700 bg-gray-900/50 p-4 rounded-xl">
+                                <p class="text-[11px] text-gray-500 mb-1 flex items-center gap-1"><i data-lucide="truck" class="w-3.5 h-3.5"></i> 택배 배송 정보</p>
+                                <p class="text-[15px] text-white font-bold">${data.택배사} <span class="text-pink-400 ml-1 tracking-wider">${data.송장번호}</span></p>
+                            </div>
+                        `;
+                    }
+                    
+                    let pathText = data.문의경로 || '';
+                    pathText = pathText.replace(/\n/g, '<br>');
+
+                    trackingBox.innerHTML = `
+                        <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-700">
+                            <span class="bg-gray-900 border border-gray-700 text-gray-400 text-[11px] px-2 py-1 rounded font-bold">${data.접수시간 ? data.접수시간.substring(0, 10) : ''}</span>
+                            <span class="font-black text-[16px] ${statusColor} flex items-center gap-1"><span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-current"></span></span> ${data.진행상태}</span>
+                        </div>
+                        <div class="text-gray-300 text-[13px] font-medium leading-relaxed bg-gray-900 p-4 rounded-xl border border-gray-700">
+                            ${pathText}
+                        </div>
+                        ${trackingHtml}
+                        <div class="mt-4 text-right">
+                            <button onclick="resetTrackingPhone()" class="text-[11px] text-gray-500 underline">다른 번호로 조회하기</button>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                }
+            }).catch(e => {
+                trackingBox.innerHTML = `<p class="text-red-400 text-[13px] text-center py-4">조회에 실패했습니다.</p>`;
+            });
+        }
+
+        function manualTrack() {
+            const p = document.getElementById('track-phone-input').value.replace(/-/g, '').trim();
+            if(!p) return;
+            localStorage.setItem('ansan_my_phone', p);
+            checkTracking();
+        }
+        
+        function resetTrackingPhone() {
+            localStorage.removeItem('ansan_my_phone');
+            checkTracking();
+        }
         
         function selectInetCarrier(c, el) { triggerHaptic(); inetState.carrier = c; el.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active', 'border-pink-500', 'bg-pink-50', 'text-pink-600')); el.classList.add('active', 'border-pink-500', 'bg-pink-50', 'text-pink-600'); calcInetGift(); }
         function selectInetProduct(p, el) { triggerHaptic(); inetState.product = p; el.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active', 'border-pink-500', 'bg-pink-50', 'text-pink-600')); el.classList.add('active', 'border-pink-500', 'bg-pink-50', 'text-pink-600'); calcInetGift(); }
