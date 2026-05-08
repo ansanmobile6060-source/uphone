@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta name="naver-site-verification" content="6bf2139809adc1210c67a82c8948a1006a499ba8" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#111827">
-    <title>U+특가몰 - (주)안산모바일</title>
+    <title>(주)안산모바일 - U+특가몰 | 안산 1등 휴대폰/인터넷 가입</title>
+    <meta name="description" content="안산모바일 VIP 특가몰! 최신 스마트폰, 인터넷 가입, 기업특판 B2B 전용 라운지. 프리미어 슈퍼 요금제 특별 혜택 및 당일 배송/설치 지원.">
     
     <script>
         var userAgent = navigator.userAgent.toLowerCase();
@@ -14,7 +16,6 @@
     </script>
 
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -25,36 +26,27 @@
         body { font-family: 'Pretendard', sans-serif; overflow-x: hidden; background-color: #111827; color: #F3F4F6; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
         .nav-link { transition: all 0.3s; color: #6B7280; }
         .nav-link.active { color: #FF2E97; transform: translateY(-2px); font-weight: 800; }
         .nav-link.active i { stroke-width: 2.5px; filter: drop-shadow(0 0 5px rgba(255, 46, 151, 0.5)); }
-        
         .page-section { display: none; }
         .page-section.active { display: block; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
         .swiper { width: 100%; border-radius: 20px; }
         .banner-swiper { height: 220px; }
         .swiper-pagination-bullet { background: #4B5563 !important; opacity: 1; }
         .swiper-pagination-bullet-active { background-color: #FF2E97 !important; width: 20px; border-radius: 10px; }
-        
         .bottom-sheet { transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); background-color: #1F2937; color: #F3F4F6; border-top: 1px solid #374151; }
         .bottom-sheet.active { transform: translateY(0); }
-        
         .skeleton { background: linear-gradient(110deg, #1f2937 8%, #374151 18%, #1f2937 33%); background-size: 200% 100%; animation: shine 1.5s linear infinite; }
         @keyframes shine { to { background-position-x: -200%; } }
-        
         .toast-enter { animation: toastIn 0.3s forwards; }
         .toast-leave { animation: toastOut 0.3s forwards; }
         @keyframes toastIn { from { opacity:0; transform:translateY(100%); } to { opacity:1; transform:translateY(0); } }
         @keyframes toastOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(20px); } }
-
         .moyo-chip { background-color: #1F2937; border: 1px solid #374151; color: #9CA3AF; transition: all 0.2s; }
         .moyo-chip.active { background-color: rgba(230, 0, 126, 0.15); border-color: #FF2E97; color: #FF2E97; box-shadow: 0 0 10px rgba(255, 46, 151, 0.2); }
-        
         select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-right: 2.5rem; background-color: #1F2937; border-color: #374151; color: white; border-radius: 12px; }
-        
         .btn-touch { transition: all 0.15s ease; cursor: pointer; }
         .btn-touch:active { transform: scale(0.95); opacity: 0.8; }
     </style>
@@ -164,7 +156,7 @@
                 <button onclick="openCarrierSheet()" class="btn-touch flex items-center gap-1 text-[16px] font-black text-white bg-gray-800 px-3 py-1.5 rounded-xl border border-yellow-900/50"><span id="b2b-display-target-carrier" class="text-yellow-500">LG U+</span> 개통 <i data-lucide="settings-2" class="w-4 h-4 text-gray-500"></i></button>
             </div>
             <div class="px-5 py-8 bg-gradient-to-b from-gray-900 to-gray-950 rounded-b-[32px] shadow-2xl mb-4 border-b border-yellow-900/20">
-                <span class="inline-block bg-yellow-950/50 text-yellow-500 text-[11px] font-bold px-2.5 py-1 rounded mb-3 border border-yellow-900/50">VIP 임직원 전용 라운지</span>
+                <span id="b2b-company-name" class="inline-block bg-yellow-950/50 text-yellow-500 text-[11px] font-bold px-2.5 py-1 rounded mb-3 border border-yellow-900/50">VIP 임직원 전용 라운지</span>
                 <h1 class="text-[24px] font-black text-white leading-snug mb-3">일반 대리점에는 없는<br><span class="text-yellow-500">법인 특별 지원금</span></h1>
                 <p class="text-gray-500 text-[14px] mb-8">인증된 임직원에게만 공개되는 시크릿 특가입니다.</p>
                 <div class="space-y-4" id="b2b-phone-list"></div>
@@ -306,12 +298,23 @@
                 <div class="flex items-center gap-5 mb-10"><div id="detail-image-container" class="w-24 h-24 bg-gray-800 rounded-2xl flex items-center justify-center border border-gray-700 p-2"></div><div><h2 id="detail-model-name" class="text-[22px] font-black text-white leading-tight">모델명</h2><p class="text-[14px] text-gray-500 mt-1">출고가 <span id="detail-retail-price">0</span>원</p></div></div>
                 <div class="space-y-8">
                     <div id="section-discount"><h3 class="text-[15px] font-bold text-gray-400 mb-3">1. 할인 방식</h3><div class="grid grid-cols-2 gap-2"><button onclick="selectDiscount('gongsi')" id="btn-disc-gongsi" class="btn-touch moyo-chip rounded-xl py-3 text-center text-[14px] font-bold">공시지원금</button><button onclick="selectDiscount('sunyak')" id="btn-disc-sunyak" class="btn-touch moyo-chip rounded-xl py-3 text-center text-[14px] font-bold">선택약정</button></div></div>
-                    <div id="section-plan"><h3 class="text-[15px] font-bold text-gray-400 mb-3 flex flex-wrap items-center gap-1.5">2. 개통 요금제 <span class="text-[11px] text-pink-500 font-bold">(프리미어 슈퍼 사용 시 추가할인)</span></h3><select id="detail-plan-select" onchange="calcDetail();" class="w-full p-4 outline-none"></select></div>
+                    <div id="section-plan">
+                        <h3 class="text-[15px] font-bold text-gray-400 mb-3 flex flex-wrap items-center gap-1.5">2. 개통 요금제 <span class="text-[11px] text-pink-500 font-bold">(프리미어 슈퍼 사용 시 추가할인)</span></h3>
+                        <select id="detail-plan-select" onchange="calcDetail();" class="w-full p-4 outline-none"></select>
+                    </div>
                 </div>
                 <div id="result-board" class="hidden bg-gray-800 border border-gray-700 rounded-2xl p-6 mt-10">
                     <div class="flex justify-between items-center mb-5 pb-5 border-b border-gray-700"><span class="font-bold text-[15px] text-white">최종 혜택 명세</span><span id="badge-jointype" class="text-[11px] bg-pink-900/30 text-pink-500 font-bold px-2 py-1 rounded border border-pink-900/50">할인 적용가</span></div>
-                    <div class="space-y-3 text-[14px]"><div class="flex justify-between text-gray-500"><span>출고가</span><span id="calc-retail">0원</span></div><div class="flex justify-between text-blue-400 font-semibold" id="row-main-discount"><span id="label-main-discount">공시지원금</span><span id="calc-main-discount">0원</span></div><div class="flex justify-between text-pink-500 font-semibold"><span>추가지원금</span><span id="calc-special">0원</span></div><div class="flex justify-between font-black text-white pt-4 mt-2 border-t border-gray-700 text-[18px]"><span>기기 구매가격</span><span id="calc-principal" class="text-pink-500">0원</span></div></div>
-                    <div class="mt-5 pt-5 border-t border-gray-700 space-y-3 text-[14px] bg-gray-900/50 -mx-6 -mb-6 p-6 rounded-b-2xl"><div class="flex justify-between text-gray-500"><span>월 기기 할부금 <span class="text-[10px]">(24개월)</span></span><span id="calc-monthly-device" class="font-bold text-gray-300">0원</span></div><div class="flex justify-between text-gray-500"><span>월 통신 요금</span><span id="calc-monthly-plan" class="font-bold text-gray-300">0원</span></div><div class="flex justify-between items-center pt-2"><span class="font-black text-[16px] text-white">예상 월 납부액</span><div class="text-right"><span id="calc-total-monthly" class="font-black text-[24px] text-pink-500">0</span><span class="text-[13px] font-bold ml-1 text-gray-400">원/월</span></div></div>
+                    <div class="space-y-3 text-[14px]">
+                        <div class="flex justify-between text-gray-500"><span>출고가</span><span id="calc-retail">0원</span></div>
+                        <div class="flex justify-between text-blue-400 font-semibold" id="row-main-discount"><span id="label-main-discount">공시지원금</span><span id="calc-main-discount">0원</span></div>
+                        <div class="flex justify-between text-pink-500 font-semibold"><span>추가지원금</span><span id="calc-special">0원</span></div>
+                        <div class="flex justify-between font-black text-white pt-4 mt-2 border-t border-gray-700 text-[18px]"><span>기기 구매가격</span><span id="calc-principal" class="text-pink-500">0원</span></div>
+                    </div>
+                    <div class="mt-5 pt-5 border-t border-gray-700 space-y-3 text-[14px] bg-gray-900/50 -mx-6 -mb-6 p-6 rounded-b-2xl">
+                        <div class="flex justify-between text-gray-500"><span>월 기기 할부금 <span class="text-[10px]">(24개월)</span></span><span id="calc-monthly-device" class="font-bold text-gray-300">0원</span></div>
+                        <div class="flex justify-between text-gray-500"><span>월 통신 요금</span><span id="calc-monthly-plan" class="font-bold text-gray-300">0원</span></div>
+                        <div class="flex justify-between items-center pt-2"><span class="font-black text-[16px] text-white">예상 월 납부액</span><div class="text-right"><span id="calc-total-monthly" class="font-black text-[24px] text-pink-500">0</span><span class="text-[13px] font-bold ml-1 text-gray-400">원/월</span></div></div>
                         <div id="premium-benefit-box" class="hidden mt-4 pt-4 border-t border-gray-800 text-center animate-pulse"><span class="inline-block bg-pink-900/30 border border-pink-900/50 text-pink-500 text-[11px] font-black px-2.5 py-1 rounded mb-2">슈퍼 요금제 특별 혜택</span><p class="text-[13px] font-bold text-gray-200">🎁 워치8, 탭A11+ <span class="text-pink-400">기기값, 이용료 무료 혜택!</span></p></div>
                     </div>
                 </div>
@@ -361,7 +364,6 @@
 
         function triggerHaptic() { if (navigator.vibrate) navigator.vibrate(50); }
         function openKakaoChat() { window.open("http://pf.kakao.com/_iVyhX/chat", "_blank"); }
-        // 🚀 채널 추가 및 채팅 기능
         function chatKakaoChannel() { Kakao.Channel.chat({ channelPublicId: '_iVyhX' }); }
         function addKakaoChannel() { Kakao.Channel.addChannel({ channelPublicId: '_iVyhX' }); }
 
@@ -465,16 +467,22 @@
         
         function checkB2BAuth() { document.getElementById('b2bAuthModal').classList.remove('hidden'); document.getElementById('b2b-password').value = ''; setTimeout(() => document.getElementById('b2b-password').focus(), 100); history.pushState({modal: 'b2bAuth'}, null, "#b2bAuth"); }
         function closeB2BAuth() { history.back(); }
+        
         function submitB2BAuth() { 
             triggerHaptic(); 
             const codeInput = document.getElementById('b2b-password').value.trim();
-            if(codeInput === '1019' || codeInput === '311202') { 
-                detailState.b2bCode = codeInput;
-                history.replaceState({page: 'b2b'}, null, "#b2b");
-                document.getElementById('b2bAuthModal').classList.add('hidden');
-                showPage('b2b', true); 
-                showToast('VIP 인증 완료', 'success'); 
-            } else { showToast('비밀코드가 다릅니다.', 'error'); } 
+            let companyName = "";
+            if(codeInput === '1019') { companyName = "안산모바일 제휴사"; } 
+            else if (codeInput === '311202') { companyName = "안산소식"; } 
+            else { showToast('비밀코드가 다릅니다.', 'error'); return; }
+
+            detailState.b2bCode = codeInput;
+            document.getElementById('b2b-company-name').innerText = companyName + " 전용 특가 라운지";
+
+            history.replaceState({page: 'b2b'}, null, "#b2b");
+            document.getElementById('b2bAuthModal').classList.add('hidden');
+            showPage('b2b', true); 
+            showToast(companyName + ' 인증 완료', 'success'); 
         }
 
         function createPhoneCard(model, item, isB2B, rank = null) {
@@ -552,14 +560,12 @@
         function openConsultForm(src) { triggerHaptic(); detailState.formSource = src; document.getElementById('formModal').classList.remove('hidden'); setTimeout(() => document.getElementById('formBottomSheet').classList.add('active'), 10); history.pushState({modal: 'form'}, null, "#form"); }
         function closeFormModal() { history.back(); }
 
-        // 🚀 접수 시 로딩버튼 + 접수경로 분류 전송
         function handleOrderSubmit(e) { 
             triggerHaptic(); e.preventDefault(); 
             
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            submitBtn.disabled = true; submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             submitBtn.innerHTML = '<div class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> 접수 처리 중...</div>';
             lucide.createIcons();
 
@@ -623,7 +629,6 @@
             });
         }
 
-        // 🚀 단 하나의 완벽한 카카오 채널 추가 팝업 동적 렌더링
         function showThankYouModal() {
             const isLoggedIn = localStorage.getItem('is_logged_in') === 'true';
             const modalContent = document.getElementById('thankYouModalContent');
