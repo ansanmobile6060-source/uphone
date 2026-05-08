@@ -8,14 +8,13 @@
     <title>안산모바일 - 안산 휴대폰 성지, 인터넷 가입, 기업특판 U+특가몰</title>
     
     <meta name="description" content="안산모바일 특가몰, 안산 휴대폰 성지, 인터넷 당일 가입,프리미어 슈퍼 요금제 특별 혜택 및 당일 배송/설치.">
-    
     <meta name="keywords" content="안산모바일, 안모, 안산 휴대폰 성지, 안산 핸드폰 싼곳, 안산 인터넷 가입, 안산 LG유플러스, 스마트폰 특가, 법인폰, 기업특판">
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="안산모바일 - 안산 휴대폰 성지 U+특가몰">
-<meta property="og:description" content="VIP 임직원 특판, 인터넷 가입, 프리미어 슈퍼 요금제 특별 혜택 안내. 안산 1등 모바일 특가몰!">
-<meta property="og:url" content="https://uphonemobile.co.kr/">
-<meta property="og:image" content="https://i.ibb.co/spmNQtnx/uplus-mall-icon-512.png">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="안산모바일 - 안산 휴대폰 성지 U+특가몰">
+    <meta property="og:description" content="VIP 임직원 특판, 인터넷 가입, 프리미어 슈퍼 요금제 특별 혜택 안내. 안산 1등 모바일 특가몰!">
+    <meta property="og:url" content="https://uphonemobile.co.kr/">
+    <meta property="og:image" content="https://i.ibb.co/spmNQtnx/uplus-mall-icon-512.png">
     
     <script>
         var userAgent = navigator.userAgent.toLowerCase();
@@ -245,7 +244,7 @@
             <div class="w-14 h-14 bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-yellow-900/30"><i data-lucide="lock" class="w-6 h-6 text-yellow-500"></i></div>
             <h3 class="text-[18px] font-black mb-2 text-white">기업특판 라운지 입장</h3>
             <p class="text-gray-400 mb-6 text-[13px]">제휴사 전용 비밀코드를 입력해주세요.</p>
-            <input type="password" id="b2b-password" placeholder="비밀코드" class="w-full px-4 py-3.5 bg-gray-900 border border-gray-700 rounded-xl mb-6 text-center text-white font-bold text-[15px] focus:border-yellow-500 focus:outline-none">
+            <input type="password" id="b2b-password" placeholder="비밀코드 (예:1019, 311202)" class="w-full px-4 py-3.5 bg-gray-900 border border-gray-700 rounded-xl mb-6 text-center text-white font-bold text-[15px] focus:border-yellow-500 focus:outline-none">
             <div class="flex gap-2">
                 <button onclick="closeB2BAuth()" class="btn-touch flex-1 bg-gray-700 text-gray-300 font-bold py-3.5 rounded-xl">취소</button>
                 <button onclick="submitB2BAuth()" class="btn-touch flex-1 bg-yellow-600 text-black font-bold py-3.5 rounded-xl">확인</button>
@@ -340,7 +339,10 @@
                 <div><input type="text" id="orderName" required placeholder="성함" class="w-full p-4 bg-gray-900 border border-gray-700 rounded-xl text-[14px] text-white outline-none focus:border-pink-500"></div>
                 <div><input type="tel" id="orderPhone" required placeholder="연락처 (010-0000-0000)" class="w-full p-4 bg-gray-900 border border-gray-700 rounded-xl text-[14px] text-white outline-none focus:border-pink-500"></div>
                 <div class="pt-2"><label class="flex items-start gap-2"><input type="checkbox" required class="mt-1"><span class="text-[12px] text-gray-500">개인정보 수집 동의 [필수]</span></label></div>
-                <button type="submit" id="submitBtn" class="btn-touch w-full bg-pink-600 text-white font-bold py-4 rounded-xl text-[15px] shadow-lg shadow-pink-900/20">접수하기</button>
+                <button type="submit" id="submitBtn" class="btn-touch w-full bg-[#FEE500] text-black font-black py-4 rounded-xl text-[15px] shadow-lg flex items-center justify-center gap-2">
+                    <svg viewBox="0 0 32 32" class="w-5 h-5"><path d="M16 4.64c-6.96 0-12.64 4.48-12.64 10.08 0 3.52 2.32 6.64 5.76 8.48l-1.44 5.44c-.16.56.48.96.96.64l6.24-4.24c.4.08.8.08 1.12.08 6.96 0 12.64-4.48 12.64-10.08S22.96 4.64 16 4.64z"/></svg>
+                    <span id="submitBtnText">카카오 1초 로그인으로 접수하기</span>
+                </button>
             </form>
         </div>
     </div>
@@ -390,6 +392,7 @@
             history.replaceState({page: 'home'}, null, "#home");
             const urlParams = new URLSearchParams(window.location.search);
             const code = urlParams.get('code');
+            
             if (code) {
                 showToast("안전하게 로그인 처리 중입니다...", "info");
                 window.history.replaceState({page: 'home'}, document.title, "/#home"); 
@@ -397,7 +400,17 @@
                 .then(res => res.json()).then(data => {
                     if (data.result === "success") {
                         localStorage.setItem('user_name', data.name); localStorage.setItem('is_logged_in', 'true');
-                        checkLoginStatus(); showToast(data.name + "님 환영합니다!", "success");
+                        checkLoginStatus(); 
+
+                        const pendingOrderStr = localStorage.getItem('ansan_pending_order');
+                        if (pendingOrderStr) {
+                            showToast("상담 내역을 자동 접수 중입니다...", "info");
+                            const pendingOrder = JSON.parse(pendingOrderStr);
+                            submitOrderToServer(pendingOrder.name, pendingOrder.phone, pendingOrder.carrier, pendingOrder.detailText, true);
+                            localStorage.removeItem('ansan_pending_order'); 
+                        } else {
+                            showToast(data.name + "님 환영합니다!", "success");
+                        }
                     } else { showToast("인증 실패", "error"); }
                 }).catch(e => { showToast("서버 연결에 실패했습니다.", "error"); });
             } else { checkLoginStatus(); }
@@ -405,16 +418,23 @@
         };
 
         function startKakaoLogin() { triggerHaptic(); Kakao.Auth.authorize({ redirectUri: REDIRECT_URI, scope: 'profile_nickname' }); }
+        
         function checkLoginStatus() {
             const isLoggedIn = localStorage.getItem('is_logged_in'); const userName = localStorage.getItem('user_name');
             if (isLoggedIn === 'true') {
                 document.getElementById('mypage-unauth').classList.add('hidden');
                 document.getElementById('mypage-auth').classList.remove('hidden');
                 if(document.getElementById('mypage-user-name')) document.getElementById('mypage-user-name').innerText = userName + " 고객님";
+                
+                const submitBtnText = document.getElementById('submitBtnText');
+                if(submitBtnText) submitBtnText.innerText = "상담 접수하기";
+                
                 checkTracking(); 
             }
         }
+
         function startKakaoLogout() { triggerHaptic(); localStorage.removeItem('is_logged_in'); localStorage.removeItem('user_name'); location.reload(); }
+        
         function startCountdown() {
             const timerEl = document.getElementById('countdown-timer'); if(!timerEl) return;
             setInterval(() => {
@@ -569,17 +589,30 @@
         function openConsultForm(src) { triggerHaptic(); detailState.formSource = src; document.getElementById('formModal').classList.remove('hidden'); setTimeout(() => document.getElementById('formBottomSheet').classList.add('active'), 10); history.pushState({modal: 'form'}, null, "#form"); }
         function closeFormModal() { history.back(); }
 
+        function submitOrderToServer(name, phone, carrier, detailText, isAutoSubmit = false) {
+            const fd = new FormData(); fd.append('이름', name); fd.append('연락처', phone); fd.append('현재통신사', carrier); fd.append('문의경로', detailText); 
+            fetch(API_URL, { method: 'POST', body: fd }).then(() => { 
+                const submitBtn = document.getElementById('submitBtn');
+                if(!isAutoSubmit) {
+                    submitBtn.disabled = false; submitBtn.classList.remove('opacity-50', 'cursor-not-allowed'); submitBtn.innerHTML = '<svg viewBox="0 0 32 32" class="w-5 h-5"><path d="M16 4.64c-6.96 0-12.64 4.48-12.64 10.08 0 3.52 2.32 6.64 5.76 8.48l-1.44 5.44c-.16.56.48.96.96.64l6.24-4.24c.4.08.8.08 1.12.08 6.96 0 12.64-4.48 12.64-10.08S22.96 4.64 16 4.64z"/></svg><span id="submitBtnText">상담 접수하기</span>';
+                }
+                localStorage.setItem('ansan_my_phone', phone.replace(/-/g, '').trim()); 
+                history.replaceState({modal: 'thankYou'}, null, "#thankYou");
+                document.getElementById('formBottomSheet').classList.remove('active'); document.getElementById('formModal').classList.add('hidden'); 
+                showThankYouModal(); 
+            }).catch(err => {
+                showToast('네트워크 오류가 발생했습니다. 다시 시도해주세요.', 'error');
+            });
+        }
+
         function handleOrderSubmit(e) { 
             triggerHaptic(); e.preventDefault(); 
             
-            const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.disabled = true; submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            submitBtn.innerHTML = '<div class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> 접수 처리 중...</div>';
-            lucide.createIcons();
+            const isLoggedIn = localStorage.getItem('is_logged_in') === 'true';
+            const name = document.getElementById('orderName').value;
+            const phone = document.getElementById('orderPhone').value;
+            const carrier = filterState.currentCarrier;
 
-            const phoneInput = document.getElementById('orderPhone').value.replace(/-/g, '').trim();
-            
             let detailText = "";
             if (detailState.formSource === '인터넷맞춤진단') {
                 detailText = `[인터넷 접수]\n- 통신사: ${inetState.carrier === 'LGU' ? 'LG U+' : 'SKT/KT/알뜰폰'}\n- 상품: ${inetState.product === 'NET_TV' ? '인터넷+TV' : '인터넷 단독'}\n- 속도: ${inetState.speed}\n- 요금제: ${inetState.planType}`;
@@ -623,39 +656,38 @@
                 detailText = `${b2bStr}\n- 가입통신사: ${filterState.targetCarrier}\n- 모델명: ${detailState.model}\n- 기기용량: ${capStr}\n- 할인방식: ${discountStr}${priceDetails}`;
             }
 
-            const fd = new FormData(); fd.append('이름', document.getElementById('orderName').value); fd.append('연락처', document.getElementById('orderPhone').value); fd.append('현재통신사', filterState.currentCarrier); fd.append('문의경로', detailText); 
-
-            fetch(API_URL, { method: 'POST', body: fd }).then(() => { 
-                submitBtn.disabled = false; submitBtn.classList.remove('opacity-50', 'cursor-not-allowed'); submitBtn.innerHTML = originalText;
-                
-                localStorage.setItem('ansan_my_phone', phoneInput); 
-                history.replaceState({modal: 'thankYou'}, null, "#thankYou");
-                document.getElementById('formBottomSheet').classList.remove('active'); document.getElementById('formModal').classList.add('hidden'); 
-                showThankYouModal(); 
-            }).catch(err => {
-                submitBtn.disabled = false; submitBtn.classList.remove('opacity-50', 'cursor-not-allowed'); submitBtn.innerHTML = originalText;
-                showToast('네트워크 오류가 발생했습니다. 다시 시도해주세요.', 'error');
-            });
+            if (!isLoggedIn) {
+                const pendingOrder = { name: name, phone: phone, carrier: carrier, detailText: detailText };
+                localStorage.setItem('ansan_pending_order', JSON.stringify(pendingOrder));
+                startKakaoLogin(); 
+            } else {
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.disabled = true; submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.innerHTML = '<div class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> 접수 처리 중...</div>';
+                lucide.createIcons();
+                submitOrderToServer(name, phone, carrier, detailText, false);
+            }
         }
 
+        // 🚀 채널 추가와 팝업 닫기/마이페이지 이동이 하나로 통합된 팝업!
         function showThankYouModal() {
-            const isLoggedIn = localStorage.getItem('is_logged_in') === 'true';
             const modalContent = document.getElementById('thankYouModalContent');
             
-            let trackingBtnHtml = isLoggedIn
-                ? `<button onclick="closeThankYouModal(); showPage('mypage');" class="btn-touch flex-1 bg-gray-700 text-gray-300 font-bold py-3.5 rounded-xl">배송조회</button>`
-                : `<button onclick="startKakaoLogin()" class="btn-touch flex-1 bg-gray-700 text-gray-300 font-bold py-3.5 rounded-xl">로그인(조회)</button>`;
-
             modalContent.innerHTML = `
-                <div class="w-20 h-20 bg-white rounded-full mx-auto mb-4 overflow-hidden border border-gray-700 p-2"><img src="https://i.ibb.co/spmNQtnx/uplus-mall-icon-512.png" class="w-full h-full object-contain"></div>
-                <h3 class="text-[18px] font-black mb-2 text-white">상담 접수 완료!</h3>
-                <p class="text-gray-300 mb-6 text-[13px] leading-relaxed">상담 및 배송 진행사항을 안내받으시려면<br><span class="text-pink-500 font-bold">카카오톡 채널 추가</span>를 꼭 진행해주세요!</p>
-                <div class="space-y-2">
-                    <button onclick="addKakaoChannel()" class="btn-touch w-full bg-[#FEE500] text-black font-black py-3.5 rounded-xl flex items-center justify-center gap-1.5 shadow-lg"><svg viewBox="0 0 32 32" class="w-4 h-4"><path d="M16 4.64c-6.96 0-12.64 4.48-12.64 10.08 0 3.52 2.32 6.64 5.76 8.48l-1.44 5.44c-.16.56.48.96.96.64l6.24-4.24c.4.08.8.08 1.12.08 6.96 0 12.64-4.48 12.64-10.08S22.96 4.64 16 4.64z"/></svg> 카카오 채널 추가하기</button>
-                    <div class="flex gap-2 pt-1">
-                        ${trackingBtnHtml}
-                        <button onclick="closeThankYouModal()" class="btn-touch flex-1 bg-gray-800 border border-gray-600 text-gray-400 font-bold py-3.5 rounded-xl">닫기</button>
-                    </div>
+                <div class="w-20 h-20 bg-white rounded-full mx-auto mb-4 overflow-hidden border border-gray-700 p-2">
+                    <img src="https://i.ibb.co/spmNQtnx/uplus-mall-icon-512.png" class="w-full h-full object-contain">
+                </div>
+                <h3 class="text-[20px] font-black mb-2 text-white">상담 접수 완료!</h3>
+                <p class="text-gray-300 mb-6 text-[13px] leading-relaxed">
+                    상담 및 배송 진행상태 알림을 받으시려면<br>
+                    아래 버튼을 눌러 <span class="text-[#FEE500] font-bold">카카오톡 채널</span>을 추가해 주세요!
+                </p>
+                <div class="flex flex-col items-center">
+                    <button onclick="addKakaoChannel(); closeThankYouModal(); showPage('mypage');" class="btn-touch w-full bg-[#FEE500] text-black font-black py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg text-[15px]">
+                        <svg viewBox="0 0 32 32" class="w-5 h-5"><path d="M16 4.64c-6.96 0-12.64 4.48-12.64 10.08 0 3.52 2.32 6.64 5.76 8.48l-1.44 5.44c-.16.56.48.96.96.64l6.24-4.24c.4.08.8.08 1.12.08 6.96 0 12.64-4.48 12.64-10.08S22.96 4.64 16 4.64z"/></svg>
+                        채널 추가하고 배송조회 가기
+                    </button>
+                    <button onclick="closeThankYouModal(); showPage('mypage');" class="mt-4 text-[11px] text-gray-500 underline underline-offset-2">채널 추가 없이 이동하기</button>
                 </div>
             `;
             document.getElementById('thankYouModal').classList.remove('hidden');
