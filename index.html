@@ -244,7 +244,7 @@
             <div class="w-14 h-14 bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-yellow-900/30"><i data-lucide="lock" class="w-6 h-6 text-yellow-500"></i></div>
             <h3 class="text-[18px] font-black mb-2 text-white">기업특판 라운지 입장</h3>
             <p class="text-gray-400 mb-6 text-[13px]">제휴사 전용 비밀코드를 입력해주세요.</p>
-            <input type="password" id="b2b-password" placeholder="비밀코드 (예:1019, 311202)" class="w-full px-4 py-3.5 bg-gray-900 border border-gray-700 rounded-xl mb-6 text-center text-white font-bold text-[15px] focus:border-yellow-500 focus:outline-none">
+            <input type="password" id="b2b-password" placeholder="비밀코드" class="w-full px-4 py-3.5 bg-gray-900 border border-gray-700 rounded-xl mb-6 text-center text-white font-bold text-[15px] focus:border-yellow-500 focus:outline-none">
             <div class="flex gap-2">
                 <button onclick="closeB2BAuth()" class="btn-touch flex-1 bg-gray-700 text-gray-300 font-bold py-3.5 rounded-xl">취소</button>
                 <button onclick="submitB2BAuth()" class="btn-touch flex-1 bg-yellow-600 text-black font-bold py-3.5 rounded-xl">확인</button>
@@ -501,7 +501,7 @@
             triggerHaptic(); 
             const codeInput = document.getElementById('b2b-password').value.trim();
             let companyName = "";
-            if(codeInput === '1019') { companyName = "안산모바일 제휴사"; } 
+            if(codeInput === '1010') { companyName = "안산모바일 제휴사"; } 
             else if (codeInput === '311202') { companyName = "안산소식"; } 
             else { showToast('비밀코드가 다릅니다.', 'error'); return; }
 
@@ -520,7 +520,7 @@
             let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
             
             if (isB2B) {
-                if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
+                if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0);
                 else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0); 
             }
             
@@ -566,7 +566,7 @@
             let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
             
             if (detailState.isB2B) {
-                if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
+                if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0);
                 else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0);
             }
             
@@ -620,7 +620,7 @@
                 let discountStr = detailState.discountType === 'gongsi' ? '공시지원금' : '선택약정';
                 let b2bStr = '[일반 특가]';
                 if (detailState.isB2B) {
-                    if (detailState.b2bCode === '1019') b2bStr = '[특판1 (1019)]';
+                    if (detailState.b2bCode === '1010') b2bStr = '[특판1 (1010)]';
                     else if (detailState.b2bCode === '311202') b2bStr = '[특판2 (311202)]';
                     else b2bStr = `[특판 (${detailState.b2bCode})]`;
                 }
@@ -635,7 +635,7 @@
                     let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
                     
                     if (detailState.isB2B) {
-                        if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
+                        if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0);
                         else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0);
                     }
                     
