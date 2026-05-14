@@ -63,7 +63,7 @@
 
     <div id="toast-container" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[200] flex flex-col gap-2 pointer-events-none w-11/12 max-w-sm"></div>
 
-    <header class="bg-gray-900/95 sticky top-0 z-[50] border-b border-gray-800 backdrop-blur-md">
+    <header class="bg-gray-900/95 sticky top-0 z-[50] border-b border-gray-800 backdrop-blur-md transition-all">
         <div class="max-w-2xl mx-auto flex justify-between items-center px-5 py-3.5">
             <div class="flex flex-col cursor-pointer" onclick="showPage('home')">
                 <div class="flex items-center gap-1 mb-0.5">
@@ -394,13 +394,13 @@
             const code = urlParams.get('code');
             const b2bParam = urlParams.get('b2b'); // 🚀 안산소식 다이렉트 링크 파라미터 확인
 
-            // 🚀 B2B 다이렉트 링크로 접속 시 자동 로그인 처리
+            // 🚀 B2B 다이렉트 링크로 접속 시 자동 로그인(자동 입장) 처리
             if (b2bParam) {
                 setTimeout(() => { submitB2BAuth(b2bParam); }, 300);
             } else {
                 history.replaceState({page: 'home'}, null, "#home");
             }
-
+            
             if (code) {
                 showToast("안전하게 로그인 처리 중입니다...", "info");
                 window.history.replaceState({page: 'home'}, document.title, "/#home"); 
@@ -502,7 +502,7 @@
                 stickyNav.classList.add('top-[53px]');
             }
 
-            // 2. 안산소식 모드일 경우 상하단 메뉴 숨김 (랜딩페이지 모드 유지)
+            // 2. 안산소식 모드일 경우 상하단 메뉴 숨김 (가두리 양식 유지)
             if (pageId === 'b2b' && detailState.b2bCode === '311202') {
                 document.querySelector('header').style.display = 'none';
                 document.querySelector('nav').style.display = 'none';
@@ -534,7 +534,7 @@
         function checkB2BAuth() { document.getElementById('b2bAuthModal').classList.remove('hidden'); document.getElementById('b2b-password').value = ''; setTimeout(() => document.getElementById('b2b-password').focus(), 100); history.pushState({modal: 'b2bAuth'}, null, "#b2bAuth"); }
         function closeB2BAuth() { history.back(); }
         
-        // 🚀 안산소식 맞춤형 디자인 교체 및 처리
+        // 🚀 B2B 진입 시 로직 (안산소식 맞춤형 디자인 교체 및 처리)
         function submitB2BAuth(autoCode = null) { 
             triggerHaptic(); 
             const codeInput = autoCode || document.getElementById('b2b-password').value.trim();
@@ -542,7 +542,7 @@
             const exitBtn = document.getElementById('b2b-exit-btn');
             let companyName = "";
 
-            if(codeInput === '1010') { 
+            if(codeInput === '1019') { 
                 companyName = "안산모바일 제휴사"; 
                 b2bHeader.className = "px-5 py-8 bg-gradient-to-b from-gray-900 to-gray-950 rounded-b-[32px] shadow-2xl mb-4 border-b border-yellow-900/20";
                 b2bHeader.innerHTML = `
@@ -550,7 +550,7 @@
                     <h1 class="text-[24px] font-black text-white leading-snug mb-3">일반 대리점에는 없는<br><span class="text-yellow-500">법인 특별 지원금</span></h1>
                     <p class="text-gray-500 text-[14px] mb-8">인증된 임직원에게만 공개되는 시크릿 특가입니다.</p>
                 `;
-                exitBtn.classList.add('hidden'); // 기존처럼 하단 메뉴를 통해 나갈 수 있으므로 숨김
+                if(exitBtn) exitBtn.classList.add('hidden'); // 기존처럼 하단 메뉴를 통해 나갈 수 있으므로 숨김
             } 
             else if (codeInput === '311202') { 
                 companyName = "안산소식 단독 이벤트"; 
@@ -563,7 +563,7 @@
                     <h1 class="relative z-10 text-[26px] font-black text-black leading-snug mb-2 tracking-tight">안산소식 × 안산모바일<br>단독 제휴 특가 이벤트</h1>
                     <p class="relative z-10 text-gray-800 text-[14px] font-bold mb-2">오직 안산소식 구독자에게만 쏟아지는 파격 지원금!</p>
                 `;
-                exitBtn.classList.remove('hidden'); // 상하단 메뉴가 사라지므로 비상용 홈버튼 노출
+                if(exitBtn) exitBtn.classList.remove('hidden'); // 상하단 메뉴가 사라지므로 비상용 홈버튼 노출
             } 
             else { 
                 if(!autoCode) showToast('비밀코드가 다릅니다.', 'error'); 
@@ -587,7 +587,7 @@
             let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
             
             if (isB2B) {
-                if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0);
+                if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
                 else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0); 
             }
             
@@ -633,7 +633,7 @@
             let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
             
             if (detailState.isB2B) {
-                if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0);
+                if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
                 else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0);
             }
             
@@ -687,7 +687,7 @@
                 let discountStr = detailState.discountType === 'gongsi' ? '공시지원금' : '선택약정';
                 let b2bStr = '[일반 특가]';
                 if (detailState.isB2B) {
-                    if (detailState.b2bCode === '1010') b2bStr = '[특판1 (1010)]';
+                    if (detailState.b2bCode === '1019') b2bStr = '[특판1 (1019)]';
                     else if (detailState.b2bCode === '311202') b2bStr = '[특판2 (311202)]';
                     else b2bStr = `[특판 (${detailState.b2bCode})]`;
                 }
@@ -702,7 +702,7 @@
                     let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
                     
                     if (detailState.isB2B) {
-                        if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0);
+                        if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
                         else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0);
                     }
                     
@@ -736,6 +736,7 @@
             }
         }
 
+        // 🚀 채널 추가와 팝업 닫기/마이페이지 이동이 하나로 통합된 팝업!
         function showThankYouModal() {
             const modalContent = document.getElementById('thankYouModalContent');
             
