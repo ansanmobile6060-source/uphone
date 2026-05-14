@@ -160,13 +160,14 @@
         </section>
 
         <section id="page-b2b" class="page-section bg-gray-950 min-h-screen">
-            <div class="bg-gray-900/95 backdrop-blur-md px-5 py-4 border-b border-yellow-900/30 sticky top-[53px] z-30 shadow-lg">
-                <button onclick="openCarrierSheet()" class="btn-touch flex items-center gap-1 text-[16px] font-black text-white bg-gray-800 px-3 py-1.5 rounded-xl border border-yellow-900/50"><span id="b2b-display-target-carrier" class="text-yellow-500">LG U+</span> 개통 <i data-lucide="settings-2" class="w-4 h-4 text-gray-500"></i></button>
+            <div id="b2b-sticky-nav" class="bg-gray-900/95 backdrop-blur-md px-5 py-4 border-b border-gray-800 sticky top-[53px] z-30 shadow-lg flex justify-between items-center transition-all">
+                <button onclick="openCarrierSheet()" class="btn-touch flex items-center gap-1 text-[16px] font-black text-white bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-700"><span id="b2b-display-target-carrier" class="text-white">LG U+</span> 개통 <i data-lucide="settings-2" class="w-4 h-4 text-gray-500"></i></button>
+                <button id="b2b-exit-btn" onclick="exitB2B()" class="hidden text-[12px] text-gray-400 border border-gray-700 px-3 py-1.5 rounded-xl btn-touch bg-gray-800"><i data-lucide="home" class="w-3.5 h-3.5 inline"></i> 메인으로</button>
             </div>
-            <div class="px-5 py-8 bg-gradient-to-b from-gray-900 to-gray-950 rounded-b-[32px] shadow-2xl mb-4 border-b border-yellow-900/20">
-                <span id="b2b-company-name" class="inline-block bg-yellow-950/50 text-yellow-500 text-[11px] font-bold px-2.5 py-1 rounded mb-3 border border-yellow-900/50">VIP 임직원 전용 라운지</span>
-                <h1 class="text-[24px] font-black text-white leading-snug mb-3">일반 대리점에는 없는<br><span class="text-yellow-500">법인 특별 지원금</span></h1>
-                <p class="text-gray-500 text-[14px] mb-8">인증된 임직원에게만 공개되는 시크릿 특가입니다.</p>
+            
+            <div id="b2b-dynamic-header"></div>
+
+            <div class="px-5 pb-16">
                 <div class="space-y-4" id="b2b-phone-list"></div>
             </div>
         </section>
@@ -232,7 +233,7 @@
         </footer>
     </main>
 
-    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl bg-gray-900/90 backdrop-blur-lg border-t border-gray-800 flex pb-safe z-[90]">
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl bg-gray-900/90 backdrop-blur-lg border-t border-gray-800 flex pb-safe z-[90] transition-all">
         <button onclick="showPage('home')" class="nav-link active flex-1 py-3 flex flex-col items-center gap-1" id="nav-home"><i data-lucide="home" class="w-5 h-5"></i><span class="text-[10px] font-medium">홈</span></button>
         <button onclick="showPage('mobile')" class="nav-link flex-1 py-3 flex flex-col items-center gap-1" id="nav-mobile"><i data-lucide="smartphone" class="w-5 h-5"></i><span class="text-[10px] font-medium">휴대폰</span></button>
         <button onclick="showPage('internet')" class="nav-link flex-1 py-3 flex flex-col items-center gap-1" id="nav-internet"><i data-lucide="monitor" class="w-5 h-5"></i><span class="text-[10px] font-medium">인터넷</span></button>
@@ -389,10 +390,17 @@
 
         window.onload = function() {
             lucide.createIcons();
-            history.replaceState({page: 'home'}, null, "#home");
             const urlParams = new URLSearchParams(window.location.search);
             const code = urlParams.get('code');
-            
+            const b2bParam = urlParams.get('b2b'); // 🚀 안산소식 다이렉트 링크 파라미터 확인
+
+            // 🚀 B2B 다이렉트 링크로 접속 시 자동 로그인 처리
+            if (b2bParam) {
+                setTimeout(() => { submitB2BAuth(b2bParam); }, 300);
+            } else {
+                history.replaceState({page: 'home'}, null, "#home");
+            }
+
             if (code) {
                 showToast("안전하게 로그인 처리 중입니다...", "info");
                 window.history.replaceState({page: 'home'}, document.title, "/#home"); 
@@ -478,9 +486,38 @@
 
         function formatNum(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
         
+        // 🚀 안산소식 랜딩페이지 탈출 함수
+        function exitB2B() {
+            detailState.b2bCode = '';
+            showPage('home');
+        }
+
         function showPage(pageId, isPopState = false) { 
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active')); document.getElementById('page-' + pageId).classList.add('active'); 
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); if(document.getElementById('nav-' + pageId)) document.getElementById('nav-' + pageId).classList.add('active'); 
+            // 1. 기본 UI 복구 (안산소식 전용화면에서 탈출할 경우 대비)
+            document.querySelector('header').style.display = 'block';
+            document.querySelector('nav').style.display = 'flex';
+            const stickyNav = document.getElementById('b2b-sticky-nav');
+            if(stickyNav) {
+                stickyNav.classList.remove('top-0'); 
+                stickyNav.classList.add('top-[53px]');
+            }
+
+            // 2. 안산소식 모드일 경우 상하단 메뉴 숨김 (랜딩페이지 모드 유지)
+            if (pageId === 'b2b' && detailState.b2bCode === '311202') {
+                document.querySelector('header').style.display = 'none';
+                document.querySelector('nav').style.display = 'none';
+                if(stickyNav) {
+                    stickyNav.classList.remove('top-[53px]'); 
+                    stickyNav.classList.add('top-0');
+                }
+            }
+
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active')); 
+            document.getElementById('page-' + pageId).classList.add('active'); 
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); 
+            if(document.getElementById('nav-' + pageId)) document.getElementById('nav-' + pageId).classList.add('active'); 
+            
             window.scrollTo(0, 0); 
             if (pageId === 'mobile' && !hasSelectedCarrier) openCarrierSheet(); 
             if (pageId === 'mypage') { renderLikedPhones(); checkTracking(); } 
@@ -497,21 +534,51 @@
         function checkB2BAuth() { document.getElementById('b2bAuthModal').classList.remove('hidden'); document.getElementById('b2b-password').value = ''; setTimeout(() => document.getElementById('b2b-password').focus(), 100); history.pushState({modal: 'b2bAuth'}, null, "#b2bAuth"); }
         function closeB2BAuth() { history.back(); }
         
-        function submitB2BAuth() { 
+        // 🚀 안산소식 맞춤형 디자인 교체 및 처리
+        function submitB2BAuth(autoCode = null) { 
             triggerHaptic(); 
-            const codeInput = document.getElementById('b2b-password').value.trim();
+            const codeInput = autoCode || document.getElementById('b2b-password').value.trim();
+            const b2bHeader = document.getElementById('b2b-dynamic-header');
+            const exitBtn = document.getElementById('b2b-exit-btn');
             let companyName = "";
-            if(codeInput === '1010') { companyName = "안산모바일 제휴사"; } 
-            else if (codeInput === '311202') { companyName = "안산소식"; } 
-            else { showToast('비밀코드가 다릅니다.', 'error'); return; }
+
+            if(codeInput === '1010') { 
+                companyName = "안산모바일 제휴사"; 
+                b2bHeader.className = "px-5 py-8 bg-gradient-to-b from-gray-900 to-gray-950 rounded-b-[32px] shadow-2xl mb-4 border-b border-yellow-900/20";
+                b2bHeader.innerHTML = `
+                    <span class="inline-block bg-yellow-950/50 text-yellow-500 text-[11px] font-bold px-2.5 py-1 rounded mb-3 border border-yellow-900/50">${companyName} 전용 라운지</span>
+                    <h1 class="text-[24px] font-black text-white leading-snug mb-3">일반 대리점에는 없는<br><span class="text-yellow-500">법인 특별 지원금</span></h1>
+                    <p class="text-gray-500 text-[14px] mb-8">인증된 임직원에게만 공개되는 시크릿 특가입니다.</p>
+                `;
+                exitBtn.classList.add('hidden'); // 기존처럼 하단 메뉴를 통해 나갈 수 있으므로 숨김
+            } 
+            else if (codeInput === '311202') { 
+                companyName = "안산소식 단독 이벤트"; 
+                // 🚀 밝고 시선을 사로잡는 안산소식 이벤트용 디자인 렌더링
+                b2bHeader.className = "px-5 py-10 bg-[#FEE500] rounded-b-[32px] shadow-xl mb-4 text-center relative overflow-hidden";
+                b2bHeader.innerHTML = `
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-white opacity-50 rounded-full blur-2xl"></div>
+                    <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-orange-400 opacity-30 rounded-full blur-2xl"></div>
+                    <span class="relative z-10 inline-block bg-black text-white text-[11px] font-bold px-3 py-1 rounded-full mb-4 shadow-sm">안산소식 구독자 특별 혜택</span>
+                    <h1 class="relative z-10 text-[26px] font-black text-black leading-snug mb-2 tracking-tight">안산소식 × 안산모바일<br>단독 제휴 특가 이벤트</h1>
+                    <p class="relative z-10 text-gray-800 text-[14px] font-bold mb-2">오직 안산소식 구독자에게만 쏟아지는 파격 지원금!</p>
+                `;
+                exitBtn.classList.remove('hidden'); // 상하단 메뉴가 사라지므로 비상용 홈버튼 노출
+            } 
+            else { 
+                if(!autoCode) showToast('비밀코드가 다릅니다.', 'error'); 
+                return; 
+            }
 
             detailState.b2bCode = codeInput;
-            document.getElementById('b2b-company-name').innerText = companyName + " 전용 특가 라운지";
-
+            
             history.replaceState({page: 'b2b'}, null, "#b2b");
             document.getElementById('b2bAuthModal').classList.add('hidden');
-            showPage('b2b', true); 
-            showToast(companyName + ' 인증 완료', 'success'); 
+            
+            showPage('b2b', true); // 이때 메뉴 숨김 처리 발동
+            renderB2B(); // 특판 코드에 맞춘 가격으로 리스트 즉시 업데이트
+            
+            if(!autoCode) showToast(companyName + ' 인증 완료', 'success'); 
         }
 
         function createPhoneCard(model, item, isB2B, rank = null) {
@@ -669,7 +736,6 @@
             }
         }
 
-        // 🚀 채널 추가와 팝업 닫기/마이페이지 이동이 하나로 통합된 팝업!
         function showThankYouModal() {
             const modalContent = document.getElementById('thankYouModalContent');
             
