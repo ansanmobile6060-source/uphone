@@ -31,7 +31,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
     <style>
-        body { font-family: 'Pretendard', sans-serif; overflow-x: hidden; background-color: #111827; color: #F3F4F6; }
+        body { font-family: 'Pretendard', sans-serif; overflow-x: hidden; background-color: #111827; color: #F3F4F6; transition: background-color 0.3s; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .nav-link { transition: all 0.3s; color: #6B7280; }
@@ -57,6 +57,25 @@
         select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-right: 2.5rem; background-color: #1F2937; border-color: #374151; color: white; border-radius: 12px; }
         .btn-touch { transition: all 0.15s ease; cursor: pointer; }
         .btn-touch:active { transform: scale(0.95); opacity: 0.8; }
+
+        /* 🚀 안산소식 전용 밝은 톤 (Light Theme) 자동 변환 CSS */
+        body.light-theme { background-color: #F9FAFB !important; color: #111827 !important; }
+        .light-theme #page-b2b, .light-theme #detail-page > div { background-color: #F9FAFB !important; }
+        .light-theme .bg-gray-950, .light-theme .bg-gray-900, .light-theme .bg-gray-800 { background-color: #FFFFFF !important; border-color: #E5E7EB !important; }
+        .light-theme .text-white { color: #111827 !important; }
+        .light-theme .text-gray-300 { color: #374151 !important; }
+        .light-theme .text-gray-400, .light-theme .text-gray-500 { color: #6B7280 !important; }
+        .light-theme .border-gray-800, .light-theme .border-gray-700 { border-color: #E5E7EB !important; }
+        .light-theme .moyo-chip { background-color: #FFFFFF !important; border-color: #D1D5DB !important; color: #4B5563 !important; }
+        .light-theme .moyo-chip.active { background-color: #FEF2F2 !important; border-color: #EF4444 !important; color: #EF4444 !important; }
+        .light-theme select { background-color: #FFFFFF !important; color: #111827 !important; border-color: #D1D5DB !important; }
+        .light-theme .text-yellow-500, .light-theme .text-pink-500 { color: #EF4444 !important; }
+        .light-theme .border-yellow-900\/50 { border-color: #FECACA !important; }
+        .light-theme .bg-yellow-950\/50 { background-color: #FEF2F2 !important; color: #EF4444 !important; }
+        .light-theme .text-blue-400 { color: #3B82F6 !important; }
+        .light-theme #result-board .bg-gray-900\/50 { background-color: #F3F4F6 !important; }
+        .light-theme .bg-gray-900\/95 { background-color: rgba(255,255,255,0.95) !important; }
+        .light-theme .skeleton { background: linear-gradient(110deg, #f3f4f6 8%, #e5e7eb 18%, #f3f4f6 33%); background-size: 200% 100%; }
     </style>
 </head>
 <body class="antialiased selection:bg-pink-900 relative">
@@ -159,8 +178,8 @@
             <div class="px-4 pb-12 space-y-3" id="phone-list"></div>
         </section>
 
-        <section id="page-b2b" class="page-section bg-gray-950 min-h-screen">
-            <div id="b2b-sticky-nav" class="bg-gray-900/95 backdrop-blur-md px-5 py-4 border-b border-gray-800 sticky top-[53px] z-30 shadow-lg flex justify-between items-center transition-all">
+        <section id="page-b2b" class="page-section bg-gray-950 min-h-screen transition-colors">
+            <div id="b2b-sticky-nav" class="bg-gray-900/95 backdrop-blur-md px-5 py-4 border-b border-gray-800 sticky top-[53px] z-30 shadow-sm flex justify-between items-center transition-all">
                 <button onclick="openCarrierSheet()" class="btn-touch flex items-center gap-1 text-[16px] font-black text-white bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-700"><span id="b2b-display-target-carrier" class="text-white">LG U+</span> 개통 <i data-lucide="settings-2" class="w-4 h-4 text-gray-500"></i></button>
                 <button id="b2b-exit-btn" onclick="exitB2B()" class="hidden text-[12px] text-gray-400 border border-gray-700 px-3 py-1.5 rounded-xl btn-touch bg-gray-800"><i data-lucide="home" class="w-3.5 h-3.5 inline"></i> 메인으로</button>
             </div>
@@ -223,7 +242,7 @@
             </div>
         </section>
 
-        <footer class="mt-auto bg-black/50 border-t border-gray-800 px-6 pt-10 pb-12 rounded-t-[24px]">
+        <footer class="mt-auto bg-black/50 border-t border-gray-800 px-6 pt-10 pb-12 rounded-t-[24px] transition-all">
             <h4 class="text-white font-black text-[18px] mb-3">고객센터 <a href="tel:1111-1111" class="text-pink-500">1111-1111</a></h4>
             <p class="text-[12px] text-gray-500 leading-relaxed mb-6">평일 10:00 ~ 20:00 / 공휴일 휴무</p>
             <div class="border-t border-gray-800 pt-6">
@@ -245,7 +264,7 @@
             <div class="w-14 h-14 bg-yellow-900/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-yellow-900/30"><i data-lucide="lock" class="w-6 h-6 text-yellow-500"></i></div>
             <h3 class="text-[18px] font-black mb-2 text-white">기업특판 라운지 입장</h3>
             <p class="text-gray-400 mb-6 text-[13px]">제휴사 전용 비밀코드를 입력해주세요.</p>
-            <input type="password" id="b2b-password" placeholder="비밀코드" class="w-full px-4 py-3.5 bg-gray-900 border border-gray-700 rounded-xl mb-6 text-center text-white font-bold text-[15px] focus:border-yellow-500 focus:outline-none">
+            <input type="password" id="b2b-password" placeholder="비밀코드 입력" class="w-full px-4 py-3.5 bg-gray-900 border border-gray-700 rounded-xl mb-6 text-center text-white font-bold text-[15px] focus:border-yellow-500 focus:outline-none">
             <div class="flex gap-2">
                 <button onclick="closeB2BAuth()" class="btn-touch flex-1 bg-gray-700 text-gray-300 font-bold py-3.5 rounded-xl">취소</button>
                 <button onclick="submitB2BAuth()" class="btn-touch flex-1 bg-yellow-600 text-black font-bold py-3.5 rounded-xl">확인</button>
@@ -392,9 +411,9 @@
             lucide.createIcons();
             const urlParams = new URLSearchParams(window.location.search);
             const code = urlParams.get('code');
-            const b2bParam = urlParams.get('b2b'); // 🚀 안산소식 다이렉트 링크 파라미터 확인
+            const b2bParam = urlParams.get('b2b'); 
 
-            // 🚀 B2B 다이렉트 링크로 접속 시 자동 로그인(자동 입장) 처리
+            // 🚀 B2B 다이렉트 링크로 접속 시 자동 입장 처리
             if (b2bParam) {
                 setTimeout(() => { submitB2BAuth(b2bParam); }, 300);
             } else {
@@ -493,23 +512,21 @@
         }
 
         function showPage(pageId, isPopState = false) { 
-            // 1. 기본 UI 복구 (안산소식 전용화면에서 탈출할 경우 대비)
+            // 1. 기본 UI(다크모드, 상하단 메뉴) 복구
             document.querySelector('header').style.display = 'block';
             document.querySelector('nav').style.display = 'flex';
+            document.querySelector('footer').style.display = 'block';
+            document.body.classList.remove('light-theme');
             const stickyNav = document.getElementById('b2b-sticky-nav');
-            if(stickyNav) {
-                stickyNav.classList.remove('top-0'); 
-                stickyNav.classList.add('top-[53px]');
-            }
+            if(stickyNav) { stickyNav.classList.remove('top-0'); stickyNav.classList.add('top-[53px]'); }
 
-            // 2. 안산소식 모드일 경우 상하단 메뉴 숨김 (가두리 양식 유지)
+            // 2. 안산소식 모드일 경우 상하단 숨기고 밝은 테마 적용! (안산모바일 흔적 삭제)
             if (pageId === 'b2b' && detailState.b2bCode === '311202') {
                 document.querySelector('header').style.display = 'none';
                 document.querySelector('nav').style.display = 'none';
-                if(stickyNav) {
-                    stickyNav.classList.remove('top-[53px]'); 
-                    stickyNav.classList.add('top-0');
-                }
+                document.querySelector('footer').style.display = 'none';
+                document.body.classList.add('light-theme');
+                if(stickyNav) { stickyNav.classList.remove('top-[53px]'); stickyNav.classList.add('top-0'); }
             }
 
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active')); 
@@ -534,36 +551,42 @@
         function checkB2BAuth() { document.getElementById('b2bAuthModal').classList.remove('hidden'); document.getElementById('b2b-password').value = ''; setTimeout(() => document.getElementById('b2b-password').focus(), 100); history.pushState({modal: 'b2bAuth'}, null, "#b2bAuth"); }
         function closeB2BAuth() { history.back(); }
         
-        // 🚀 B2B 진입 시 로직 (안산소식 맞춤형 디자인 교체 및 처리)
+        // 🚀 B2B 진입 시 로직 (안산소식 맞춤형 디자인 & 일반 특판 1010 분리)
         function submitB2BAuth(autoCode = null) { 
             triggerHaptic(); 
             const codeInput = autoCode || document.getElementById('b2b-password').value.trim();
             const b2bHeader = document.getElementById('b2b-dynamic-header');
             const exitBtn = document.getElementById('b2b-exit-btn');
+            const targetCarrierTxt = document.getElementById('b2b-display-target-carrier');
+            const stickyNav = document.getElementById('b2b-sticky-nav');
             let companyName = "";
 
-            if(codeInput === '1019') { 
-                companyName = "안산모바일 제휴사"; 
+            if(codeInput === '1010') { 
+                companyName = "일반 특판 제휴사"; 
                 b2bHeader.className = "px-5 py-8 bg-gradient-to-b from-gray-900 to-gray-950 rounded-b-[32px] shadow-2xl mb-4 border-b border-yellow-900/20";
                 b2bHeader.innerHTML = `
                     <span class="inline-block bg-yellow-950/50 text-yellow-500 text-[11px] font-bold px-2.5 py-1 rounded mb-3 border border-yellow-900/50">${companyName} 전용 라운지</span>
                     <h1 class="text-[24px] font-black text-white leading-snug mb-3">일반 대리점에는 없는<br><span class="text-yellow-500">법인 특별 지원금</span></h1>
                     <p class="text-gray-500 text-[14px] mb-8">인증된 임직원에게만 공개되는 시크릿 특가입니다.</p>
                 `;
-                if(exitBtn) exitBtn.classList.add('hidden'); // 기존처럼 하단 메뉴를 통해 나갈 수 있으므로 숨김
+                if(exitBtn) exitBtn.classList.add('hidden');
+                stickyNav.classList.add('bg-gray-900/95', 'border-gray-800'); stickyNav.classList.remove('bg-white/95', 'border-gray-200');
+                targetCarrierTxt.classList.add('text-white'); targetCarrierTxt.classList.remove('text-black');
             } 
             else if (codeInput === '311202') { 
-                companyName = "안산소식 단독 이벤트"; 
-                // 🚀 밝고 시선을 사로잡는 안산소식 이벤트용 디자인 렌더링
-                b2bHeader.className = "px-5 py-10 bg-[#FEE500] rounded-b-[32px] shadow-xl mb-4 text-center relative overflow-hidden";
+                companyName = "안산소식 구독자 혜택"; 
+                // 🚀 안산모바일 삭제 및 안산소식 전용 문구로 100% 교체
+                b2bHeader.className = "px-5 py-10 bg-[#FEE500] rounded-b-[32px] shadow-sm mb-4 text-center relative overflow-hidden border-b border-gray-200";
                 b2bHeader.innerHTML = `
-                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-white opacity-50 rounded-full blur-2xl"></div>
-                    <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-orange-400 opacity-30 rounded-full blur-2xl"></div>
-                    <span class="relative z-10 inline-block bg-black text-white text-[11px] font-bold px-3 py-1 rounded-full mb-4 shadow-sm">안산소식 구독자 특별 혜택</span>
-                    <h1 class="relative z-10 text-[26px] font-black text-black leading-snug mb-2 tracking-tight">안산소식 × 안산모바일<br>단독 제휴 특가 이벤트</h1>
-                    <p class="relative z-10 text-gray-800 text-[14px] font-bold mb-2">오직 안산소식 구독자에게만 쏟아지는 파격 지원금!</p>
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-white opacity-60 rounded-full blur-2xl"></div>
+                    <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-orange-300 opacity-40 rounded-full blur-2xl"></div>
+                    <span class="relative z-10 inline-block bg-black text-white text-[11px] font-bold px-3 py-1 rounded-full mb-4 shadow-sm">구독자 전용 혜택</span>
+                    <h1 class="relative z-10 text-[26px] font-black text-black leading-snug mb-2 tracking-tight">안산소식 구독자<br>특별 지원금 특가</h1>
+                    <p class="relative z-10 text-gray-800 text-[14px] font-bold mb-2">오직 안산소식 구독자에게만 제공되는 파격 특가!</p>
                 `;
-                if(exitBtn) exitBtn.classList.remove('hidden'); // 상하단 메뉴가 사라지므로 비상용 홈버튼 노출
+                if(exitBtn) exitBtn.classList.remove('hidden');
+                stickyNav.classList.remove('bg-gray-900/95', 'border-gray-800'); stickyNav.classList.add('bg-white/95', 'border-gray-200');
+                targetCarrierTxt.classList.remove('text-white'); targetCarrierTxt.classList.add('text-black');
             } 
             else { 
                 if(!autoCode) showToast('비밀코드가 다릅니다.', 'error'); 
@@ -575,10 +598,10 @@
             history.replaceState({page: 'b2b'}, null, "#b2b");
             document.getElementById('b2bAuthModal').classList.add('hidden');
             
-            showPage('b2b', true); // 이때 메뉴 숨김 처리 발동
-            renderB2B(); // 특판 코드에 맞춘 가격으로 리스트 즉시 업데이트
+            showPage('b2b', true); 
+            renderB2B(); 
             
-            if(!autoCode) showToast(companyName + ' 인증 완료', 'success'); 
+            if(!autoCode) showToast(companyName + ' 입장 완료', 'success'); 
         }
 
         function createPhoneCard(model, item, isB2B, rank = null) {
@@ -587,19 +610,22 @@
             let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
             
             if (isB2B) {
-                if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
+                if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0); // 🚀 1010으로 업데이트
                 else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0); 
             }
             
             const min = Math.max(0, retail - pub - spc);
             const disc = pub + spc; const discountRate = retail > 0 ? Math.round((disc / retail) * 100) : 0;
             const isLiked = likedPhones.some(p => p.model === model); const heartClass = isLiked ? 'fill-pink-500 text-pink-500' : 'text-gray-600';
-            const cardBg = isB2B ? 'bg-gray-900 border-yellow-900/30' : 'bg-gray-800 border-gray-700'; const priceColor = isB2B ? 'text-yellow-500' : 'text-pink-500';
+            
+            // 🚀 기본은 다크, 밝은 테마일때는 CSS로 자동 치환됨
+            const cardBg = isB2B ? 'bg-gray-900 border-yellow-900/30' : 'bg-gray-800 border-gray-700'; 
+            const priceColor = isB2B ? 'text-yellow-500' : 'text-pink-500';
             const badge = rank ? `<div class="absolute top-0 left-0 bg-white text-black text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-br-lg z-10">${rank}</div>` : (hasCarrier ? `<span class="inline-block text-[10px] font-bold ${isB2B?'text-yellow-500 bg-yellow-950/50':'text-blue-400 bg-blue-900/30'} px-2 py-0.5 rounded mb-1 border ${isB2B?'border-yellow-900/50':'border-blue-900/50'}">${isChange?'기변':'번이'} 혜택</span>` : '');
 
             let priceHtml = hasCarrier ? `<div class="flex flex-col items-end justify-center"><span class="text-[11px] text-gray-500 line-through">${formatNum(retail)}원</span><div class="flex items-center gap-1.5 mt-0.5">${discountRate > 0 ? `<span class="bg-red-600 text-white font-black text-[10px] px-1.5 py-0.5 rounded leading-none">${discountRate}%</span>` : ''}<span class="text-[16px] font-black ${priceColor} leading-none">${formatNum(min)}<span class="text-[12px] font-bold text-gray-400 ml-0.5">원~</span></span></div></div>` : `<span class="text-[12px] font-bold text-gray-600">통신사 선택 필요</span>`;
 
-            return `<div onclick="openDetail('${model}', ${isB2B})" class="relative ${cardBg} p-4 rounded-2xl border flex gap-4 btn-touch"><button onclick="toggleLike('${model}', event)" class="absolute top-3 right-3 z-10 p-1.5 rounded-full"><i data-lucide="heart" class="w-4 h-4 ${heartClass}"></i></button><div class="w-20 h-20 bg-gray-900 rounded-xl flex items-center justify-center shrink-0 border border-gray-700 overflow-hidden relative p-2">${badge}<img src="${item.imageurl}" class="w-full h-full object-contain relative z-0"></div><div class="flex-1 flex flex-col justify-center"><h3 class="text-[14px] font-bold text-white mb-1 pr-6">${model}</h3><div class="flex items-end justify-between mt-auto"><span class="text-[11px] text-gray-500">${isB2B?'임직원가':'실구매가'}</span><div class="text-right">${priceHtml}</div></div></div></div>`;
+            return `<div onclick="openDetail('${model}', ${isB2B})" class="relative ${cardBg} p-4 rounded-2xl border flex gap-4 btn-touch"><button onclick="toggleLike('${model}', event)" class="absolute top-3 right-3 z-10 p-1.5 rounded-full"><i data-lucide="heart" class="w-4 h-4 ${heartClass}"></i></button><div class="w-20 h-20 bg-gray-900 rounded-xl flex items-center justify-center shrink-0 border border-gray-700 overflow-hidden relative p-2">${badge}<img src="${item.imageurl}" class="w-full h-full object-contain relative z-0"></div><div class="flex-1 flex flex-col justify-center"><h3 class="text-[14px] font-bold text-white mb-1 pr-6">${model}</h3><div class="flex items-end justify-between mt-auto"><span class="text-[11px] text-gray-500">${isB2B?'특가혜택가':'실구매가'}</span><div class="text-right">${priceHtml}</div></div></div></div>`;
         }
 
         function renderTop3() { const container = document.getElementById('home-top3-list'); if(!mockData.length) return; let filtered = mockData.filter(i => i.targetCarrier === filterState.targetCarrier); filtered = filtered.filter((item, index, self) => index === self.findIndex((t) => t.model === item.model)); container.innerHTML = ''; filtered.slice(0, 3).forEach((data, idx) => container.insertAdjacentHTML('beforeend', createPhoneCard(data.model, data, false, idx+1))); lucide.createIcons(); }
@@ -620,7 +646,7 @@
             const item = mockData.find(d => d.model === model && d.targetCarrier === filterState.targetCarrier); if(!item) return;
             document.getElementById('detail-model-name').innerText = model; document.getElementById('detail-retail-price').innerText = formatNum(item.price); document.getElementById('detail-image-container').innerHTML = `<img src="${item.imageurl}" class="w-full h-full object-contain">`;
             const select = document.getElementById('detail-plan-select'); select.innerHTML = `<option value="115000">5G 프리미어 슈퍼 (115,000원)</option><option value="85000" selected>5G 프리미어 에센셜 (85,000원)</option><option value="75000">5G 스탠다드 (75,000원)</option>`;
-            calcDetail(); document.getElementById('detail-page').classList.remove('translate-x-full'); document.getElementById('result-board').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+            calcDetail(); document.getElementById('detail-page').classList.remove('translate-x-full'); document.getElementById('result-board').classList.remove('hidden'); document.body.style.overflow = (detailState.b2bCode === '311202') ? 'hidden' : 'hidden';
             history.pushState({modal: 'detail'}, null, "#detail");
         }
         function closeDetail() { history.back(); }
@@ -633,7 +659,7 @@
             let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
             
             if (detailState.isB2B) {
-                if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
+                if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0); // 🚀 1010으로 업데이트
                 else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0);
             }
             
@@ -687,7 +713,7 @@
                 let discountStr = detailState.discountType === 'gongsi' ? '공시지원금' : '선택약정';
                 let b2bStr = '[일반 특가]';
                 if (detailState.isB2B) {
-                    if (detailState.b2bCode === '1019') b2bStr = '[특판1 (1019)]';
+                    if (detailState.b2bCode === '1010') b2bStr = '[특판1 (1010)]'; // 🚀 1010 업데이트
                     else if (detailState.b2bCode === '311202') b2bStr = '[특판2 (311202)]';
                     else b2bStr = `[특판 (${detailState.b2bCode})]`;
                 }
@@ -702,7 +728,7 @@
                     let spc = isChange ? (item.changesub || 0) : (item.mnpsub || 0); 
                     
                     if (detailState.isB2B) {
-                        if (detailState.b2bCode === '1019') spc += (item.b2bsub || 0);
+                        if (detailState.b2bCode === '1010') spc += (item.b2bsub || 0);
                         else if (detailState.b2bCode === '311202') spc += (item.b2bsub2 || 0);
                     }
                     
