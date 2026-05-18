@@ -604,14 +604,20 @@
                 stickyNav.classList.add('bg-gray-900/95', 'border-gray-800'); stickyNav.classList.remove('bg-white/95', 'border-gray-200');
                 targetCarrierTxt.classList.add('text-white'); targetCarrierTxt.classList.remove('text-black');
             } 
-            else if (codeInput === '311202') { 
+ else if (codeInput === '311202') { 
                 companyName = "안산소식 구독자 혜택"; 
-                b2bHeader.className = "px-5 py-10 bg-[#FEE500] rounded-b-[32px] shadow-sm mb-4 text-center relative overflow-hidden border-b border-gray-200";
-                b2bHeader.innerHTML = `<div class="absolute -right-10 -top-10 w-32 h-32 bg-white opacity-60 rounded-full blur-2xl"></div><div class="absolute -left-10 -bottom-10 w-32 h-32 bg-orange-300 opacity-40 rounded-full blur-2xl"></div><span class="relative z-10 inline-block bg-black text-white text-[11px] font-bold px-3 py-1 rounded-full mb-4 shadow-sm">구독자 전용 혜택</span><h1 class="relative z-10 text-[26px] font-black text-black leading-snug mb-2 tracking-tight">안산소식 구독자<br>특별 지원금 특가</h1><p class="relative z-10 text-gray-800 text-[14px] font-bold mb-2">오직 안산소식 구독자에게만 제공되는 파격 특가!</p>`;
+                
+                // 💡 [수정됨] 배경색(bg-[#FEE500])과 여백(px-5 py-10)을 지우고 이미지가 꽉 차게 변경
+                b2bHeader.className = "mb-4 relative overflow-hidden rounded-b-[24px] shadow-sm border-b border-gray-200 bg-white";
+                
+                // 💡 [수정됨] 글씨 대신 img 태그로 점장님의 이미지를 꽉 차게 삽입!
+                // src=" " 안에 아까 복사해둔 imgBB 이미지 주소를 넣어주세요.
+                b2bHeader.innerHTML = `<img src="https://i.ibb.co/pjDgR39j/1779095682487-1.jpg" alt="안산소식 구독자 특별 지원금 특가" class="w-full h-auto block">`;
+                
                 if(exitBtn) exitBtn.classList.remove('hidden');
                 stickyNav.classList.remove('bg-gray-900/95', 'border-gray-800'); stickyNav.classList.add('bg-white/95', 'border-gray-200');
                 targetCarrierTxt.classList.remove('text-white'); targetCarrierTxt.classList.add('text-black');
-            } 
+            }
             else { 
                 if(!autoCode) showToast('비밀코드가 다릅니다.', 'error'); 
                 return; 
