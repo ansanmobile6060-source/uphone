@@ -526,7 +526,7 @@
             const wrapper = document.getElementById('banner-wrapper'); if (!banners || banners.length === 0) return; wrapper.innerHTML = '';
             banners.forEach(b => {
                 let textOverlay = ''; if (b.title || b.subtitle) textOverlay = `<div class="absolute inset-0 bg-black/40 flex items-end p-4"><div><p class="text-white text-[11px] font-bold mb-1">${b.subtitle || ''}</p><h3 class="text-white font-black text-[16px] leading-tight">${b.title || ''}</h3></div></div>`;
-                const slide = `<div class="swiper-slide relative h-full bg-black btn-touch" onclick="handleBannerClick('${b.linkUrl}')"><img src="${b.imageUrl}" class="w-full h-full object-cover">${textOverlay}</div>`; wrapper.insertAdjacentHTML('beforeend', slide);
+                const slide = `<div class="swiper-slide relative h-full bg-gray-900 btn-touch" onclick="handleBannerClick('${b.linkUrl}')"><img src="${b.imageUrl}" class="w-full h-full object-contain">${textOverlay}</div>`; wrapper.insertAdjacentHTML('beforeend', slide);
             });
             if(bannerSwiper) bannerSwiper.destroy(); bannerSwiper = new Swiper(".banner-swiper", { pagination: { el: ".swiper-pagination", clickable: true }, autoplay: { delay: 3500, disableOnInteraction: false }, loop: true, effect: "fade" });
         }
