@@ -76,12 +76,6 @@
     <main class="max-w-2xl mx-auto min-h-screen flex flex-col pb-24">
         
        <section id="page-home" class="page-section active bg-white">
-            <div class="px-5 pt-5 pb-3">
-                <div id="banner-wrapper" class="shadow-sm border border-gray-100 w-full aspect-[2/1] rounded-[24px] overflow-hidden relative bg-gray-50">
-                    <div class="skeleton h-full w-full"></div>
-                </div>
-            </div>
-
             <div class="px-5 py-6">
                 <div class="bg-white rounded-[28px] shadow-[0_2px_20px_rgba(15,23,42,0.06)] border border-gray-100 p-6 relative overflow-hidden btn-touch" onclick="showPage('mobile')">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-teal-50 rounded-full blur-2xl"></div>
@@ -125,14 +119,9 @@
 
         <section id="page-mobile" class="page-section bg-white">
             <div class="bg-white/95 backdrop-blur-md px-5 py-4 border-b border-gray-100 sticky top-[53px] z-30 shadow-lg">
-                <button onclick="openCarrierSheet()" class="btn-touch flex items-center gap-1 text-[16px] font-black text-gray-900 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-200 mb-3">
+                <button onclick="openCarrierSheet()" class="btn-touch flex items-center gap-1 text-[16px] font-black text-gray-900 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-200">
                     <span id="display-target-carrier" class="text-teal-600">LG U+</span> 개통 <i data-lucide="settings-2" class="w-4 h-4 text-gray-500"></i>
                 </button>
-                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-                    <button onclick="toggleQuickCuration('S26 시리즈', this)" class="quick-curation-chip btn-touch shrink-0 px-4 py-2 rounded-full text-[12px] font-bold moyo-chip">S26 시리즈</button>
-                    <button onclick="toggleQuickCuration('폴더블7 시리즈', this)" class="quick-curation-chip btn-touch shrink-0 px-4 py-2 rounded-full text-[12px] font-bold moyo-chip">폴더블7 시리즈</button>
-                    <button onclick="toggleQuickCuration('아이폰17 시리즈', this)" class="quick-curation-chip btn-touch shrink-0 px-4 py-2 rounded-full text-[12px] font-bold moyo-chip">아이폰17 시리즈</button>
-                </div>
             </div>
             <div class="px-5 py-5 flex justify-between items-center">
                 <h2 class="text-[15px] font-black text-gray-900">맞춤 특가 단말기</h2>
@@ -233,7 +222,7 @@
         const REDIRECT_URI = window.location.origin; 
 
         let mockData = [];
-        let filterState = { currentCarrier: '', targetCarrier: 'LG U+', series: [] };
+        let filterState = { currentCarrier: '', targetCarrier: 'LG U+' };
         let detailState = { model: '', capacity: '', discountType: 'gongsi', formSource: '' };
         let hasSelectedCarrier = false; let pendingDetailModel = ''; 
         
@@ -270,22 +259,7 @@
         function processData(data) {
             mockData = data.prices || []; mockData.forEach(d => { if(!d.targetCarrier) d.targetCarrier = 'LG U+'; });
             document.querySelectorAll('.skeleton').forEach(el => el.remove());
-            renderBanners(data.banners); renderTop3(); applyFilters();
-        }
-
-        function renderBanners(banners) {
-            const wrapper = document.getElementById('banner-wrapper'); if (!banners || banners.length === 0) return;
-            const b = banners[0];
-            let textOverlay = ''; if (b.title || b.subtitle) textOverlay = `<div class="absolute inset-0 bg-black/40 flex items-end p-4"><div><p class="text-gray-900 text-[11px] font-bold mb-1">${b.subtitle || ''}</p><h3 class="text-gray-900 font-black text-[16px] leading-tight">${b.title || ''}</h3></div></div>`;
-            wrapper.innerHTML = `<div class="relative h-full w-full bg-white btn-touch" onclick="handleBannerClick('${b.linkUrl}')"><img src="${b.imageUrl}" class="w-full h-full object-contain">${textOverlay}</div>`;
-        }
-
-        function handleBannerClick(linkUrl) {
-            triggerHaptic(); if (!linkUrl) return;
-            if (linkUrl.startsWith('mobile:')) {
-                const targetSeries = linkUrl.split(':')[1].trim(); showPage('mobile');
-                setTimeout(() => { filterState.series = [targetSeries]; document.querySelectorAll('.quick-curation-chip').forEach(btn => btn.classList.toggle('active', btn.innerText.trim() === targetSeries)); applyFilters(); showToast(`${targetSeries} 특가 리스트`, 'success'); }, 100);
-            }
+            renderTop3(); applyFilters();
         }
 
         function formatNum(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
@@ -330,8 +304,7 @@
         }
 
         function renderTop3() { const container = document.getElementById('home-top3-list'); if(!mockData.length) return; let filtered = mockData.filter(i => i.targetCarrier === filterState.targetCarrier); filtered = filtered.filter((item, index, self) => index === self.findIndex((t) => t.model === item.model)); container.innerHTML = ''; filtered.slice(0, 3).forEach((data, idx) => container.insertAdjacentHTML('beforeend', createPhoneCard(data.model, data, idx+1))); lucide.createIcons(); }
-        function applyFilters() { let filtered = mockData.filter(i => i.targetCarrier === filterState.targetCarrier); if (filterState.series.length > 0) filtered = filtered.filter(i => filterState.series.includes(i.series)); filtered = filtered.filter((item, index, self) => index === self.findIndex((t) => t.model === item.model)); if(document.getElementById('list-count')) document.getElementById('list-count').innerText = `${filtered.length}개`; const container = document.getElementById('phone-list'); container.innerHTML = ''; filtered.forEach(item => container.insertAdjacentHTML('beforeend', createPhoneCard(item.model, item))); lucide.createIcons(); }
-        function toggleQuickCuration(keyword, el) { triggerHaptic(); const isActive = el.classList.contains('active'); document.querySelectorAll('.quick-curation-chip').forEach(c => c.classList.remove('active')); filterState.series = []; if (!isActive) { el.classList.add('active'); filterState.series.push(keyword); } applyFilters(); }
+        function applyFilters() { let filtered = mockData.filter(i => i.targetCarrier === filterState.targetCarrier); filtered = filtered.filter((item, index, self) => index === self.findIndex((t) => t.model === item.model)); if(document.getElementById('list-count')) document.getElementById('list-count').innerText = `${filtered.length}개`; const container = document.getElementById('phone-list'); container.innerHTML = ''; filtered.forEach(item => container.insertAdjacentHTML('beforeend', createPhoneCard(item.model, item))); lucide.createIcons(); }
         
 
         function openDetail(model) {
